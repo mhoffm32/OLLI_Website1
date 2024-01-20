@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #dbd0b3;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,11 +39,12 @@
 
 
 .topnav {
-  background-color: #333;
+  background-color: #6c7751;
   overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
 }
 
 /* Style the links inside the navigation bar */
@@ -54,6 +55,9 @@
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #555554;
 }
 
 /* Change the color of links on hover */
@@ -64,6 +68,6 @@
 
 /* Add a color to the active/current link */
 .topnav a.active {
-  background-color: #04AA6D;
-  color: white;
+  background-color: #dbd0b3;
+  color: #6c7751;
 }
