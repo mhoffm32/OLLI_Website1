@@ -12,7 +12,7 @@ class NavigationBar extends React.Component {
     render() {
         const { activeOption } = this.props;
         return (
-            <div class="topnav">
+            <div className="topnav">
                 <a className={activeOption === 'Home' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>Home</a>
                 <a className={activeOption === 'News' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>News</a>
                 <a className={activeOption === 'Events' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>Events</a>
