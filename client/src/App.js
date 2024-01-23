@@ -5,6 +5,10 @@ import Home from './Components/Pages/Home';
 import Contact from './Components/Pages/Contact';
 import About from './Components/Pages/About';
 import Events from './Components/Pages/Events';
+import News from './Components/Pages/News';
+import Fundraising from './Components/Pages/Fundraising';
+import Login from './Components/Pages/Login';
+import Signup from './Components/Pages/Signup';
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +39,18 @@ class App extends React.Component {
         break;
       case 'Events':
         page = <Events />;
+        break;
+      case 'Fundraising':
+        page = <Fundraising />;
+        break;
+      case 'News':
+        page = <News />;
+        break;
+      case 'Login':
+        page = <Login />;
+        break;
+      case 'Sign Up':
+        page = <Signup />;
         break;
       default:
         page = <Home />;
