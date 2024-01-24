@@ -132,3 +132,10 @@
   display: flex;
 }
 
+.topnav .nav-icon {
+  margin-right: 5px;
+  vertical-align:middle;
+  height: 30px;
+  width: 30px;
+}
+
