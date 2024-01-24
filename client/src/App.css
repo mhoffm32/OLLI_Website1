@@ -114,3 +114,21 @@
   background-color: #ddd;
   color: black;
 }
+
+.opening{
+  text-align: left;
+  font-size: large;
+  display: flex;
+}
+.title{
+  text-align: center;
+  
+}
+
+.history{
+  text-align: center;
+  background-color: #ffd7c7;
+  font-size: medium;
+  display: flex;
+}
+
