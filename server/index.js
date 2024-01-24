@@ -1,18 +1,18 @@
 const express = require("express");
-const app = express();
-const port = 3001;
-const fs = require("fs");
-const path = require("path");
-const router = express.Router();
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-app.use("/api", router);
-app.use(express.json());
-router.use(express.json());
+const app = express();
+const PORT = process.env.PORT || 3002;
+
+app.use(cors());
+app.use(bodyParser.json());
 
 app.get("/api", (req, res) => {
-  res.json({ users: ["user1", "user2", "user3"] });
+  console.log("in index.js");
+  res.json("hey");
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
