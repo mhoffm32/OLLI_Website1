@@ -7,3 +7,4 @@ cd into client folder:
 cd into server folder: 
 - npm install express
 - npm install mongoose
+- npm install mongodb
