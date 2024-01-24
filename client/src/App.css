@@ -125,10 +125,43 @@
   
 }
 
-.history{
+.works{
   text-align: center;
   background-color: #ffd7c7;
   font-size: medium;
   display: flex;
 }
+
+.group1{
+  text-align: left;
+  font-size: medium;
+  display: flex;
+  border: 1px solid black
+}
+.group2{
+  text-align: left;
+  font-size: medium;
+  display: flex;
+  border: 1px solid black
+}
+
+.group3{
+  text-align: left;
+  font-size: medium;
+  display: flex;
+  border: 1px solid black
+}
+
+.connections{
+  text-align: left;
+  font-size: medium;
+  display: flex;
+  border: 1px solid black;
+  background-color: #ffd7c7;
+}
+
+.titles{
+  display: inline;
+}
+
 
