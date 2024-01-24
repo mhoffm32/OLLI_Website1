@@ -5,7 +5,15 @@ class Fundraising extends Component {
         return (
             <div>
                 <h1>Fundraising Page</h1>
-                {/* Add your fundraising page content here */}
+                <p>Support O.L.L.I. by donating to our wonderful community programs!</p>
+                <a href='https://www.canadahelps.org/en/charities/the-ontario-caregiver-organization/'>Ontario Caregiver's Organization</a>
+                <br/>
+                <a href='https://lambtoncatholic.ca/donate'>Order of Alhambra</a>
+                <br/>
+                <a href='https://www.rockglen.com/'>Rock Glen Resorts</a>
+
+
+
             </div>
         );
     }
