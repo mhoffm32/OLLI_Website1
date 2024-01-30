@@ -132,6 +132,13 @@
   display: flex;
 }
 
+.topnav .nav-icon {
+  margin-right: 5px;
+  vertical-align:middle;
+  height: 30px;
+  width: 30px;
+}
+
 .group1{
   text-align: left;
   font-size: medium;
