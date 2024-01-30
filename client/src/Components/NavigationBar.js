@@ -1,4 +1,5 @@
 import React from 'react';
+import GLogin from "./Pages/GLogin";
 
 class NavigationBar extends React.Component {
     constructor(props) {
@@ -37,9 +38,13 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
+
+                <GLogin/>
                 <button className="login" onClick={evt => this.props.changePage(evt)}>Login</button>
                 <button className="signup" onClick={evt => this.props.changePage(evt)}>Sign Up</button>
+
             </div>
+
         );
     }
 }
