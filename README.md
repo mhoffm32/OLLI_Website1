@@ -8,3 +8,4 @@ cd into server folder:
 - npm install express
 - npm install mongoose
 - npm install mongodb
+- npm install nodemon
