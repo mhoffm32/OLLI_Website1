@@ -24,31 +24,29 @@ class Login extends Component {
 
         return (
             <div>
+                <button onClick={() => this.props.changePage('Home')} className='backBtn'>🡠</button>
+                <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
                 <h1>Login Page</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Username:
                         <input
                             type="text"
                             name="username"
                             value={username}
                             onChange={this.handleInputChange}
                             className='usernameBar'
+                            placeholder="Username..."
                         />
-                    </label>
                     <br />
-                    <label>
-                        Password:
                         <input
                             type="password"
                             name="password"
                             value={password}
                             onChange={this.handleInputChange}
                             className='passwordBar'
+                            placeholder="Password..."
                         />
-                    </label>
                     <br />
-                    <button type="submit">Login</button>
+                    <button type="submit" className='loginBtn'>Login</button>
                 </form>
             </div>
         );
