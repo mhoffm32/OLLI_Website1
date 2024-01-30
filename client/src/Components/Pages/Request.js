@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class News extends Component {
+class Request extends Component {
     render() {
         return (
             <div>
                 
-                <h1>News Page</h1>
+                <h1>Request a Caretaker</h1>
                 {/* Add your news content here */}
             </div>
         );
     }
 }
 
-export default News;
+export default Request;
