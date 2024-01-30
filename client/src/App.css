@@ -170,14 +170,14 @@
   color: #6c7751;
 }
 
-#subReq{
+#subEve{
   background-color: #6c7751;
   color: white;
   height: 50px;
   width: 100px;
 }
 
-#ctChoice{
+#eveChoice{
   width: 200px;
   height: 50px;
 }
@@ -192,19 +192,38 @@
   height: 50px;
 }
 
-.reqMenu{
+.eveMenu{
   display: flex;
 }
 .selection{
   display: inline;
 }
 
-#reqWhite{
+#eveWhite{
   width: 200px;
   height: 300px
 }
 
-#reqGreen{
+#eveGreen{
   width: 200px;
   height: 300px;
+}
+
+.eventDate{
+  display: flex;
+}
+
+#eveYear{
+  width: 200px;
+  height: 50px;
+}
+
+#eveMonth{
+  width: 200px;
+  height: 50px;
+}
+
+#eveDay{
+  width: 200px;
+  height: 50px;
 }

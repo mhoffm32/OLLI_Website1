@@ -17,7 +17,6 @@ class NavigationBar extends React.Component {
                 <a className={activeOption === 'News' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>News</a>
                 <a className={activeOption === 'Events' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>Events</a>
                 <a className={activeOption === 'Fundraising' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>Fundraising</a>
-                <a className={activeOption === 'Request' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>Request a Caretaker</a>
                 <a className={activeOption === 'Contact' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>Contact</a>
                 <a className={activeOption === 'About' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>About</a>
                 <button className="login" onClick={evt => this.props.changePage(evt)}>Login</button>

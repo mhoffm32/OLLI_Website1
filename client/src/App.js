@@ -9,7 +9,6 @@ import News from './Components/Pages/News';
 import Fundraising from './Components/Pages/Fundraising';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
-import Request from './Components/Pages/Request'
 
 class App extends React.Component {
   constructor(props) {
@@ -52,9 +51,6 @@ class App extends React.Component {
         break;
       case 'Sign Up':
         page = <Signup />;
-        break;
-      case 'Request a Caretaker':
-        page=<Request />;
         break;
       default:
         page = <Home />;
