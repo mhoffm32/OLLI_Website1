@@ -1,4 +1,6 @@
 /********************************** INITIALIZATION *****************************/
+require('dotenv').config();
+const bcrypt = require('bcrypt');
 /************ EXPRESS *******************/
 
 const express = require("express");
@@ -14,6 +16,11 @@ app.use(bodyParser.json());
 const router = express.Router();
 
 /************ PASSPORT *******************/
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+
 passport.use(new JwtStrategy({
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 	secretOrKey: process.env.SECRET_KEY // Replace with your own secret
@@ -32,6 +39,33 @@ app.use(passport.initialize());
 
 // Initialize passport
 app.use(passport.initialize());
+
+/************ MONGODB **********************/
+const UserVerificationEmails = require('./models/UserVerificationEmails');
+const User = require('./models/user');
+const { ObjectId } = require('mongodb');
+const path = require('path');
+
+/************** NODEMAILER *****************/
+
+const nodemailer = require('nodemailer');
+const {v4: uuidv4} = require('uuid');
+
+let transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: process.env.AUTH_EMAIL,
+		pass: process.env.AUTH_PASS
+	}
+});
+
+transporter.verify((error, success) => {
+	if(error){
+		console.log(error);
+	} else {
+		console.log("Server is ready to take messages");
+	}
+});
 
 /********************************** ROUTES *************************************/
 /************* USER ROUTES ***************/
@@ -75,14 +109,14 @@ router.route('/user/verify/:userID/:uniqueString')
 		const uniqueString = req.params.uniqueString;
 		const userID = req.params.userID.trim();
 
-		let user = await verificationCollection.findOne({userID: userID})
+		let user = await UserVerificationEmails.findOne({userID: userID})
 	
 		if(user){
 			const {expireAt} = user;
 			const hashedUniqueString = user.uniqueString;
 			if(Date.now() > expireAt){
-				await verificationCollection.deleteOne({userID})
-				await userCollection.deleteOne({_id: userID})
+				await UserVerificationEmails.deleteOne({userID})
+				await User.deleteOne({_id: userID})
 				res.json({
 					status: 'Please Sign Up Again',
 					message: 'Verification code has been expired. Please Sign Up Again'
@@ -91,9 +125,9 @@ router.route('/user/verify/:userID/:uniqueString')
 				bcrypt.compare(uniqueString, hashedUniqueString)
 					.then( async (result) => {
 						if(result){
-							let result = await userCollection.updateOne({_id: new ObjectId(userID)}, {$set: {verified: true}})
+							let result = await User.updateOne({_id: new ObjectId(userID)}, {$set: {verified: true}})
 							console.log(result)
-							await verificationCollection.deleteOne({userID})
+							await UserVerificationEmails.deleteOne({userID})
 
 							res.sendFile(path.join(__dirname, './UserValidated.html'))
 
@@ -145,7 +179,7 @@ router.route('/user/resendVerification')
 		const {email} = req.body;
 		let user = await getUserByEmail(email)
 		if(user){
-			const currentURL = "http://52.0.86.42:5000";
+			const currentURL = "http://localhost:3002";
 
 			const uniqueString = uuidv4() + user._id;
 
@@ -237,25 +271,16 @@ async function createUser(username, password, email, res){
 	console.log("Create the User: " + username + " ; " + password + " ; " + email)
 
 	let hashedPassword = await bcrypt.hash(password, 10);
-	let newUser = {}
-	if(username == "admin"){
-		newUser = {
-			username: username,
-			password: hashedPassword,
-			email: email,
-			verified: true,
-			admin: true,
-		};
-	} else {
-		newUser = {
-			username: username,
-			password: hashedPassword,
-			email: email,
-			verified: false,
-		};
-	}
-	//console.log(client.isConnected())
-	const result = await userCollection.insertOne(newUser);
+
+	let newUser = new User({
+		username: username,
+    	email: email,
+		password: hashedPassword,
+		verified: false,
+    	type: 'generalUser'
+	});
+
+	const result = await newUser.save();
 	if(result){
 		console.log("Email: " + newUser.email);
 		if(!result.verified)
@@ -315,14 +340,22 @@ async function sendVerificationEmail({_id, email}, res){
 
 			console.log("Something: " + _id)
 
-			const newVerification = {
+			let newVerification = new UserVerificationEmails({
 				userID: _id.toString(),
 				uniqueString: hashedUniqueString,
 				createdAt: Date.now(),
 				expireAt: Date.now() + 21600000 // 6 hours
-			};
+			});
 
-			await verificationCollection.insertOne(newVerification)
+			console.log("Inserting Verification")
+
+			try {
+				const result = await newVerification.save();
+			} catch (err) {
+				console.error(err);
+			}
+
+      		console.log("Sending Email")
 
 			transporter.sendMail(mailOptions, (error, info) => {
 				if (error) {
@@ -341,6 +374,7 @@ async function sendVerificationEmail({_id, email}, res){
 			});
 		})
 		.catch(() => {
+			console.log("Error in Hashing")
 			res.json({
 				status: 'failed',
 				message: 'Error occurred while hashing the password'
@@ -357,9 +391,10 @@ function inputSanitization(input){
 }
 
 async function validateEmail(email){
-	let allAccounts = await userCollection.find({}).toArray();
+	allAccounts = await User.find();
 	for(let i=0; i<allAccounts.length; i++){
 		if(allAccounts[i].email == email){
+			console.log("Email already exists")
 			return false;
 		}
 	}

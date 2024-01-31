@@ -5,7 +5,8 @@ class Signup extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            email: ''
         };
     }
 
@@ -49,7 +50,7 @@ class Signup extends Component {
     }
 
     render() {
-        const { username, password } = this.state;
+        const { username, password, email} = this.state;
 
         return (
             <div>
@@ -60,7 +61,7 @@ class Signup extends Component {
                         <input
                             type="text"
                             name="email"
-                            value={username}
+                            value={email}
                             onChange={this.handleInputChange}
                             className='usernameBar'
                             placeholder="Email..."

@@ -9,3 +9,5 @@ cd into server folder:
 - npm install mongoose
 - npm install mongodb
 - npm install nodemon
+
+npm install express cors body-parser passport jsonwebtoken passport-jwt mongodb nodemailer uuid dotenv bcrypt path
