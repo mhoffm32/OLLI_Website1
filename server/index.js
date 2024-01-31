@@ -104,6 +104,12 @@ router.route('/login')
 		}
 	});
 
+router.route('/user/getUsers')
+  .get(async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+  })
+
 router.route('/user/verify/:userID/:uniqueString')
 	.get(async (req, res) => {
 		const uniqueString = req.params.uniqueString;
