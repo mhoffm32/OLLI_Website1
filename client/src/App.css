@@ -189,24 +189,27 @@
   justify-content: flex-end; /* Align items to the right */
 }
 
+
 #signout-button {
   cursor: pointer;
   color: black;
   background-color: white;
-  display: flex; /* Use flexbox to align logo and text */
-  align-items: center; /* Center items vertically */
+  display: flex;
+  align-items: center; 
   padding: 10px;
+  width: 125px
 }
 
+
 .logo {
-  width: 20px;
-  height: 20px;
+  width: 4px;
+  height: 4px;
   margin-right: 5px;
   vertical-align: middle;
 }
 
 #signout-button span {
-  vertical-align: middle; /* Adjust the vertical position of the text */
+  vertical-align: middle; 
 }
 
 
