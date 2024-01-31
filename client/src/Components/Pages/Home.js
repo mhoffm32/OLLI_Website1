@@ -19,6 +19,7 @@ class Home extends Component {
                     <div className="CheerConnectionsTitle">
                         Cheer Connections
                     </div>
+                    <div className='cheerConnectionsDescBack'>
                     <div className="CheerConnections">
                         <div className="CheerConnectionsDescription">
                             Caregiver social and support
@@ -27,11 +28,13 @@ class Home extends Component {
                         </div>
                         <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
                     </div>
+                    </div>
                 </div>
                 <div className="olliAspects">
                     <div className="CheerConnectionsTitle">
                         Cheer Works
                     </div>
+                    <div className='cheerWorksDescBack'>
                     <div className="CheerConnections">
                         <div className="CheerConnectionsDescription">
                             Assisted employment for CHEER
@@ -43,11 +46,13 @@ class Home extends Component {
                         </div>
                         <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
                     </div>
+                    </div> 
                 </div>
                 <div className="olliAspects">
                     <div className="CheerConnectionsTitle">
                         Cheer Group
                     </div>
+                    <div className='cheerGroupDescBack'>
                     <div className="CheerConnections">
                         <div className="CheerConnectionsDescription">
                             Social, recreation, leisure, and
@@ -56,12 +61,14 @@ class Home extends Component {
                         </div>
                         <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
                     </div>
+                    </div>
                 </div>
                 <div className="olliAspects">
                     <div className="CheerConnectionsTitle">
                         Cheer 
                         Living
                     </div>
+                    <div className='cheerLivingDescBack'>
                     <div className="CheerConnections">
                         <div className="CheerConnectionsDescription">
                             An opportunity to practice
@@ -69,6 +76,7 @@ class Home extends Component {
                             with minimal supports.
                         </div>
                         <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
+                    </div>
                     </div>
                 </div>
             </div>

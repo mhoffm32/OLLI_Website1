@@ -301,10 +301,15 @@
 }
 
 .olliAspects {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%; /* Adjust as needed */
   float: left;
   width: 18.9%;
   height: auto;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
@@ -317,24 +322,47 @@
 .CheerConnectionsTitle {
   color: #6c7751;
   width: 100%;
-  padding: 10px;
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
   margin-top: 10px;
+}
+
+.cheerConnectionsDescBack {
+  padding: 10px;
   margin-left: 3.5%;
+  background: url("../public/images/cheer-connections.png") no-repeat center center;
+  background-size: cover;
+}
+
+.cheerWorksDescBack {
+  background: url("../public/images/2.png") no-repeat center center;
+  background-size: cover;
+}
+
+.cheerLivingDescBack {
+  padding: 10px;
+  margin-left: 3.5%;
+  background: url("../public/images/cheer-connections.png") no-repeat center center;
+  background-size: cover;
+}
+
+.cheerGroupDescBack {
+  padding: 10px;
+  margin-left: 3.5%;
+  background: url("../public/images/1.png") no-repeat center center;
+  background-size: cover;
 }
 
 .CheerConnections {
-  background-color: #6c7751;
+  position: relative;
+  background-color: none;
   color: white;
   width: 100%;
-  padding: 10px;
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
   margin-top: 10px;
-  margin-left: 3.5%;
   min-height: 200px;
   height: auto;
 }
