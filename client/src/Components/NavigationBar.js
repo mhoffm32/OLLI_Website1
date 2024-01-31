@@ -8,7 +8,6 @@ class NavigationBar extends React.Component {
         this.state = {
             activeOption: props.activeOption
         };
-
     }
 
     handleSignOut = () => {
@@ -48,6 +47,7 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
+
                 <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification
