@@ -1,4 +1,5 @@
 import React from 'react';
+import GLogin from "./Pages/GLogin";
 import { jwtDecode } from 'jwt-decode';
 
 class NavigationBar extends React.Component {
@@ -41,13 +42,14 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
+
+                <GLogin/>
+
                 <a className={activeOption === 'Verification' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification
                 </a>
                 
-                <button className="login" onClick={evt => this.props.changePage(evt)}>Login</button>
-                <button className="signup" onClick={evt => this.props.changePage(evt)}>Sign Up</button>
                 {token ? (
                     <b className="username">{jwtDecode(token).username}</b>
                 ) : (
@@ -56,7 +58,9 @@ class NavigationBar extends React.Component {
                         <button className="signup" onClick={evt => this.props.changePage('Sign Up')}>Sign Up</button>
                     </>
                 )}
+             
             </div>
+
         );
     }
 }
