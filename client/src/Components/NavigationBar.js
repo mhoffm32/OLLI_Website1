@@ -8,7 +8,6 @@ class NavigationBar extends React.Component {
         this.state = {
             activeOption: props.activeOption
         };
-
     }
 
     render() {
@@ -42,9 +41,7 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
-
-                <GLogin/>
-
+                
                 <a className={activeOption === 'Verification' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification

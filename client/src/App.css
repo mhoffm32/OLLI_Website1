@@ -199,6 +199,12 @@
   width: 125px
 }
 
+#g-login-btn1{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+}
 
 .logo {
   width: 4px;

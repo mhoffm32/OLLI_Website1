@@ -8,11 +8,42 @@ const CLIENT_ID =
   
 const GLogin = () => {
   const [user, setUser] = useState(null);
-
+  
   const handleSuccess = (credentials) => {
     console.log('Login Success: ', credentials);
-    setUser(jwtDecode(credentials.credential))
+
+    // Send the authorization code to the backend
+    const info = jwtDecode(credentials.credential)
+    console.log(info)
+    sendAuthorizationCode(credentials.credential);
+    //localStorage.setItem('jwt', data.token);  
   };
+
+  const sendAuthorizationCode = async (code) => {
+    try {
+      const response = await fetch('http://localhost:3002/api/google-auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: code,
+        }),
+      });
+
+      const r = await response.json();
+      console.log(r.message)
+
+
+      //const userInfo = await response.json();
+      //console.log('User Information from Backend:', userInfo);
+
+      //setUser(userInfo);
+    } catch (error) {
+      console.error('Error communicating with backend:', error.message);
+    }
+};
+  
 
   const handleFailure = () => {
     console.log('Login Failed');
@@ -30,10 +61,11 @@ const GLogin = () => {
       {user ? <button id='signout-button' style={{ display: 'block'}} onClick={()=> handleLogout()} >
       <img className="logo" src="/images/google-logo.png" alt="Logo" />
       Sign Out
-      </button> : <GoogleLogin
+      </button > : <GoogleLogin
         clientId={CLIENT_ID}
         onSuccess={handleSuccess}
         onError={handleFailure}
+        prompt="select_account"
       />}
     </div>
   );

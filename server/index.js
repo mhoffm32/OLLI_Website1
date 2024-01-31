@@ -1,6 +1,7 @@
 /********************************** INITIALIZATION *****************************/
 require('dotenv').config();
 const bcrypt = require('bcrypt');
+const axios = require('axios');
 /************ EXPRESS *******************/
 
 const express = require("express");
@@ -18,6 +19,7 @@ const router = express.Router();
 /************ PASSPORT *******************/
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const jwtDecode = require("jwt-decode")
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
@@ -103,6 +105,76 @@ router.route('/login')
 			res.status(400).json({ message: 'Login failed' });
 		}
 	});
+
+router.route('/google-auth')
+	.post(async (req, res) => {
+
+		const { code } = req.body;
+		const decoded_info = jwtDecode.jwtDecode(code);
+		const email = decoded_info.email;
+
+		const user = await getUserByEmail(email)
+
+		if(!user){
+			const username = email.split("@")[0].replace(/\s/g, '') + (Math.floor(Math.random() * (10)) + 1) + (Math.floor(Math.random() * (10)) + 1);
+
+			const pass = generatePass(12);
+			createGUser(username, pass, email, res)
+		}else{
+			const payload = { id: user._id, username: user.username, verified: user.verified, admin: user.admin }
+			if(payload == "disabled"){
+				res.status(409).json({ message: 'This account has been disabled' });
+			} else if(!payload.verified){
+				res.status(410).json({ message: 'Email has not been verified' });
+			} else if(payload){
+				const token = jwt.sign(payload, process.env.SECRET_KEY); // Replace with your own secret
+				res.status(200).json({ message: 'Login successful', token });
+			} else {
+				res.status(400).json({ message: 'Login failed' });
+			}
+
+		}
+
+	});
+
+
+	async function createGUser(username, password, email, res){
+		//const database = client.db('se3316-lab4-superheroLists');
+		//const collection = database.collection('Users');
+	
+		console.log("Create the User: " + username + " ; " + password + " ; " + email)
+	
+		let hashedPassword = await bcrypt.hash(password, 10);
+	
+		let newUser = new User({
+			username: username,
+			email: email,
+			password: hashedPassword,
+			verified: false,
+			type: 'generalUser'
+		});
+	
+		const result = await newUser.save();
+		if(result){
+			console.log("Email: " + newUser.email);
+			if(!result.verified)
+				sendVerificationEmail(newUser, res)
+		}
+	}
+
+function generatePass(length) {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
+	let password = '';
+	
+	for (let i = 0; i < length; i++) {
+		const randomIndex = Math.floor(Math.random() * charset.length);
+		password += charset.charAt(randomIndex);
+	}
+	return password;
+}
+	
+
+
 
 router.route('/user/verify/:userID/:uniqueString')
 	.get(async (req, res) => {
@@ -223,7 +295,6 @@ router.route('/user/resendVerification')
 						message: 'Error occurred while hashing the password'
 					})
 				});
-			
 		} else {
 			res.json({
 				status: 'error',
@@ -288,10 +359,34 @@ async function createUser(username, password, email, res){
 	}
 }
 
+async function createGUser(username, password, email, res){
+	console.log("Create the User: " + username + " ; " + password + " ; " + email)
+	let hashedPassword = await bcrypt.hash(password, 10);
+
+	let newUser = new User({
+		username: username,
+    	email: email,
+		password: hashedPassword,
+		verified: True,
+    	type: 'generalUser'
+	});
+
+	const result = await newUser.save();
+	if(result){
+		console.log("Email: " + newUser.email);
+		if(!result.verified)
+			sendVerificationEmail(newUser, res)
+	}
+}
+
+
+
+
+
+
 async function getUserByEmail(mail){
 	//const database = client.db('se3316-lab4-superheroLists');
 	//const collection = database.collection('Users');
-
 	try {
 		console.log("Getting User: " + mail)
 		const userObj = await User.findOne({ email: mail });
