@@ -9,11 +9,7 @@ import News from './Components/Pages/News';
 import Fundraising from './Components/Pages/Fundraising';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
-<<<<<<< HEAD
-import Verification from './Components/Pages/Verification';
 import ValidateEmail from './Components/Pages/ValidateEmail';
-=======
->>>>>>> parent of 252fa83 (add front end for verification request)
 
 class App extends React.Component {
   constructor(props) {
