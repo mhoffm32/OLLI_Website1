@@ -9,6 +9,7 @@ import News from './Components/Pages/News';
 import Fundraising from './Components/Pages/Fundraising';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
+import ValidateEmail from './Components/Pages/ValidateEmail';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,9 +19,9 @@ class App extends React.Component {
     };
   }
 
-  changePage = (evt) => {
+  changePage = (str) => {
     this.setState({
-      activeOption: evt.target.innerText
+      activeOption: str
     });
   }
 
@@ -28,10 +29,9 @@ class App extends React.Component {
     let page;
     switch (this.state.activeOption) {
       case 'Home':
-        page = <Home />;
+        page = <Home changePage={this.changePage}/>;
         break;
       case 'Contact':
-        console.log("Displaying Contact page");
         page = <Contact />;
         break;
       case 'About':
@@ -47,19 +47,25 @@ class App extends React.Component {
         page = <News />;
         break;
       case 'Login':
-        page = <Login />;
+        page = <Login changePage={this.changePage}/>;
         break;
       case 'Sign Up':
-        page = <Signup />;
+        page = <Signup changePage={this.changePage}/>;
+        break;
+      case 'ValidateEmail':
+        console.log('Changing page to ValidateEmail');
+        page = <ValidateEmail changePage={this.changePage}/>;
         break;
       default:
-        page = <Home />;
+        page = <Home changePage={this.changePage}/>;
   }
 
     return (
       <div className="App">
       <header className="App-header">
-        <NavigationBar activeOption={this.state.activeOption} changePage={this.changePage} />
+        {this.state.activeOption !== 'Login' && this.state.activeOption !== 'Sign Up' && this.state.activeOption !== 'ValidateEmail' &&
+          <NavigationBar activeOption={this.state.activeOption} changePage={this.changePage} />
+        }
         {page}
       </header>
       </div>
