@@ -10,6 +10,12 @@ class NavigationBar extends React.Component {
         };
     }
 
+    handleSignOut = () => {
+        // remove the JWT token from local storage to sign out user
+        localStorage.removeItem('jwt');
+        window.location.reload();
+    };
+
     render() {
         const { activeOption } = this.props;
 
@@ -41,14 +47,22 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
-                
-                <a className={activeOption === 'Verification' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>
+
+                <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification
                 </a>
+
+
+                <GLogin/>
+
+                
                 
                 {token ? (
-                    <b className="username">{jwtDecode(token).username}</b>
+                    <>
+                        <b className="username">{jwtDecode(token).username}</b>
+                        <button className="signout" onClick={this.handleSignOut}>Sign Out</button>
+                    </>
                 ) : (
                     <>
                         <button className="login" onClick={evt => this.props.changePage('Login')}>Login</button>

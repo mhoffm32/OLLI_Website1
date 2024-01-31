@@ -45,6 +45,7 @@ app.use(passport.initialize());
 /************ MONGODB **********************/
 const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/user');
+const Requests = require('./models/VerificationRequests')
 const { ObjectId } = require('mongodb');
 const path = require('path');
 
@@ -84,6 +85,42 @@ router.route('/signup')
 		}
 	});
 
+router.route('/user/requestVerification')
+	.post(async (req, res) =>{
+		console.log("Requesting verification")
+		const { email, password, type} = req.body;
+		if(!email || !password || !type){
+			return res.status(400).json({message: 'Username, password, and type are required'});
+		}
+
+		if(!inputSanitization(email) || !inputSanitization(password)){
+			return res.status(400).json({message: 'Invalid entries for email/password'});
+		}
+		try{
+			const user = await User.findOne({email});
+			if(!user){
+				return res.status(404).json({message: 'User not found'});
+			}
+
+
+			const validPass = await bcrypt.compare(password, user.password);
+			if(!validPass){
+				return res.status(400).json({message: 'Invalid password'});
+			}
+
+			const hashed = await bcrypt.hash(password, 10);
+
+			await Requests.insertOne({email, password: hashed, type})
+
+			return res.status(200).json({message: "Verification request submitted"});
+
+		} catch (error){
+			console.log("Error in verification process");
+			return res.status(500).json({message: 'Internal server error'});
+		}
+	
+	});
+
 router.route('/login')
 	.post(async (req, res) => {
 		const { email, password } = req.body;
@@ -105,6 +142,7 @@ router.route('/login')
 			res.status(400).json({ message: 'Login failed' });
 		}
 	});
+
 
 router.route('/google-auth')
 	.post(async (req, res) => {
@@ -176,6 +214,13 @@ function generatePass(length) {
 
 
 
+router.route('/user/getUsers')
+  .get(async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+  })
+
+
 router.route('/user/verify/:userID/:uniqueString')
 	.get(async (req, res) => {
 		const uniqueString = req.params.uniqueString;
@@ -245,6 +290,8 @@ router.route('/user/changePassword')
 			})
 		}
 	})
+
+
 
 router.route('/user/resendVerification')
 	.post(async (req, res) => {
