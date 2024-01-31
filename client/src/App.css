@@ -469,7 +469,9 @@
 }
 
 .contacts1{
-  display: inline;
+  display: block;
+  position: relative;
+  right: 200px;
 }
 
 .contacts2{
@@ -480,9 +482,24 @@
   display: flex;
 }
 
-#logoFB{
-  width: 300px;
-  height: 200px;
+
+
+#logoFB1{
+  width: 50px;
+  height: 50px;
+  
+}
+
+#logoFB2{
+  width: 50px;
+  height: 50px;
+ 
+}
+
+#logoFB3{
+  width: 50px;
+  height: 50px;
+  
 }
 
 #placeholderCon{
@@ -490,43 +507,46 @@
   height: 200px;
 }
 
-#conCon{
-  width: 200px;
-  height: 200px;
-}
-
-#greenLogoCon{
-  width: 200px;
-  height: 200px;
-}
-
-.connectionsLink{
-  position:relative;
-  left:75px;
-}
-
-.worksLink{
-  position:relative;
-  left: 50px;
-}
-
-.fbLink{
-  position: relative;
-  left: 100px;
-}
 
 .repEmail{
   position: relative;
-  left: 50px;
 }
 
 
-#contactTitle{
+/*#contactTitle{
   position: relative;
   top: 50px;
+}*/
+
+.messageOptions input{
+  display: block;
+  margin-bottom: 10px;
 }
 
 #contactMessage{
   width: 600px;
   height: 200px;
+}
+
+#contactName{
+  width: 200px;
+  height: 30px;
+}
+
+#contactEmail{
+  width: 200px;
+  height: 30px;
+}
+
+#fbTitle{
+  position: relative;
+  bottom: 40px;
+}
+
+.fbLinks{
+  display: flex;
+}
+
+.locationInfo{
+  text-align: left;
 }
