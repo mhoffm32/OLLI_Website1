@@ -28,6 +28,49 @@ class Home extends Component {
                         <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
                     </div>
                 </div>
+                <div className="olliAspects">
+                    <div className="CheerConnectionsTitle">
+                        Cheer Works
+                    </div>
+                    <div className="CheerConnections">
+                        <div className="CheerConnectionsDescription">
+                            Assisted employment for CHEER
+                            Group members providing an
+                            opportunity to gain job skills
+                            and income. There are many
+                            different jobs available
+                            considering differing abilities.
+                        </div>
+                        <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
+                    </div>
+                </div>
+                <div className="olliAspects">
+                    <div className="CheerConnectionsTitle">
+                        Cheer Group
+                    </div>
+                    <div className="CheerConnections">
+                        <div className="CheerConnectionsDescription">
+                            Social, recreation, leisure, and
+                            friendship program for young adults
+                            with intellectual disabilities.
+                        </div>
+                        <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
+                    </div>
+                </div>
+                <div className="olliAspects">
+                    <div className="CheerConnectionsTitle">
+                        Cheer 
+                        Living
+                    </div>
+                    <div className="CheerConnections">
+                        <div className="CheerConnectionsDescription">
+                            An opportunity to practice
+                            independent living skills and living
+                            with minimal supports.
+                        </div>
+                        <button className="CheerConnectionsButton" onClick={evt => this.props.changePage('About')}>Learn More</button>
+                    </div>
+                </div>
             </div>
         );
     }

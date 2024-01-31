@@ -95,7 +95,7 @@
   margin-right: 16px;
   padding-left: 20px;
   padding-right: 20px;
-  border-style: solid;
+  border-style: none;
   border-width: 2px;
   border-color: #555554;
   font-size: 17px;
@@ -300,9 +300,23 @@
   font-size: 25px;
 }
 
+.olliAspects {
+  float: left;
+  width: 18.9%;
+  height: auto;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  min-width: 280px;
+  margin-top: 10px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
 .CheerConnectionsTitle {
   color: #6c7751;
-  width: 20%;
+  width: 100%;
   padding: 10px;
   font-size: medium;
   border: none;
@@ -314,14 +328,15 @@
 .CheerConnections {
   background-color: #6c7751;
   color: white;
-  width: 20%;
+  width: 100%;
   padding: 10px;
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
   margin-top: 10px;
   margin-left: 3.5%;
-  height: 120px;
+  min-height: 200px;
+  height: auto;
 }
 
 .CheerConnections .CheerConnectionsTitle {
@@ -345,6 +360,7 @@
 }
 
 .CheerConnectionsButton {
+  margin-top: 20px;
   background-color: #df7958;
   color: black;
   width: 50%;
@@ -352,7 +368,6 @@
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
-  margin-top: 10px;
   visibility: hidden;
 }
 
@@ -465,5 +480,10 @@
 
 #digit4{
   width: 50px;
+  height: 50px;
+}
+
+.backArrowImg {
+  width: 60px;
   height: 50px;
 }

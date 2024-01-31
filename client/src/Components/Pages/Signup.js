@@ -56,7 +56,7 @@ class Signup extends Component {
 
         return (
             <div>
-                <button onClick={() => this.props.changePage('Home')} className='backBtn'>🡠</button>
+                <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
                 <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
                 <h1>Signup Page</h1>
                 <form onSubmit={this.handleSubmit}>
