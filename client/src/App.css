@@ -467,3 +467,53 @@
   width: 50px;
   height: 50px;
 }
+
+.contacts1{
+  display: flex;
+}
+
+.contacts2{
+  display: flex;
+}
+
+#logoFB{
+  width: 300px;
+  height: 200px;
+}
+
+#placeholderCon{
+  width: 200px;
+  height: 200px;
+}
+
+#conCon{
+  width: 200px;
+  height: 200px;
+}
+
+#greenLogoCon{
+  width: 200px;
+  height: 200px;
+}
+
+.connectionsLink{
+  position:relative;
+  top: 50px;
+  left:75px;
+}
+
+.worksLink{
+  position:relative;
+  top: 50px;
+  left: 50px;
+}
+
+.fbLink{
+  position: relative;
+  left: 100px;
+}
+
+.repEmail{
+  position: relative;
+  left: 50px;
+}
