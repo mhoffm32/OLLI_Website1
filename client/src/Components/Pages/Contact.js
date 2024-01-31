@@ -8,38 +8,46 @@ class Contact extends Component {
         const worksFB ="https://www.facebook.com/profile.php?id=100057044577232&mibextid=ZbWKwL"
         return (
             <div>
-                <h1>Contact Page</h1>
+                <h1 id= "contactTitle">Contact Page</h1>
 
+            <div class ="contactsMenu">
                 <div class = "contacts1">
+
                 <div class="repEmail">
                 <img src={`/images/placeholder.jpg`} alt='logo'id="placeholderCon"/>
-                    <h4>If you are interested in the CHEER and it's activities, please contact:</h4>
-                    <a href={`mailto:${emailAddress}`}>{emailAddress}</a>
+                    <h4>Send an Email to Ivey Hartman:</h4>
                 </div>
-                
 
-                <div class="fbLink">
-                <img src={`/images/facebook.jpg`} alt='logo'id="logoFB"/>
-                    <h4>CHEER facebook page:</h4>
-                    <a href={`malito:${facebook}`}>{facebook}</a>
+
+                <div class="messageOptions">
+                    <input type='text' id='contactName'></input>
+                    <input type='text' id='contactEmail'></input>
+                    <input type='text' id='contactMessage'></input>
                 </div>
+
+                </div>
+
+                <div class = "contacts2">
+                <div class="fbLink">
+                    <a href = "https://www.facebook.com/cheer.2023?mibextid=ZbWKwL">
+                    <img src={`/images/facebookLogo.jpg`} alt='logo'id="logoFB"/>
+                    </a>
                 </div>
                 
-                <div class = "contacts2">
                 <div class = "connectionsLink">
-                <img src={`/images/connections_logo.jpg`} alt='logo'id="conCon"/>
-                    <h4>CHEER Connections on Facebook: </h4>
-                    <a href ={`malito:${conectionFB}`}>{conectionFB}</a>
+                    <a href ="https://www.facebook.com/familyconnectionscheer?mibextid=ZbWKwL">
+                    <img src={`/images/facebookLogo.jpg`} alt='logo'id="conCon"/>
+                    </a>
                 </div>
 
 
                 <div class = "worksLink">
-                    <img src={`/images/cheer_logo.green.jpg`} alt='logo'id="greenLogoCon"/>
-                        <h4>CHEER Works on Facebook: </h4>
-                        <a href ={`malito:${worksFB}`}>{worksFB}</a>
+                    <a href ="https://www.facebook.com/profile.php?id=100057044577232&mibextid=ZbWKwL">
+                    <img src={`/images/facebookLogo.jpg`} alt='logo'id="greenLogoCon"/>
+                    </a>
                 </div>
                 </div>
-
+                </div>
             </div>
         );
     }
