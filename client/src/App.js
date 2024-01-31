@@ -18,6 +18,7 @@ class App extends React.Component {
     this.state = {
       activeOption: 'Home'
     };
+    localStorage.removeItem('jwt');
   }
 
   changePage = (str) => {
