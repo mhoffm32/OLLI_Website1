@@ -469,10 +469,14 @@
 }
 
 .contacts1{
-  display: flex;
+  display: inline;
 }
 
 .contacts2{
+  display: inline;
+}
+
+.contactsMenu{
   display: flex;
 }
 
@@ -498,13 +502,11 @@
 
 .connectionsLink{
   position:relative;
-  top: 50px;
   left:75px;
 }
 
 .worksLink{
   position:relative;
-  top: 50px;
   left: 50px;
 }
 
@@ -516,4 +518,15 @@
 .repEmail{
   position: relative;
   left: 50px;
+}
+
+
+#contactTitle{
+  position: relative;
+  top: 50px;
+}
+
+#contactMessage{
+  width: 600px;
+  height: 200px;
 }
