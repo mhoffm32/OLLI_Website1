@@ -44,16 +44,12 @@ class NavigationBar extends React.Component {
                 </a>
 
                 <GLogin/>
-                <button className="login" onClick={evt => this.props.changePage(evt)}>Login</button>
-                <button className="signup" onClick={evt => this.props.changePage(evt)}>Sign Up</button>
 
                 <a className={activeOption === 'Verification' ? 'active' : ''} onClick={evt => this.props.changePage(evt)}>
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification
                 </a>
                 
-                <button className="login" onClick={evt => this.props.changePage(evt)}>Login</button>
-                <button className="signup" onClick={evt => this.props.changePage(evt)}>Sign Up</button>
                 {token ? (
                     <b className="username">{jwtDecode(token).username}</b>
                 ) : (
