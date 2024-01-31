@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 
 class Events extends Component {
     render() {
+        /* Visual looks*/
         return (
             <div>
                      <h1>Welcome to the Event menu</h1>
-                {/* Add your news content here */}
             <div class = "eveMenu">
                 <div class="eveWhiteLogo">
                 <img src={`/images/cheer_logo_white.jpg`} alt='logo' id='eveWhite'/>
                 </div>
+                {/*Join Event menu*/}
 
                 <div class = "selection">
                 <h2>Join an event?</h2>
@@ -43,7 +44,7 @@ class Events extends Component {
                         </select>
 
 
-                        <select name="month" id="eveMonth">
+                        <select name="day" id="eveDay">
                         <option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>
@@ -90,6 +91,7 @@ class Events extends Component {
 
 
                 <div class="line"></div>
+                {/*Create Event menu*/}
 
                 <div class="createMenu">
                 <div class = "selection">
@@ -152,7 +154,7 @@ class Events extends Component {
 
                     </div>
 
-
+                    
                     <h3>Date Selection:</h3>
                     <div class="eventDate">
 
@@ -179,7 +181,7 @@ class Events extends Component {
                         </select>
 
 
-                        <select name="month" id="eveMonth">
+                        <select name="day" id="eveDay">
                         <option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>
@@ -236,6 +238,11 @@ class Events extends Component {
             </div>
         );
     }
+
+    /*Front-end work code*/
+
+
+
 }
 
 export default Events;
