@@ -294,7 +294,7 @@ async function getUserByEmail(mail){
 
 	try {
 		console.log("Getting User: " + mail)
-		const userObj = await userCollection.findOne({ email: mail });
+		const userObj = await User.findOne({ email: mail });
 		console.log(userObj)
 		if (userObj) {
 			return userObj;

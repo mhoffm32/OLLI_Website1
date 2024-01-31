@@ -1,4 +1,5 @@
 import React from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 class NavigationBar extends React.Component {
     constructor(props) {
@@ -11,6 +12,9 @@ class NavigationBar extends React.Component {
 
     render() {
         const { activeOption } = this.props;
+
+        const token = localStorage.getItem('jwt');
+
         return (
             <div className="topnav">
                 <a className={activeOption === 'Home' ? 'active' : ''} onClick={evt => this.props.changePage('Home')}>
@@ -37,8 +41,14 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
-                <button className="login" onClick={evt => this.props.changePage('Login')}>Login</button>
-                <button className="signup" onClick={evt => this.props.changePage('Sign Up')}>Sign Up</button>
+                {token ? (
+                    <b className="username">{jwtDecode(token).username}</b>
+                ) : (
+                    <>
+                        <button className="login" onClick={evt => this.props.changePage('Login')}>Login</button>
+                        <button className="signup" onClick={evt => this.props.changePage('Sign Up')}>Sign Up</button>
+                    </>
+                )}
             </div>
         );
     }

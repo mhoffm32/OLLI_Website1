@@ -42,11 +42,13 @@ class Signup extends Component {
                 if(data === "User already exists"){
                     alert("User already exists");
                 } else {
-                    this.props.changePage('Login');
+                    
                 }
             })
             .catch(err => console.log(err));
         }
+        console.log('Change page to ValidateEmail');
+        this.props.changePage('ValidateEmail');
     }
 
     render() {

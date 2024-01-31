@@ -9,6 +9,7 @@ import News from './Components/Pages/News';
 import Fundraising from './Components/Pages/Fundraising';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
+import ValidateEmail from './Components/Pages/ValidateEmail';
 
 class App extends React.Component {
   constructor(props) {
@@ -51,6 +52,10 @@ class App extends React.Component {
       case 'Sign Up':
         page = <Signup changePage={this.changePage}/>;
         break;
+      case 'ValidateEmail':
+        console.log('Changing page to ValidateEmail');
+        page = <ValidateEmail changePage={this.changePage}/>;
+        break;
       default:
         page = <Home changePage={this.changePage}/>;
   }
@@ -58,7 +63,7 @@ class App extends React.Component {
     return (
       <div className="App">
       <header className="App-header">
-        {this.state.activeOption !== 'Login' && this.state.activeOption !== 'Sign Up' && 
+        {this.state.activeOption !== 'Login' && this.state.activeOption !== 'Sign Up' && this.state.activeOption !== 'ValidateEmail' &&
           <NavigationBar activeOption={this.state.activeOption} changePage={this.changePage} />
         }
         {page}
