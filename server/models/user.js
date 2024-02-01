@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     type: String //eg. client, parent/guardian, staff, owner
 });
 
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
