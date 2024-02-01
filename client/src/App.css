@@ -339,11 +339,13 @@
   margin-left: 3.5%;
   background: url("../public/images/cheer-connections.png") no-repeat center center;
   background-size: cover;
+  border-radius: 20px;
 }
 
 .cheerWorksDescBack {
   background: url("../public/images/2.png") no-repeat center center;
   background-size: cover;
+  border-radius: 20px;
 }
 
 .cheerLivingDescBack {
@@ -351,6 +353,7 @@
   margin-left: 3.5%;
   background: url("../public/images/cheer-connections.png") no-repeat center center;
   background-size: cover;
+  border-radius: 20px;
 }
 
 .cheerGroupDescBack {
@@ -358,6 +361,7 @@
   margin-left: 3.5%;
   background: url("../public/images/1.png") no-repeat center center;
   background-size: cover;
+  border-radius: 20px;
 }
 
 .CheerConnections {
