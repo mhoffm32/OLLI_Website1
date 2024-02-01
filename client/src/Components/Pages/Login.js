@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GLogin from '../Pages/GLogin'
 
 class Login extends Component {
     constructor(props) {
@@ -8,7 +9,6 @@ class Login extends Component {
             password: ''
         };
     }
-
     handleInputChange = (event) => {
         const { name, value } = event.target;
         this.setState({ [name]: value });
@@ -69,7 +69,6 @@ class Login extends Component {
               }
             }))
         }
-        
     }
 
     render() {
@@ -80,6 +79,9 @@ class Login extends Component {
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
                 <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
                 <h1>Login Page</h1>
+
+                <div id="g-login-btn1"><GLogin/></div>
+  
                 <form onSubmit={this.handleSubmit}>
                         <input
                             type="text"
