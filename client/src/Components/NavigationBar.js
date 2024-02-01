@@ -52,11 +52,6 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification
                 </a>
-
-
-                <GLogin/>
-
-                
                 
                 {token ? (
                     <>

@@ -6,7 +6,8 @@ class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            loginText: ''
         };
     }
     handleInputChange = (event) => {
@@ -15,6 +16,7 @@ class Login extends Component {
     }
 
     handleSubmit = (event) => {
+        this.state.loginText = ""
         event.preventDefault();
         if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.state.email)){
             alert("Please enter a valid email");
@@ -57,7 +59,11 @@ class Login extends Component {
                       }
                   }))
                 }
-              } else if(res.status == 409){
+              } else if(res.status == 400){
+                this.state.loginText = 'Please try another password or log in using google.'
+              }
+               else if(res.status == 409){
+                
                 alert("Log In Unsuccesful. Account Disabled. Contact Admin")
               } else if(res.status !== 200){
                 console.log(res.status)
@@ -102,6 +108,7 @@ class Login extends Component {
                         />
                     <br />
                     <button type="submit" className='loginBtn'>Login</button>
+                    <p className='loginText'>{this.state.loginText}</p>
                 </form>
             </div>
         );
