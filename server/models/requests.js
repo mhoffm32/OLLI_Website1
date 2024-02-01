@@ -1,7 +1,5 @@
 const mongoose = require('../db'); 
 
-
-
 const requestSchema = new mongoose.Schema({
     email: String,
     password: String,

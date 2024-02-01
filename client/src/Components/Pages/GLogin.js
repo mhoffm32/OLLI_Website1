@@ -14,9 +14,8 @@ const GLogin = () => {
 
     // Send the authorization code to the backend
     const info = jwtDecode(credentials.credential)
-    console.log(info)
     sendAuthorizationCode(credentials.credential);
-    //localStorage.setItem('jwt', data.token);  
+   
   };
 
   const sendAuthorizationCode = async (code) => {
@@ -31,14 +30,11 @@ const GLogin = () => {
         }),
       });
 
-      const r = await response.json();
-      console.log(r.message)
+      const u = await response.json();
+      localStorage.setItem('jwt', u.token); 
+      const usr = u.token
+      console.log(jwtDecode(usr)) 
 
-
-      //const userInfo = await response.json();
-      //console.log('User Information from Backend:', userInfo);
-
-      //setUser(userInfo);
     } catch (error) {
       console.error('Error communicating with backend:', error.message);
     }
