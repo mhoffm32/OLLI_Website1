@@ -43,7 +43,7 @@ app.use(passport.initialize());
 /************ MONGODB **********************/
 const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/user');
-const Requests = require('./models/VerificationRequests')
+const Requests = require('./models/requests');
 const { ObjectId } = require('mongodb');
 const path = require('path');
 

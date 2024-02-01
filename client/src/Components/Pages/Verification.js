@@ -6,25 +6,60 @@ class Verification extends Component {
         this.state = {
             username: '',
             password: '',
-            type: ''
+            type: '',
+            error: ''
         };
     }
 
     handleInputChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
+        this.setState({ [name]: value, error: ''});
     }
 
     handleVerificationTypeChange = (event) =>{
-        this.setState({type: event.target.value});
+        this.setState({type: event.target.value, error: ''});
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
+
+        const {email, password, type } = this.state;
+
+
+        try{
+            const response = await fetch('/user/requestVerification', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({email, password, type})
+            });
+           
+
+            const data = await response.json();
+            const {status, message} = data;
+
+            if(status === 'ok'){
+                alert('Verification request sent successfully');
+            }
+            else if (message === 'User not found'){
+                this.setState({error: 'User not found'});
+            }
+            else if (message === 'Invalid password'){
+                this.setState({error: 'Invalid password'})
+            }
+            else{
+                this.setState({error: 'Error encountered'})
+            }
+        }
+        catch(error){
+            this.setState({error: error.message});
+           
+        }
     }
 
     render() {
-        const { username, password, type} = this.state;
+        const { username, password, type, error} = this.state;
 
         return (
             <div>
@@ -65,6 +100,8 @@ class Verification extends Component {
                         </select>
                     </label>
                     <button type="submit" disabled={!(type && username && password)}>Submit Request</button>
+                    {error && <p className='error-message'>{error}</p>}
+
                 </form>
             </div>
         );
