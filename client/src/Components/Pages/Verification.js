@@ -62,7 +62,7 @@ class Verification extends Component {
         const { username, password, type, error} = this.state;
 
         return (
-            <div>
+            <div className="verification">
                 <h1>Request Account Verification</h1>
                 <form onSubmit={this.handleSubmit}>
                     <label>

@@ -4,7 +4,7 @@ class About extends React.Component {
   render() {
     const address = "info@rockglen.com";
     return (
-      <div>
+      <div className="about">
         <h1>About Us</h1>
         <p>OLLI's clubhouse is located at Rock Glen Family Resort (8685 Rock Glen Road, Arkona, ON N0M 1B0). </p>
         <p>To contact the venue, please call 1-800-265-7597 (Toll Free) or 519-828-3456 (Local) or email <a href={`mailto:${address}`}>{address}</a></p>

@@ -7,23 +7,33 @@ class Fundraising extends Component {
             height: '150px'
         };
         return (
-            <div>
+            <div className="fundraising">
                 <h1>Fundraising Page</h1>
-                <p>Support O.L.L.I. by donating to our wonderful community programs!</p>
-                <img src='\images\Sunset-Community-Foundation-Logo-Colour-1024x453.png' style={style}></img>
-                <a href='https://sunsetcommunityfoundation.ca/'>Grand Bend Sunset Foundation</a>
+                <h3>Support O.L.L.I. by donating to our wonderful community programs!</h3>
+                <br></br>
+                <div className="container">
+                    <a className="child bounce" target="_blank" href='https://sunsetcommunityfoundation.ca/'><img src='\images\Sunset-Community-Foundation-Logo-Colour-1024x453.png' style={style}></img></a>
+                </div>
+                <p>Grand Bend Sunset Foundation</p>
+                <hr></hr>
                 <br />
-                <img src='/images/caregivers.jpg'></img>
-                <a href='https://www.canadahelps.org/en/charities/the-ontario-caregiver-organization/'>Ontario Caregiver's Organization</a>
+                <div className="container">
+                    <a className="child bounce" target="_blank" href='https://www.canadahelps.org/en/charities/the-ontario-caregiver-organization/'><img src='/images/caregivers.png'></img></a>
+                </div>
+                <p>Ontario Caregiver Organization</p>
+                <hr></hr>
                 <br/>
-                <img src='/images/algarva.jpeg'></img>
-                <a href='https://algarva168.org/'>Order of Alhambra, Algarva 168</a>
+                <div className="container">
+                    <a className="child bounce" target="_blank" href='https://algarva168.org/'><img height="150px" src='/images/algarva.jpeg'></img></a>
+                </div>
+                <p>Order of Alhambra, Algarva 168</p>
+                <hr></hr>
                 <br/>
-                <img src='/images/rockglen.jpeg'></img>
-                <a href='https://www.rockglen.com/'>Rock Glen Resorts</a>
-
-
-
+                <div className="container">
+                    <a className="child bounce" target="_blank" href='https://www.rockglen.com/'><img height="150px" src='/images/rockglen.jpeg'></img></a>
+                </div>
+                <p>Rock Glen Resorts</p>
+                <br></br>
             </div>
         );
     }
