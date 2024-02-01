@@ -45,7 +45,7 @@ app.use(passport.initialize());
 /************ MONGODB **********************/
 const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/user');
-const Requests = require('./models/VerificationRequests')
+//const Requests = require('./models/VerificationRequests')
 const { ObjectId } = require('mongodb');
 const path = require('path');
 
@@ -127,11 +127,9 @@ router.route('/login')
 
 		const payload = await validatePassword(email, password);
 
-		console.log("Payload: " + payload)
-
-		console.log(payload.verified)
-
-		if(payload == "disabled"){
+		if(!payload){
+			res.status(400).json({ message: 'Please try another password or log in using google.'})
+		} else if (payload == "disabled"){
 			res.status(409).json({ message: 'This account has been disabled' });
 		} else if(!payload.verified){
 			res.status(410).json({ message: 'Email has not been verified' });
@@ -155,11 +153,13 @@ router.route('/google-auth')
 
 		if(!user){
 			const username = email.split("@")[0].replace(/\s/g, '') + (Math.floor(Math.random() * (10)) + 1) + (Math.floor(Math.random() * (10)) + 1);
-
+	
 			const pass = generatePass(12);
 			createGUser(username, pass, email, res)
+
 		}else{
 			const payload = { id: user._id, username: user.username, verified: user.verified, admin: user.admin }
+			console.log(payload)
 			if(payload == "disabled"){
 				res.status(409).json({ message: 'This account has been disabled' });
 			} else if(!payload.verified){
@@ -178,8 +178,8 @@ router.route('/google-auth')
 
 	async function createGUser(username, password, email, res){
 		//const database = client.db('se3316-lab4-superheroLists');
-		//const collection = database.collection('Users');
-	
+		//const collection = database.collection('Users')
+
 		console.log("Create the User: " + username + " ; " + password + " ; " + email)
 	
 		let hashedPassword = await bcrypt.hash(password, 10);
@@ -188,16 +188,12 @@ router.route('/google-auth')
 			username: username,
 			email: email,
 			password: hashedPassword,
-			verified: false,
+			verified: true,
 			type: 'generalUser'
 		});
 	
-		const result = await newUser.save();
-		if(result){
-			console.log("Email: " + newUser.email);
-			if(!result.verified)
-				sendVerificationEmail(newUser, res)
-		}
+		await newUser.save();
+
 	}
 
 function generatePass(length) {
@@ -406,30 +402,6 @@ async function createUser(username, password, email, res){
 	}
 }
 
-async function createGUser(username, password, email, res){
-	console.log("Create the User: " + username + " ; " + password + " ; " + email)
-	let hashedPassword = await bcrypt.hash(password, 10);
-
-	let newUser = new User({
-		username: username,
-    	email: email,
-		password: hashedPassword,
-		verified: True,
-    	type: 'generalUser'
-	});
-
-	const result = await newUser.save();
-	if(result){
-		console.log("Email: " + newUser.email);
-		if(!result.verified)
-			sendVerificationEmail(newUser, res)
-	}
-}
-
-
-
-
-
 
 async function getUserByEmail(mail){
 	//const database = client.db('se3316-lab4-superheroLists');
@@ -437,7 +409,7 @@ async function getUserByEmail(mail){
 	try {
 		console.log("Getting User: " + mail)
 		const userObj = await User.findOne({ email: mail });
-		console.log(userObj)
+		console.log("userobj",userObj)
 		if (userObj) {
 			return userObj;
 		} else {
