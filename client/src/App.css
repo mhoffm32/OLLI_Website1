@@ -374,6 +374,13 @@
   visibility: visible;
 }
 
+.CheerConnections:hover{
+  padding-top: 10px;
+  background-color: #6c7751;
+  opacity: 0.9;
+  transition: all 0.5s;
+}
+
 .CheerConnectionsButton {
   margin-top: 20px;
   background-color: #df7958;
