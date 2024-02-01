@@ -72,7 +72,7 @@
   margin-right: 16px;
   padding-left: 20px;
   padding-right: 20px;
-  border-style: solid;
+  border-style: none;
   border-width: 2px;
   border-color: #555554;
   font-size: 17px;
@@ -283,28 +283,75 @@
   font-size: 25px;
 }
 
+.olliAspects {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%; /* Adjust as needed */
+  float: left;
+  width: 18.9%;
+  height: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  min-width: 280px;
+  margin-top: 10px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
 .CheerConnectionsTitle {
   color: #6c7751;
-  width: 20%;
-  padding: 10px;
+  width: 100%;
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
   margin-top: 10px;
+}
+
+.cheerConnectionsDescBack {
+  padding: 10px;
   margin-left: 3.5%;
+  background: url("../public/images/cheer-connections.png") no-repeat center center;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.cheerWorksDescBack {
+  background: url("../public/images/2.png") no-repeat center center;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.cheerLivingDescBack {
+  padding: 10px;
+  margin-left: 3.5%;
+  background: url("../public/images/cheer-connections.png") no-repeat center center;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.cheerGroupDescBack {
+  padding: 10px;
+  margin-left: 3.5%;
+  background: url("../public/images/1.png") no-repeat center center;
+  background-size: cover;
+  border-radius: 20px;
 }
 
 .CheerConnections {
-  background-color: #6c7751;
+  position: relative;
+  background-color: none;
   color: white;
-  width: 20%;
-  padding: 10px;
+  width: 100%;
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
   margin-top: 10px;
-  margin-left: 3.5%;
-  height: 120px;
+  min-height: 200px;
+  height: auto;
 }
 
 .CheerConnections .CheerConnectionsTitle {
@@ -327,7 +374,15 @@
   visibility: visible;
 }
 
+.CheerConnections:hover{
+  padding-top: 10px;
+  background-color: #6c7751;
+  opacity: 0.9;
+  transition: all 0.5s;
+}
+
 .CheerConnectionsButton {
+  margin-top: 20px;
   background-color: #df7958;
   color: black;
   width: 50%;
@@ -335,7 +390,6 @@
   font-size: medium;
   border: none;
   border-radius: 20px; /* Rounded sides */
-  margin-top: 10px;
   visibility: hidden;
 }
 
@@ -619,6 +673,16 @@
 .hoursHeader{
   display: flex;
   align-items: center;
+}
+
+.backArrowImg {
+  width: 60px;
+  height: 50px;
+}
+
+.backArrowImg {
+  width: 60px;
+  height: 50px;
 }
 
 /* FUNDRAISING PAGE */ 
