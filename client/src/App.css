@@ -200,6 +200,12 @@
   width: 125px
 }
 
+#g-login-btn1{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+}
 
 .logo {
   width: 4px;
@@ -360,7 +366,6 @@
   visibility: visible;
 
 }
-
 .requestButton{
   font-size: larger;
   color: #6c7751;
@@ -435,9 +440,10 @@
 }
 
 #eveDay{
-  width: 1500px;
+  width: 150px;
   height: 50px;
 }
+
 
 .line {
   height: 100px;
@@ -471,4 +477,169 @@
 .error-message {
   color: red;
   font-size: 14px;
+}
+
+.contacts1{
+  display: block;
+  position: fixed;
+  left: 0;
+  width: 50%;
+  height: 83.5vh;
+  text-align: left;
+  border: 2px solid #6c7751;
+}
+
+
+
+#placeholderCon{
+  text-align: center;
+}
+
+.contacts2{
+  display: inline;
+  background-color: #e98361;
+  font-size: 27px;
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 83.5vh;
+  border: 2px solid #6c7751;
+}
+
+.contactsMenu{
+  display: flex;
+}
+
+
+
+#logoFB1{
+  width: 55px;
+  height: 55px;
+  
+}
+
+#logoFB2{
+  width: 50px;
+  height: 50px;
+ 
+}
+
+#logoFB3{
+  width: 50px;
+  height: 50px;
+  
+}
+
+#placeholderCon{
+  width: 200px;
+  height: 200px;
+}
+
+
+.repEmail{
+  position: relative;
+  align-items: center;
+}
+
+
+
+
+#contactMessage{
+  width: 500px;
+  height: 150px;
+}
+
+#contactName{
+  width: 200px;
+  height: 30px;
+}
+
+#contactEmail{
+  width: 200px;
+  height: 30px;
+}
+
+#subject{
+  width: 200px;
+  height: 30px;
+}
+
+#contactPhone{
+  width: 200px;
+  height: 30px;
+}
+
+
+.messageOptions1 input{
+  display: inline;
+  margin-bottom: 10px;
+  
+}
+
+.messageOptions2 input{
+  display: inline;
+  margin-bottom: 10px;
+}
+
+.messageOptions3 input{
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+#contactEmail{
+  margin-left: 20px;
+}
+
+#contactPhone{
+  margin-left: 20px;
+}
+
+#contactName{
+  text-align: left;
+}
+
+#subject{
+  text-align: left;
+}
+
+#fbTitle{
+  position: relative;
+  bottom: 40px;
+}
+
+.fbLinks{
+  display: flex;
+}
+
+.locationInfo{
+  text-align: left;
+}
+
+#sendButton{
+  background-color: #6c7751;
+  color:#fafafa;
+  text-align: left;
+  width: 100px;
+  height: 50px;
+}
+
+#maps{
+  width:50px;
+  height: 50px;
+}
+
+.mapsLine{
+  display: flex;
+  align-items: center;
+}
+
+#clock{
+  width:50px;
+  height:50px
+}
+
+.hoursHeader{
+  display: flex;
+  align-items: center;
 }
