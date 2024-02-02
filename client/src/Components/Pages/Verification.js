@@ -4,7 +4,7 @@ class Verification extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             type: '',
             error: ''
@@ -22,57 +22,69 @@ class Verification extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
-
-        const {email, password, type } = this.state;
-
-
-        try{
-            const response = await fetch('/user/requestVerification', {
+        if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.state.email)){
+            this.setState({error: 'Please enter a valid email'});
+            return;
+        }
+        else if(this.state.email === undefined || this.state.email === ""){
+            this.setState({error: 'Please enter an email'});
+            return;
+        }
+        else if(this.state.password === undefined || this.state.password === ""){
+            this.setState({error: 'Please enter a password'});
+            return;
+        }
+    
+        try {
+            const response = await fetch('http://localhost:3002/api/request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({email, password, type})
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password,
+                    type: this.state.type
+                })
             });
-           
-
+            
+            
+    
             const data = await response.json();
-            const {status, message} = data;
-
-            if(status === 'ok'){
+            const { status, message } = data;
+    
+            if (status === 'ok') {
                 alert('Verification request sent successfully');
+            } else if(message === 'Invalid entries for email/password') {
+                this.setState({error: 'Invalid format for entries'})
             }
-            else if (message === 'User not found'){
-                this.setState({error: 'User not found'});
+            else if (message === 'User not found') {
+                this.setState({ error: 'User not found' });
+            } else if (message === 'Invalid password') {
+                this.setState({ error: 'Invalid password' });
+            } else {
+                this.setState({ error: 'Error encountered' });
             }
-            else if (message === 'Invalid password'){
-                this.setState({error: 'Invalid password'})
-            }
-            else{
-                this.setState({error: 'Error encountered'})
-            }
-        }
-        catch(error){
-            this.setState({error: error.message});
-           
+        } catch (error) {
+            this.setState({ error: error.message });
         }
     }
-
+    
     render() {
-        const { username, password, type, error} = this.state;
+        const { email, password, type, error} = this.state;
 
         return (
             <div className="verification">
                 <h1>Request Account Verification</h1>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Username:
+                        Email:
                         <input
                             type="text"
-                            name="username"
-                            value={username}
+                            name="email"
+                            value={email}
                             onChange={this.handleInputChange}
-                            className='usernameBar'
+                            className='emailBar'
                         />
                     </label>
                     <br />
@@ -99,7 +111,7 @@ class Verification extends Component {
 
                         </select>
                     </label>
-                    <button type="submit" disabled={!(type && username && password)}>Submit Request</button>
+                    <button type="submit" disabled={!(type && email && password)}>Submit Request</button>
                     {error && <p className='error-message'>{error}</p>}
 
                 </form>

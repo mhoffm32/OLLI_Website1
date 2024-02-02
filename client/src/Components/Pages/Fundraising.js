@@ -8,7 +8,7 @@ class Fundraising extends Component {
         };
         return (
             <div className="fundraising">
-                <h1>Fundraising Page</h1>
+                <h1>Fundraisers We Support</h1>
                 <h3>Support O.L.L.I. by donating to our wonderful community programs!</h3>
                 <br></br>
                 <div className="container">

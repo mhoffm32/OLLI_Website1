@@ -88,26 +88,30 @@ router.route('/signup')
 		}
 	});
 
-router.route('/user/requestVerification')
+router.route('/request')
 	.post(async (req, res) =>{
 		console.log("Requesting verification")
 		const { email, password, type} = req.body;
 		if(!email || !password || !type){
+			console.log('all fields required')
 			return res.status(400).json({message: 'Username, password, and type are required'});
 		}
-
-		if(!inputSanitization(email) || !inputSanitization(password)){
+		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !inputSanitization(password)){
+			console.log('Invalid entries')
 			return res.status(400).json({message: 'Invalid entries for email/password'});
 		}
 		try{
 			const emailLower = email.toLowerCase.trim()
 			const user = await User.findOne({emailLower});
 			if(!user){
+				console.log('User not found')
 				return res.status(404).json({message: 'User not found'});
+				
 			}
 
 			const validPass = await bcrypt.compare(password, user.password);
 			if(!validPass){
+				console.log("invalid password")
 				return res.status(400).json({message: 'Invalid password'});
 			}
 
