@@ -48,16 +48,17 @@ class Verification extends Component {
                 })
             });
             
-            if (!response.ok) {
-                throw new Error('Failed to request verification');
-            }
+            
     
             const data = await response.json();
             const { status, message } = data;
     
             if (status === 'ok') {
                 alert('Verification request sent successfully');
-            } else if (message === 'User not found') {
+            } else if(message === 'Invalid entries for email/password') {
+                this.setState({error: 'Invalid format for entries'})
+            }
+            else if (message === 'User not found') {
                 this.setState({ error: 'User not found' });
             } else if (message === 'Invalid password') {
                 this.setState({ error: 'Invalid password' });
