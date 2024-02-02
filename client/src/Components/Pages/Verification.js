@@ -36,6 +36,7 @@ class Verification extends Component {
         }
     
         try {
+
             const response = await fetch('http://localhost:3002/api/request', {
                 method: 'POST',
                 headers: {
@@ -48,12 +49,14 @@ class Verification extends Component {
                 })
             });
             
-            
     
             const data = await response.json();
-            const { status, message } = data;
+            const { message } = data;
+            
+            console.log("data",data)
+            
     
-            if (status === 'ok') {
+            if (response.ok) {
                 alert('Verification request sent successfully');
             } else if(message === 'Invalid entries for email/password') {
                 this.setState({error: 'Invalid format for entries'})

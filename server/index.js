@@ -45,9 +45,7 @@ app.use(passport.initialize());
 /************ MONGODB **********************/
 const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/user');
-
 const Requests = require('./models/requests');
-
 const { ObjectId } = require('mongodb');
 const path = require('path');
 
@@ -91,6 +89,9 @@ router.route('/request')
 	.post(async (req, res) =>{
 		console.log("Requesting verification")
 		const { email, password, type} = req.body;
+
+		console.log("recieving: ", req.body)
+
 		if(!email || !password || !type){
 			console.log('all fields required')
 			return res.status(400).json({message: 'Username, password, and type are required'});
@@ -104,22 +105,31 @@ router.route('/request')
 			if(!user){
 				console.log('User not found')
 				return res.status(404).json({message: 'User not found'});
-				
 			}
 			const validPass = await bcrypt.compare(password, user.password);
 			if(!validPass){
 				console.log("invalid password")
 				return res.status(400).json({message: 'Invalid password'});
 			}
+			
+			const hashed = await bcrypt.hash(password, 10);	
 
-			const hashed = await bcrypt.hash(password, 10);
+			const request = {
+				email: email,
+				password: hashed,
+				type: type
+			}
 
-			await Requests.insertOne({email, password: hashed, type})
+			Requests.create(request).then((request) => {
+				console.log('Request created:', request);
+			}).catch((error) => {
+				console.error('Error creating request:', error);
+			});			
 
 			return res.status(200).json({message: "Verification request submitted"});
 
 		} catch (error){
-			console.log("Error in verification process");
+			console.log("Error in verification process:", error);
 			return res.status(500).json({message: 'Internal server error'});
 		}
 	
