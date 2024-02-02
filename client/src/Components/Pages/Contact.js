@@ -6,7 +6,7 @@ class Contact extends Component {
         return (
             <div className="contact">
                 <div>
-                    <h1 id= "contactTitle">Contact Page</h1>
+                    <h1 id= "contactTitle">Let's Get in Touch</h1>
 
                 <div class ="contactsMenu">
                     <div class = "contacts1">
