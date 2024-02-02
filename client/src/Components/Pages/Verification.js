@@ -4,7 +4,7 @@ class Verification extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             type: '',
             error: ''
@@ -22,11 +22,11 @@ class Verification extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
-        if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.state.username)){
+        if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.state.email)){
             this.setState({error: 'Please enter a valid email'});
             return;
         }
-        else if(this.state.username === undefined || this.state.username === ""){
+        else if(this.state.email === undefined || this.state.email === ""){
             this.setState({error: 'Please enter an email'});
             return;
         }
@@ -42,7 +42,7 @@ class Verification extends Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    email: this.state.username,
+                    email: this.state.email,
                     password: this.state.password,
                     type: this.state.type
                 })
@@ -70,20 +70,20 @@ class Verification extends Component {
     }
     
     render() {
-        const { username, password, type, error} = this.state;
+        const { email, password, type, error} = this.state;
 
         return (
             <div>
                 <h1>Request Account Verification</h1>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Username:
+                        Email:
                         <input
                             type="text"
-                            name="username"
-                            value={username}
+                            name="email"
+                            value={email}
                             onChange={this.handleInputChange}
-                            className='usernameBar'
+                            className='emailBar'
                         />
                     </label>
                     <br />
@@ -110,7 +110,7 @@ class Verification extends Component {
 
                         </select>
                     </label>
-                    <button type="submit" disabled={!(type && username && password)}>Submit Request</button>
+                    <button type="submit" disabled={!(type && email && password)}>Submit Request</button>
                     {error && <p className='error-message'>{error}</p>}
 
                 </form>
