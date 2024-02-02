@@ -7,7 +7,8 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            loginText: ''
+            loginText: '',
+  
         };
     }
     handleInputChange = (event) => {
@@ -17,6 +18,7 @@ class Login extends Component {
 
     handleSubmit = (event) => {
         this.state.loginText = ""
+        document.querySelector('.loginText').textContent = ''
         event.preventDefault();
         if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.state.email)){
             alert("Please enter a valid email");
@@ -60,26 +62,33 @@ class Login extends Component {
                   }))
                 }
               } else if(res.status == 400){
+                console.log("Invalid Credentials. Please try another password or log in using google.")
                 this.state.loginText = 'Please try another password or log in using google.'
+                document.querySelector('.loginText').textContent = 'Please try another password or log in using google.'
               }
                else if(res.status == 409){
                 
                 alert("Log In Unsuccesful. Account Disabled. Contact Admin")
-              } else if(res.status !== 200){
+              } else if (res.status == 404){
+                console.log("email does not exust")
+              }else if(res.status !== 200){
                 console.log(res.status)
                 alert("Log In Unsuccesful")
               }
               else {
+                this.props.changePage('Home')
                 console.log(data) 
-                localStorage.setItem('jwt', data.token);        
+                localStorage.setItem('jwt', data.token);      
+               
               }
             }))
         }
     }
 
     render() {
+        
         const { email, password } = this.state;
-
+      
         return (
             <div>
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
@@ -107,7 +116,8 @@ class Login extends Component {
                             placeholder="Password..."
                         />
                     <br />
-                    <button type="submit" className='loginBtn'>Login</button>
+                    <button type="submit" className='loginBtn' >Login</button>
+                    
                     <p className='loginText'>{this.state.loginText}</p>
                 </form>
             </div>

@@ -139,7 +139,7 @@ router.route('/login')
 			const token = jwt.sign(payload, process.env.SECRET_KEY); // Replace with your own secret
 			res.status(200).json({ message: 'Login successful', token });
 		} else {
-			res.status(400).json({ message: 'Login failed' });
+			res.status(404).json({ message: `Account under ${email} does not exist` });
 		}
 	});
 
@@ -425,10 +425,12 @@ async function getUserByEmail(mail){
 async function validatePassword(email, password){
 	console.log("Validating Password: " + email + " ; " + password)
 	let user = await getUserByEmail(email)
-	if(user.disabled == true){
-		return "disabled"
-	}
+	console.log("1",user)
+	
 	if(user){
+		if(user.disabled == true){
+			return "disabled"
+		}
 		let hashedPassword = user.password;
 		let result = await bcrypt.compare(password, hashedPassword);
 		if(result){
@@ -436,6 +438,8 @@ async function validatePassword(email, password){
 		} else {
 			return null;
 		}
+	}else{
+		return null;
 	}
 }
 
