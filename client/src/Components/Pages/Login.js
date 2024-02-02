@@ -95,7 +95,7 @@ class Login extends Component {
                 <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
                 <h1>Login Page</h1>
 
-                <div id="g-login-btn1"><GLogin/></div>
+                <div id="g-login-btn1"><GLogin changePage={this.props.changePage}/></div>
   
                 <form onSubmit={this.handleSubmit}>
                         <input

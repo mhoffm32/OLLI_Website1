@@ -2,11 +2,13 @@ import { useState } from "react";
 import {jwtDecode} from "jwt-decode";
 import { GoogleLogin } from '@react-oauth/google';
 import { googleLogout } from '@react-oauth/google';
+import Home from '../Pages/Home'
 
 const CLIENT_ID =
   "227573894857-410pmafu7279nappmuv7gfkuf2t32bt0.apps.googleusercontent.com";
   
-const GLogin = () => {
+const GLogin = ({ changePage }) => {
+
   const [user, setUser] = useState(null);
   
   const handleSuccess = (credentials) => {
@@ -33,7 +35,10 @@ const GLogin = () => {
       const u = await response.json();
       localStorage.setItem('jwt', u.token); 
       const usr = u.token
-      console.log(jwtDecode(usr)) 
+      setUser(usr)
+      console.log(jwtDecode(usr))
+  
+      changePage('Home') 
 
     } catch (error) {
       console.error('Error communicating with backend:', error.message);
@@ -54,15 +59,12 @@ const GLogin = () => {
 
   return (
     <div id="g-login-btn">
-      {user ? <button id='signout-button' style={{ display: 'block'}} onClick={()=> handleLogout()} >
-      <img className="logo" src="/images/google-logo.png" alt="Logo" />
-      Sign Out
-      </button > : <GoogleLogin
+      <GoogleLogin
         clientId={CLIENT_ID}
         onSuccess={handleSuccess}
         onError={handleFailure}
         prompt="select_account"
-      />}
+      />
     </div>
   );
 };
