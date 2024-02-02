@@ -902,6 +902,27 @@
   display: none;
 }
 
+/* VERIFICATION PAGE */
+.verification input, .verification select {
+  width: 20%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+}
+
+.verification button {
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+}
+
 /* UNGROUPED */
 
 .backArrowImg {
