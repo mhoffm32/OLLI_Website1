@@ -79,8 +79,9 @@ router.route('/signup')
 	.post(async (req, res) => {
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
-		if(await validateEmail(email) && inputSanitization(username) && inputSanitization(password)){
-			createUser(username, password, email, res)
+		const emailLower = email.toLowerCase().trim()
+		if(await validateEmail(emailLower) && inputSanitization(username) && inputSanitization(password)){
+			createUser(username, password, emailLower, res)
 			res.status(200).json({ message: 'Signup successful' });
 		} else {
 			res.status(400).json({ message: 'Signup failed' });
@@ -99,11 +100,11 @@ router.route('/user/requestVerification')
 			return res.status(400).json({message: 'Invalid entries for email/password'});
 		}
 		try{
-			const user = await User.findOne({email});
+			const emailLower = email.toLowerCase.trim()
+			const user = await User.findOne({emailLower});
 			if(!user){
 				return res.status(404).json({message: 'User not found'});
 			}
-
 
 			const validPass = await bcrypt.compare(password, user.password);
 			if(!validPass){
@@ -112,7 +113,7 @@ router.route('/user/requestVerification')
 
 			const hashed = await bcrypt.hash(password, 10);
 
-			await Requests.insertOne({email, password: hashed, type})
+			await Requests.insertOne({emailLower, password: hashed, type})
 
 			return res.status(200).json({message: "Verification request submitted"});
 
@@ -126,8 +127,8 @@ router.route('/user/requestVerification')
 router.route('/login')
 	.post(async (req, res) => {
 		const { email, password } = req.body;
-
-		const payload = await validatePassword(email, password);
+		const emailLower = email.toLowerCase().trim()
+		const payload = await validatePassword(emailLower, password);
 
 		if(!payload){
 			res.status(400).json({ message: 'Please try another password or log in using google.'})
@@ -149,7 +150,8 @@ router.route('/google-auth')
 
 		const { code } = req.body;
 		const decoded_info = jwtDecode.jwtDecode(code);
-		const email = decoded_info.email;
+		const email = decoded_info.email.toLowerCase().trim();
+		
 
 		const user = await getUserByEmail(email)
 
@@ -294,7 +296,8 @@ router.route('/user/changePassword')
 router.route('/user/resendVerification')
 	.post(async (req, res) => {
 		const {email} = req.body;
-		let user = await getUserByEmail(email)
+		const emailLower = email.toLowerCase().trim()
+		let user = await getUserByEmail(emailLower)
 		if(user){
 			const currentURL = "http://localhost:3002";
 
@@ -302,7 +305,7 @@ router.route('/user/resendVerification')
 
 			const mailOptions = {
 				from: process.env.AUTH_EMAIL,
-				to: email,
+				to: emailLower,
 				subject: 'Please verify your email',
 				html: `Hello,<br> Please Click on the link to verify your email.<br><a href=${currentURL}/api/user/verify/${user._id}/${uniqueString}>Click here to verify</a>`
 			};
@@ -384,6 +387,7 @@ async function createUser(username, password, email, res){
 	//const database = client.db('se3316-lab4-superheroLists');
 	//const collection = database.collection('Users');
 
+
 	console.log("Create the User: " + username + " ; " + password + " ; " + email)
 
 	let hashedPassword = await bcrypt.hash(password, 10);
@@ -408,9 +412,11 @@ async function createUser(username, password, email, res){
 async function getUserByEmail(mail){
 	//const database = client.db('se3316-lab4-superheroLists');
 	//const collection = database.collection('Users');
+
 	try {
 		console.log("Getting User: " + mail)
-		const userObj = await User.findOne({ email: mail });
+		const email = mail.toLowerCase().trim()
+		const userObj = await User.findOne({ email: email });
 		console.log("userobj",userObj)
 		if (userObj) {
 			return userObj;
@@ -424,8 +430,10 @@ async function getUserByEmail(mail){
 
 async function validatePassword(email, password){
 	console.log("Validating Password: " + email + " ; " + password)
-	let user = await getUserByEmail(email)
-	console.log("1",user)
+	
+	const mail = email.toLowerCase().trim()
+
+	let user = await getUserByEmail(mail)	
 	
 	if(user){
 		if(user.disabled == true){
@@ -512,14 +520,15 @@ function inputSanitization(input){
 
 async function validateEmail(email){
 	allAccounts = await User.find();
+	const mail = email.toLowerCase().trim()
 	for(let i=0; i<allAccounts.length; i++){
-		if(allAccounts[i].email == email){
+		if(allAccounts[i].email == mail){
 			console.log("Email already exists")
 			return false;
 		}
 	}
 
-	if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)){
+	if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mail)){
 		return true;
 	} else {
 		return false;

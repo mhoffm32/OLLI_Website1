@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GLogin from './GLogin';
 
 class Signup extends Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class Signup extends Component {
             <div>
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
                 <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
+                <div id="g-login-btn1"><GLogin changePage={this.props.changePage}/></div>
                 <h1>Signup Page</h1>
                 <form onSubmit={this.handleSubmit}>
                         <input
