@@ -5,7 +5,7 @@ class Events extends Component {
         /* Visual looks*/
         return (
             <div className="events">
-                <h1>Come Join our Events!</h1>
+                <h1>Come Join our Events</h1>
                 <div class = "eveMenu">
                     <div class="eveWhiteLogo">
                     <img src={`/images/cheer_logo_white.jpg`} alt='logo' id='eveWhite'/>
