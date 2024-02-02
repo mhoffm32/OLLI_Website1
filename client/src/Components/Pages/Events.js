@@ -15,19 +15,19 @@ class Events extends Component {
                     <div class = "selection">
                     <h2>Signup Here:</h2>
                         <h3>Please enter patient name:</h3>
-                        <input type="text" id="patientName"/>
+                        <input className="event-input" type="text" id="patientName"/>
                         <h3>Please enter patient ID</h3>
-                        <input type="text"id="patientID"/>
+                        <input className="event-input" type="text"id="patientID"/>
                         <h3>Date Selection:</h3>
                         <div class="eventDate">
 
-                            <select name="year" id="eveYear">
+                            <select className="event-input" name="year" id="eveYear">
                             <option value="2024">2024</option>
                             <option value="2025">2025</option>
                             <option value="2026">2026</option>
                             </select>
 
-                            <select name="month" id="eveMonth">
+                            <select className="event-input" name="month" id="eveMonth">
                             <option value="01">01</option>
                             <option value="02">02</option>
                             <option value="03">03</option>
@@ -42,7 +42,7 @@ class Events extends Component {
                             <option value="12">12</option>
                             </select>
 
-                            <select name="day" id="eveDay">
+                            <select className="event-input" name="day" id="eveDay">
                             <option value="01">01</option>
                             <option value="02">02</option>
                             <option value="03">03</option>
@@ -77,7 +77,7 @@ class Events extends Component {
                         </div>
                         
                         <h3>Event?</h3>
-                        <select name="events"id="eveChoice">
+                        <select  className="event-input" name="events"id="eveChoice">
                             <option value="event1">event1</option>
                             <option value="event2">event2</option>
                             <option value="event3">event3</option>
