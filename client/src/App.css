@@ -728,3 +728,219 @@
   50%  { transform: translateY(-30px); }
   100% { transform: translateY(0); }
 }
+
+.groupPic{
+  width: 50%;
+  height: auto;
+  position: relative; /* Add this line */
+}
+
+.aboutDescription{
+  text-align: left;
+  font-size: medium;
+  background-color: #6c7751;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  width: 55%;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.aboutDescription p{
+  font-size: 30px;
+}
+
+.CheerConnectionsButtonAbtPage {
+  margin-top: 20px;
+  background-color: #df7958;
+  color: black;
+  width: 50%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  margin-left: 20px;
+}
+
+.CheerConnectionsButtonAbtPage:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.cheerGroupSection {
+  background-color: #6c7751;
+  color: white;
+  width: 60%;
+  margin: auto;
+  margin-top: 150px;
+  border-radius: 20px;
+}
+
+.cheerGroupSection h1 {
+  float: left;
+  padding-left: 30px;
+}
+
+.cheerGroupSection p {
+  float: left;
+  width: 65%;
+  margin-left: 20px;
+  margin-bottom: 50px;
+}
+
+.expandCheerGroupSection {
+  background-color: #df7958;
+  color: black;
+  width: 50%;
+  margin: auto;
+  border: none;
+  border-radius: 20px;
+  font-size: medium;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.expandCheerGroupSection:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.cheerWorksSectionExpandable {
+  display: none;
+}
+
+.cheerWorksSection {
+  background-color: #6c7751;
+  color: white;
+  width: 60%;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 20px;
+}
+
+.cheerWorksSection h1 {
+  float: left;
+  padding-left: 30px;
+}
+
+.cheerWorksSection p {
+  float: left;
+  width: 65%;
+  margin-left: 20px;
+  margin-bottom: 50px;
+}
+
+.expandCheerWorksSection {
+  background-color: #df7958;
+  color: black;
+  width: 50%;
+  margin: auto;
+  border: none;
+  border-radius: 20px;
+  font-size: medium;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.expandCheerWorksSection:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.cheerConnectionsSectionExpandable {
+  display: none;
+}
+
+.cheerConnectionsSection {
+  background-color: #6c7751;
+  color: white;
+  width: 60%;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 20px;
+}
+
+.cheerConnectionsSection h1 {
+  float: left;
+  padding-left: 30px;
+}
+
+.cheerConnectionsSection p {
+  float: left;
+  width: 50%;
+  margin-left: 20px;
+  margin-bottom: 50px;
+}
+
+.expandCheerConnectionsSection {
+  background-color: #df7958;
+  color: black;
+  width: 50%;
+  margin: auto;
+  border: none;
+  border-radius: 20px;
+  font-size: medium;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.expandCheerConnectionsSection:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.cheerConnectionsSectionExpandable {
+  display: none;
+}
+
+.cheerLivingSectionExpandable {
+  display: none;
+}
+
+.cheerLivingSectionExpandable {
+  display: none;
+}
+
+.cheerLivingSection {
+  background-color: #6c7751;
+  color: white;
+  width: 60%;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 20px;
+}
+
+.cheerLivingSection h1 {
+  float: left;
+  padding-left: 30px;
+}
+
+.cheerLivingSection p {
+  float: left;
+  width: 65%;
+  margin-left: 20px;
+  margin-bottom: 50px;
+}
+
+.expandCheerLivingSection {
+  background-color: #df7958;
+  color: black;
+  width: 50%;
+  margin: auto;
+  border: none;
+  border-radius: 20px;
+  font-size: medium;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.expandCheerLivingSection:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.cheerLivingSectionExpandable {
+  display: none;
+}
+
