@@ -85,7 +85,7 @@ router.route('/signup')
 		}
 	});
 
-router.route('/user/requestVerification')
+router.route('/request')
 	.post(async (req, res) =>{
 		console.log("Requesting verification")
 		const { email, password, type} = req.body;

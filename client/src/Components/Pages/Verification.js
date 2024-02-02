@@ -22,42 +22,53 @@ class Verification extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
-
-        const {email, password, type } = this.state;
-
-
-        try{
-            const response = await fetch('/user/requestVerification', {
+        if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.state.username)){
+            this.setState({error: 'Please enter a valid email'});
+            return;
+        }
+        else if(this.state.username === undefined || this.state.username === ""){
+            this.setState({error: 'Please enter an email'});
+            return;
+        }
+        else if(this.state.password === undefined || this.state.password === ""){
+            this.setState({error: 'Please enter a password'});
+            return;
+        }
+    
+        try {
+            const response = await fetch('http://localhost:3002/api/request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({email, password, type})
+                body: JSON.stringify({
+                    email: this.state.username,
+                    password: this.state.password,
+                    type: this.state.type
+                })
             });
-           
-
+            
+            if (!response.ok) {
+                throw new Error('Failed to request verification');
+            }
+    
             const data = await response.json();
-            const {status, message} = data;
-
-            if(status === 'ok'){
+            const { status, message } = data;
+    
+            if (status === 'ok') {
                 alert('Verification request sent successfully');
+            } else if (message === 'User not found') {
+                this.setState({ error: 'User not found' });
+            } else if (message === 'Invalid password') {
+                this.setState({ error: 'Invalid password' });
+            } else {
+                this.setState({ error: 'Error encountered' });
             }
-            else if (message === 'User not found'){
-                this.setState({error: 'User not found'});
-            }
-            else if (message === 'Invalid password'){
-                this.setState({error: 'Invalid password'})
-            }
-            else{
-                this.setState({error: 'Error encountered'})
-            }
-        }
-        catch(error){
-            this.setState({error: error.message});
-           
+        } catch (error) {
+            this.setState({ error: error.message });
         }
     }
-
+    
     render() {
         const { username, password, type, error} = this.state;
 
