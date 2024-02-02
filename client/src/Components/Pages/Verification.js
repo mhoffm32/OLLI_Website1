@@ -49,12 +49,8 @@ class Verification extends Component {
                 })
             });
             
-    
             const data = await response.json();
             const { message } = data;
-            
-            console.log("data",data)
-            
     
             if (response.ok) {
                 alert('Verification request sent successfully');
