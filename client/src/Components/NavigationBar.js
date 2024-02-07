@@ -6,7 +6,8 @@ class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeOption: props.activeOption
+            activeOption: props.activeOption,
+            userType: null
         };
     }
 
@@ -20,6 +21,7 @@ class NavigationBar extends React.Component {
         const { activeOption } = this.props;
 
         const token = localStorage.getItem('jwt');
+        const decoded = token ? jwtDecode(token): null;
 
         return (
             <div className="topnav">
@@ -52,6 +54,11 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification
                 </a>
+                {decoded && (decoded.type === 'admin') && (
+                    <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={evt => this.props.changePage('AdminTools')}>
+                        Admin Tools
+                    </a>
+                )}
                 
                 {token ? (
                     <>
