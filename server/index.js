@@ -240,6 +240,12 @@ router.route('/user/getUsers')
   })
 
 
+router.route('/admin/getVerificationRequests')
+  .get(async (req, res) => {
+	const requests = await Requests.find();
+	res.json(requests);
+  })
+
 router.route('/user/verify/:userID/:uniqueString')
 	.get(async (req, res) => {
 		const uniqueString = req.params.uniqueString;
