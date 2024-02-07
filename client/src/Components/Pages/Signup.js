@@ -11,6 +11,15 @@ class Signup extends Component {
         };
     }
 
+    inputSanitization = (input) =>{
+        if(/^[\u00BF-\u1FFF\u2C00-\uD7FF\w-_]{0,20}$/.test(input)){
+            console.log("Input is valid: " + input)
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     handleInputChange = (event) => {
         const { name, value } = event.target;
         this.setState({ [name]: value });
@@ -30,6 +39,12 @@ class Signup extends Component {
         } else if(this.state.password === undefined || this.state.password === ""){
             alert("Please enter a password");
             return;
+        } else if (!this.inputSanitization(this.state.username)){
+            alert("Please enter a valid username");
+            return;
+        } else if (!this.inputSanitization(this.state.password)){
+            alert("Please enter a valid password");
+            return;
         } else {
             fetch('http://localhost:3002/api/signup', {
                 method: 'POST',
@@ -42,14 +57,15 @@ class Signup extends Component {
             .then(data => {
                 if(data === "User already exists"){
                     alert("User already exists");
+                } else if (data.message == 'Signup failed') {
+                    alert("Failed Signing Up")
                 } else {
-                    
+                    console.log('Change page to ValidateEmail');
+                    this.props.changePage('ValidateEmail');
                 }
             })
             .catch(err => console.log(err));
         }
-        console.log('Change page to ValidateEmail');
-        this.props.changePage('ValidateEmail');
     }
 
     render() {
