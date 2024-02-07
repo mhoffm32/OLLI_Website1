@@ -248,8 +248,13 @@ router.route('/user/getUsers')
 
 router.route('/admin/getVerificationRequests')
   .get(async (req, res) => {
-	const requests = await Requests.find();
+	try{
+	const requests = await Requests.find({}, 'email type');
 	res.json(requests);
+	}catch(error){
+		res.status(500).send('Internal error')
+	}
+
   })
 
 router.route('/user/verify/:userID/:uniqueString')
