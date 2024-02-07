@@ -73,6 +73,33 @@ transporter.verify((error, success) => {
 /********************************** ROUTES *************************************/
 /************* USER ROUTES ***************/
 
+router.route('/send-ivey-message')
+	.post(async(req,res) => {
+		console.log('Sending message to Ivey')
+		const {name, email, password, service, message, subject, phoneNumber} =  req.body;
+		const transport = nodemailer.createTransport({
+			service: service,
+			auth: {
+				user: email,
+				pass: password
+			}
+		})
+		try {
+			await transport.sendMail({
+			  from: email,
+			  to: 'olivinglearn@gmail.com',
+			  subject: subject,
+			  text: "Hello I'm " + name +'.\n\t' + message + '\nMy phone number is ' + phoneNumber
+			});
+			res.status(200).send('Email sent successfully');
+		  } catch (error) {
+			console.error('Error sending email:', error);
+			res.status(500).send('Error sending email');
+		  }
+
+	});
+
+
 router.route('/signup')
 	.post(async (req, res) => {
 		console.log("Signing Up")
