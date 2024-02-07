@@ -943,3 +943,61 @@
 input, button, select, option {
   font-family: 'Nunito', sans-serif;
 }
+
+.verification {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.verification h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.verification form {
+  display: flex;
+  flex-direction: column;
+}
+
+.verification label {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.verification input,
+.verification select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.verification button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.verification button:hover{
+  background-color: blue;
+}
+
+.verification button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-top: 10px;
+  text-align: center;
+}
+
