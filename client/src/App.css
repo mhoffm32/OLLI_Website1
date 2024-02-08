@@ -945,3 +945,56 @@
   display: none;
 }
 
+#return-btn {
+  position: fixed;
+  top: 120px;
+  left: 20px;
+}
+
+#download-img {
+  margin-left: 10px;
+  width: 25px;
+  vertical-align: middle;
+}
+
+a:hover {
+  cursor:pointer;
+}
+
+.letter-info{
+ text-align: left;
+}
+
+#newsletter-list{
+  align-items: left;
+  margin-top: 50px;
+  margin-left: -150px;
+
+}
+
+.letter-info {
+  text-align: left; /* Align text to the left within the paragraphs */
+}
+
+#upload-pdf {
+  text-align: left; /* Align content to the left side of the page */
+}
+
+.newsletter-item {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: -25px; /* Adjust this value to reduce the space */
+}
+
+.info-container {
+  flex: 1; /* Take up remaining space */
+}
+
+.button-container {
+  display: flex;
+}
+
+.open-btn{
+  margin-left: 10px;
+}
+
