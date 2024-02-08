@@ -116,7 +116,7 @@ class Login extends Component {
                             placeholder="Password..."
                         />
                     <br />
-                    <button type="submit" className='loginBtn' >Login</button>
+                    <button type="submit" className='loginBtn'>Login</button>
                     
                     <p className='loginText'>{this.state.loginText}</p>
                 </form>
