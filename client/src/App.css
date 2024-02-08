@@ -954,6 +954,7 @@ a:hover {
 
 .open-btn{
   margin-left: 10px;
+}
 
 /* VERIFICATION PAGE */
 .verification input, .verification select {
@@ -976,7 +977,7 @@ a:hover {
   border-radius: 20px; /* Rounded sides */
 }
 
-/* UNGROUPED */
+
 
 .backArrowImg {
   width: 60px;
@@ -1053,4 +1054,3 @@ input, button, select, option {
   margin-top: 10px;
   text-align: center;
 }
-
