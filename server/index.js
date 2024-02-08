@@ -47,6 +47,7 @@ const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/user');
 const Requests = require('./models/requests');
 const Newsletters = require('./models/newsletters');
+const AccountSetting = require('./models/accountSettings');
 const { ObjectId } = require('mongodb');
 const path = require('path');
 
@@ -494,6 +495,39 @@ router.route('/user/deleteNewsletter')
 });
 
 
+router.route('/user/settings/:id')
+    .get(async (req, res) => {
+		try {
+			const user_id = req.params.id;
+			const settings = await AccountSetting.find({ user_id: user_id });
+            res.json({ settings: settings[0] });
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+});
+
+
+router.route('/user/updateSettings')
+    .post(async (req, res) => {
+		try {
+			const { settings } = req.body;
+			console.log(settings)
+
+			const result = await AccountSetting.findOneAndUpdate({ user_id: settings.user_id }, 
+				settings, { new: true } );
+
+            //const user_prefs = await AccountSetting.findById(user_id);
+            
+            res.json({ message: "Successfully updated settings " });
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+});
+
+
+
 
 /****************************** FINISH INITIALIZATION **************************/
 
@@ -550,7 +584,6 @@ async function createUser(username, password, email, res){
 			sendVerificationEmail(newUser, res)
 	}
 }
-
 
 async function getUserByEmail(mail){
 	//const database = client.db('se3316-lab4-superheroLists');

@@ -5,8 +5,7 @@ const UploadLetter = ({ changePage , user}) => {
   const [newsletters, setNewsletters] = useState(null);
   const [letterStates, setletterStates] = useState(null);
   const [lettersLoaded, setLoaded] = useState(0);
-  const [letterData, setLetterData] = useState({});
-  
+
   const [uploadText, setText] = useState("");
   const [letterName, setName] = useState("");
 

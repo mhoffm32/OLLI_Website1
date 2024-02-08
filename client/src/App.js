@@ -13,6 +13,7 @@ import Verification from './Components/Pages/Verification';
 import ValidateEmail from "./Components/Pages/ValidateEmail"
 import AdminTools from './Components/Pages/AdminTools';
 import UploadLetter from './Components/Pages/UploadLetter';
+import UserSettings from './Components/Pages/UserSettings';
 
 class App extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class App extends React.Component {
         page = <Fundraising />;
         break;
       case 'News':
-        page = <News />;
+        page = <News/>;
         break;
       case 'Verification':
         page = <Verification />
@@ -56,6 +57,9 @@ class App extends React.Component {
 
       case 'AdminTools':
         page = <AdminTools changePage={this.changePage} />
+        break;
+      case 'UserSettings':
+          page = <UserSettings changePage={this.changePage} />
         break;
       case 'Login':
         page = <Login changePage={this.changePage}/>;
