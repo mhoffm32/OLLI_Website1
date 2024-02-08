@@ -103,8 +103,9 @@ router.route('/request')
 			return res.status(400).json({message: 'Invalid entries for email/password'});
 		}
 		try{
-			const emailLower = email.toLowerCase.trim()
-			const user = await User.findOne({emailLower});
+			const emailLower = email.toLowerCase().trim()
+			const user = await User.findOne({email: emailLower});
+			console.log(emailLower)
 			if(!user){
 				console.log('User not found')
 				return res.status(404).json({message: 'User not found'});
@@ -143,19 +144,23 @@ router.route('/login')
 	.post(async (req, res) => {
 		const { email, password } = req.body;
 		const emailLower = email.toLowerCase().trim()
-		const payload = await validatePassword(emailLower, password);
 
-		if(!payload){
-			res.status(400).json({ message: 'Please try another password or log in using google.'})
-		} else if (payload == "disabled"){
-			res.status(409).json({ message: 'This account has been disabled' });
-		} else if(!payload.verified){
-			res.status(410).json({ message: 'Email has not been verified' });
-		} else if(payload){
-			const token = jwt.sign(payload, process.env.SECRET_KEY); // Replace with your own secret
-			res.status(200).json({ message: 'Login successful', token });
-		} else {
-			res.status(404).json({ message: `Account under ${email} does not exist` });
+		if(inputSanitization(password) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailLower)){
+			console.log("Valid entries")
+			const payload = await validatePassword(emailLower, password);
+
+			if(!payload){
+				res.status(400).json({ message: 'Please try another password or log in using google.'})
+			} else if (payload == "disabled"){
+				res.status(409).json({ message: 'This account has been disabled' });
+			} else if(!payload.verified){
+				res.status(410).json({ message: 'Email has not been verified' });
+			} else if(payload){
+				const token = jwt.sign(payload, process.env.SECRET_KEY); // Replace with your own secret
+				res.status(200).json({ message: 'Login successful', token });
+			} else {
+				res.status(404).json({ message: `Account under ${email} does not exist` });
+			}
 		}
 	});
 
@@ -290,6 +295,7 @@ router.route('/user/verify/:userID/:uniqueString')
 
 router.route('/user/resendVerification')
 	.post(async (req, res) => {
+		console.log("Resending Verification Email")
 		const {email} = req.body;
 		const emailLower = email.toLowerCase().trim()
 		let user = await getUserByEmail(emailLower)
@@ -307,14 +313,19 @@ router.route('/user/resendVerification')
 
 			bcrypt.hash(uniqueString, 10)
 				.then(async (hashedUniqueString) => {
-					const newVerification = {
+					console.log("Hashing")
+					const newVerification = UserVerificationEmails({
 						userID: user._id.toString(),
 						uniqueString: hashedUniqueString,
 						createdAt: Date.now(),
 						expireAt: Date.now() + 21600000 // 6 hours
-					};
+					});
 
-					await verificationCollection.insertOne(newVerification)
+					console.log("Verification Created")
+
+					await newVerification.save();
+
+					console.log("Sending Email")
 
 					transporter.sendMail(mailOptions, (error, info) => {
 						if (error) {
@@ -333,6 +344,7 @@ router.route('/user/resendVerification')
 					});
 				})
 				.catch(() => {
+					console.log("Error in Hashing")
 					res.json({
 						status: 'failed',
 						message: 'Error occurred while hashing the password'
@@ -643,6 +655,7 @@ async function sendVerificationEmail({_id, email}, res){
 
 function inputSanitization(input){
 	if(/^[\u00BF-\u1FFF\u2C00-\uD7FF\w-_]{0,20}$/.test(input)){
+		console.log("Input is valid: " + input)
 		return true;
 	} else {
 		return false;

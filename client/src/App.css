@@ -1,3 +1,5 @@
+/* ENTIRE APP */ 
+
 .App {
   text-align: center;
   font-family: 'Nunito', sans-serif;
@@ -20,12 +22,12 @@
   background-color: #6c7751;
   overflow: hidden;
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-/* Style the links inside the navigation bar */
 .topnav a {
   float: left;
   color: #f2f2f2;
@@ -38,13 +40,11 @@
   border-color: #555554;
 }
 
-/* Change the color of links on hover */
 .topnav a:hover {
   background-color: #ddd;
   color: black;
 }
 
-/* Add a color to the active/current link */
 .topnav a.active {
   background-color: #dbd0b3;
   color: #6c7751;
@@ -62,7 +62,6 @@
   border-color: #555554;
 }
 
-/* Right-aligned section inside the top navigation */
 .topnav button {
   float: right;
   height: 40px;
@@ -105,6 +104,8 @@
   color: black;
 }
 
+/* HOME PAGE */
+
 .opening{
   text-align: left;
   font-size: large;
@@ -112,7 +113,6 @@
 }
 .title{
   text-align: center;
-  
 }
 
 .works{
@@ -167,7 +167,6 @@
   justify-content: flex-end; /* Align items to the right */
 }
 
-
 #signout-button {
   cursor: pointer;
   color: black;
@@ -196,7 +195,7 @@
   vertical-align: middle; 
 }
 
-
+/* LOGIN PAGE */ 
 
 .backBtn{
   position: absolute;
@@ -267,6 +266,8 @@
   background-color: #ddd;
   color: black;
 }
+
+/* HOME PAGE */ 
 
 .homePageDescription{
   text-align: left;
@@ -403,11 +404,17 @@
   color: #6c7751;
 }
 
+/* EVENTS PAGE */
+
 #subEve{
-  background-color: #6c7751;
-  color: white;
-  height: 50px;
-  width: 100px;
+  margin-top: 20px;
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  margin-left: 20px;
 }
 
 #eveChoice{
@@ -476,6 +483,17 @@
   height: 50px;
 }
 
+.event-input {
+  width: 20%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+}
+
 
 .line {
   height: 100px;
@@ -511,144 +529,105 @@
   font-size: 14px;
 }
 
-.contacts1{
-  display: block;
-  position: fixed;
-  left: 0;
-  width: 50%;
-  height: 83.5vh;
-  text-align: left;
-  border: 2px solid #6c7751;
+/* CONTACT PAGE */
+
+.contact {
+  width: 100%;
 }
 
+.contact .contact-left,
+.contact .contact-right {
+  width: 48%; /* Adjust as needed */
+  box-sizing: border-box;
+  text-align: left;
+  padding: 0 20px; /* Adjust padding as needed */
+  margin: 0;
+  display: inline-block;
+  vertical-align: top; /* Align elements at the top */
+}
 
+.contact .contact-right {
+  font-size: 27px;
+  border-left: solid #6c7751 2px;
+  padding-left: 50px;
+}
 
-#placeholderCon{
+.contact .contact-left {
+  margin-left: 20px;
+}
+
+.contact .contactMenu {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+}
+
+/* Media query for small screens */
+@media only screen and (max-width: 767px) {
+  .contact .contact-left,
+  .contact .contact-right {
+    width: 100%; /* Full width on smaller screens */
+    border-left: none; /* Remove the border on smaller screens */
+  }
+}
+
+.contact p {
+  font-size: 20px;
+}
+
+.contact .contact-right h3 {
+  font-style: italic;
   text-align: center;
 }
 
-.contacts2{
-  display: inline;
-  background-color: #e98361;
-  font-size: 27px;
-  position: absolute;
-  right: 0;
-  width: 50%;
-  height: 83.5vh;
-  border: 2px solid #6c7751;
+.contact .contact-left h3 {
+  font-style: italic;
 }
 
-.contactsMenu{
-  display: flex;
+.contact hr {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: black;
+  border: 1px solid #6c7751;
 }
 
-
-
-#logoFB1{
-  width: 55px;
-  height: 55px;
-  
+.contact .messageOptions1 input, .messageOptions2 input {
+  display: inline-block;
+  margin-bottom: 10px;
+  width: 38.6%;
+  height: 30px;
+  margin-right: 10px;
 }
 
-#logoFB2{
-  width: 50px;
-  height: 50px;
- 
-}
-
-#logoFB3{
-  width: 50px;
-  height: 50px;
-  
-}
-
-#placeholderCon{
-  width: 200px;
-  height: 200px;
-}
-
-
-.repEmail{
-  position: relative;
-  align-items: center;
-}
-
-
-
-
-#contactMessage{
-  width: 500px;
+.contact .messageOptions3 input{
+  display: block;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 80%;
   height: 150px;
 }
 
-#contactName{
-  width: 200px;
-  height: 30px;
-}
-
-#contactEmail{
-  width: 200px;
-  height: 30px;
-}
-
-#subject{
-  width: 200px;
-  height: 30px;
-}
-
-#contactPhone{
-  width: 200px;
-  height: 30px;
-}
-
-
-.messageOptions1 input{
-  display: inline;
-  margin-bottom: 10px;
-  
-}
-
-.messageOptions2 input{
-  display: inline;
-  margin-bottom: 10px;
-}
-
-.messageOptions3 input{
-  display: block;
-  margin-bottom: 10px;
-}
-
-
-#contactEmail{
-  margin-left: 20px;
-}
-
-#contactPhone{
-  margin-left: 20px;
-}
-
-#contactName{
+.contact .fbLinks{
   text-align: left;
+  display: inline;
 }
 
-#subject{
-  text-align: left;
-}
-
-#fbTitle{
-  position: relative;
-  bottom: 40px;
-}
-
-.fbLinks{
+.contact .link {
   display: flex;
 }
 
-.locationInfo{
+.contact .contact-right img {
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.contact .locationInfo{
   text-align: left;
 }
 
-#sendButton{
+.contact #sendButton{
   background-color: #6c7751;
   color:#fafafa;
   text-align: left;
@@ -656,41 +635,17 @@
   height: 50px;
 }
 
-#maps{
-  width:50px;
-  height: 50px;
-}
-
-.mapsLine{
+.contact .mapsLine{
   display: flex;
   align-items: center;
 }
 
-#clock{
-  width:50px;
-  height:50px
-}
-
-.hoursHeader{
+.contact .hours{
   display: flex;
   align-items: center;
-}
-
-.backArrowImg {
-  width: 60px;
-  height: 50px;
-}
-
-.backArrowImg {
-  width: 60px;
-  height: 50px;
 }
 
 /* FUNDRAISING PAGE */ 
-.fundraising, .contact, .events, .homePage, .verification, .news, .about {
-  margin-top: 50px;
-  text-align: center;
-}
 
 .fundraising p {
   font-style: bolder;
@@ -706,7 +661,7 @@
 
 }
 
-.container {
+.fundraising .container {
   display: flex;
   height: 100%;
   width: 100%;
@@ -714,13 +669,13 @@
   justify-content: center;
 }
 
-.child {
+.fundraising .child {
   align-self: flex-end;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   transform-origin: bottom;
 }
-.bounce:hover {
+.fundraising .bounce:hover {
   animation-name: bounce;
   animation-timing-function: ease;
 }
@@ -729,6 +684,8 @@
   50%  { transform: translateY(-30px); }
   100% { transform: translateY(0); }
 }
+
+/* ABOUT PAGE */ 
 
 .groupPic{
   width: 50%;
@@ -945,6 +902,7 @@
   display: none;
 }
 
+
 #return-btn {
   position: fixed;
   top: 120px;
@@ -996,5 +954,103 @@ a:hover {
 
 .open-btn{
   margin-left: 10px;
+
+/* VERIFICATION PAGE */
+.verification input, .verification select {
+  width: 20%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+}
+
+.verification button {
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+}
+
+/* UNGROUPED */
+
+.backArrowImg {
+  width: 60px;
+  height: 50px;
+}
+
+.backArrowImg {
+  width: 60px;
+  height: 50px;
+}
+
+.fundraising, .contact, .events, .homePage, .verification, .news, .about {
+  margin-top: 50px;
+  text-align: center;
+}
+
+input, button, select, option {
+  font-family: 'Nunito', sans-serif;
+}
+
+.verification {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.verification h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.verification form {
+  display: flex;
+  flex-direction: column;
+}
+
+.verification label {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.verification input,
+.verification select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.verification button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.verification button:hover{
+  background-color: blue;
+}
+
+.verification button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-top: 10px;
+  text-align: center;
 }
 
