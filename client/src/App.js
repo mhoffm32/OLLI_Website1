@@ -10,7 +10,9 @@ import Fundraising from './Components/Pages/Fundraising';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
 import Verification from './Components/Pages/Verification';
-import ValidateEmail from './Components/Pages/ValidateEmail';
+import ValidateEmail from "./Components/Pages/ValidateEmail"
+import AdminTools from './Components/Pages/AdminTools';
+import UploadLetter from './Components/Pages/UploadLetter';
 
 class App extends React.Component {
   constructor(props) {
@@ -51,11 +53,18 @@ class App extends React.Component {
       case 'Verification':
         page = <Verification />
         break;
+
+      case 'AdminTools':
+        page = <AdminTools changePage={this.changePage} />
+        break;
       case 'Login':
         page = <Login changePage={this.changePage}/>;
         break;
       case 'Sign Up':
         page = <Signup changePage={this.changePage}/>;
+        break;
+      case 'Contact':
+        page = <Contact />;
         break;
       case 'ValidateEmail':
         console.log('Changing page to ValidateEmail');
