@@ -46,7 +46,7 @@ class Signup extends Component {
             alert("Please enter a valid password");
             return;
         } else {
-            fetch('http://localhost:3002/api/signup', {
+            fetch('http://localhost:3002/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -55,8 +55,8 @@ class Signup extends Component {
             })
             .then(res => res.json())
             .then(data => {
-                if(data === "User already exists"){
-                    alert("User already exists");
+                if(data.message === "Email already exists"){
+                    alert("Email already exists");
                 } else if (data.message == 'Signup failed') {
                     alert("Failed Signing Up")
                 } else {

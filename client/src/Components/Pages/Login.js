@@ -30,7 +30,7 @@ class Login extends Component {
             alert("Please enter a password");
             return;
         } else {
-            fetch(`http://localhost:3002/api/login/`, {
+            fetch(`http://localhost:3002/login/`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ class Login extends Component {
                 let resend = window.confirm("Would you like to resend the verification email?")
                 console.log(resend)
                 if(resend){
-                  fetch(`http://localhost:3002/api/user/resendVerification/`, {
+                  fetch(`http://localhost:3002/user/resendVerification/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
