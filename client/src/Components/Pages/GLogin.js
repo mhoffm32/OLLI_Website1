@@ -12,6 +12,8 @@ const GLogin = ({ changePage }) => {
   const [user, setUser] = useState(null);
   
   const handleSuccess = (credentials) => {
+
+  
     console.log('Login Success: ', credentials);
 
     // Send the authorization code to the backend
@@ -22,7 +24,7 @@ const GLogin = ({ changePage }) => {
 
   const sendAuthorizationCode = async (code) => {
     try {
-      const response = await fetch('http://localhost:3002/api/google-auth', {
+      const response = await fetch('http://localhost:3002/google-auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
