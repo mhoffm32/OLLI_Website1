@@ -5,7 +5,8 @@ const User = require('../models/User'); // adjust the path as needed
 const InputChecker = require('../helperClasses/inputChecker'); // adjust the path as needed
 const jwt = require('jsonwebtoken');
 const UserInterface = require('../helperClasses/userInterface');
-const jwtDecode = require("jwt-decode")
+const jwtDecode = require("jwt-decode");
+const AccountSetting = require('../models/accountSettings');
 
 router.route('/login')
 	.post(async (req, res) => {
@@ -69,11 +70,9 @@ module.exports = router;
 /******************************** HELPER FUNCTIONS **************************************/
 
 	async function createGUser(username, password, email, res){
-		//const database = client.db('se3316-lab4-superheroLists');
-		//const collection = database.collection('Users')
 
 		console.log("Create the User: " + username + " ; " + password + " ; " + email)
-	
+
 		let hashedPassword = await bcrypt.hash(password, 10);
 	
 		let newUser = new User({
@@ -83,9 +82,16 @@ module.exports = router;
 			verified: true,
 			type: 'generalUser'
 		});
-	
-		await newUser.save();
 
+		const savedUser = await newUser.save();
+
+		let userSettings = new AccountSetting({
+			user_id: savedUser._id,
+			email_newsletter: true
+		});
+
+		await userSettings.save();
+		
 	}
 
     function generatePass(length) {
