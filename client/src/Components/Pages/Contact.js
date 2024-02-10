@@ -21,7 +21,7 @@ class Contact extends Component {
         sendMessage = async() => {
             const { name, email, password, service, message, subject, phoneNumber } = this.state;
             try {
-                const response = await fetch ('http://localhost:3002/api/send-ivey-message',{
+                const response = await fetch ('http://localhost:3000/api/send-ivey-message',{
                 method: 'POST',
                 body: JSON.stringify({
                     name,
