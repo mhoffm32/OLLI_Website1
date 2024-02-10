@@ -902,6 +902,60 @@
   display: none;
 }
 
+
+#return-btn {
+  position: fixed;
+  top: 120px;
+  left: 20px;
+}
+
+#download-img {
+  margin-left: 10px;
+  width: 25px;
+  vertical-align: middle;
+}
+
+a:hover {
+  cursor:pointer;
+}
+
+.letter-info{
+ text-align: left;
+}
+
+#newsletter-list{
+  align-items: left;
+  margin-top: 50px;
+  margin-left: -150px;
+
+}
+
+.letter-info {
+  text-align: left; /* Align text to the left within the paragraphs */
+}
+
+#upload-pdf {
+  text-align: left; /* Align content to the left side of the page */
+}
+
+.newsletter-item {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: -25px; /* Adjust this value to reduce the space */
+}
+
+.info-container {
+  flex: 1; /* Take up remaining space */
+}
+
+.button-container {
+  display: flex;
+}
+
+.open-btn{
+  margin-left: 10px;
+}
+
 /* VERIFICATION PAGE */
 .verification input, .verification select {
   width: 20%;
@@ -923,7 +977,7 @@
   border-radius: 20px; /* Rounded sides */
 }
 
-/* UNGROUPED */
+
 
 .backArrowImg {
   width: 60px;
@@ -942,4 +996,77 @@
 
 input, button, select, option {
   font-family: 'Nunito', sans-serif;
+}
+
+.verification {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.verification h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.verification form {
+  display: flex;
+  flex-direction: column;
+}
+
+.verification label {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.verification input,
+.verification select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.verification button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.verification button:hover{
+  background-color: blue;
+}
+
+.verification button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.letterheader{
+  text-align: left;
+}
+
+#settings-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(100%);
+}
+
+.switch input {
+  margin-left: 20px;
+  width: 20px;
+  height: 20px;
 }
