@@ -5,6 +5,8 @@ const User = require('../models/User'); // adjust the path as needed
 const InputChecker = require('../helperClasses/inputChecker'); // adjust the path as needed
 const jwt = require('jsonwebtoken');
 const UserInterface = require('../helperClasses/userInterface');
+const jwtDecode = require("jwt-decode");
+const AccountSetting = require('../models/accountSettings');
 
 router.route('/login')
 	.post(async (req, res) => {
@@ -37,7 +39,6 @@ router.route('/google-auth')
 		const decoded_info = jwtDecode.jwtDecode(code);
 		const email = decoded_info.email.toLowerCase().trim();
 		
-
 		const user = await UserInterface.getUserByEmail(email)
 
 		if(!user){
@@ -47,7 +48,7 @@ router.route('/google-auth')
 			createGUser(username, pass, email, res)
 
 		}else{
-			const payload = { id: user._id, username: user.username, verified: user.verified, admin: user.admin }
+			const payload = { id: user._id, username: user.username, verified: user.verified, type: user.type }
 			console.log(payload)
 			if(payload == "disabled"){
 				res.status(409).json({ message: 'This account has been disabled' });
@@ -69,11 +70,9 @@ module.exports = router;
 /******************************** HELPER FUNCTIONS **************************************/
 
 	async function createGUser(username, password, email, res){
-		//const database = client.db('se3316-lab4-superheroLists');
-		//const collection = database.collection('Users')
 
 		console.log("Create the User: " + username + " ; " + password + " ; " + email)
-	
+
 		let hashedPassword = await bcrypt.hash(password, 10);
 	
 		let newUser = new User({
@@ -83,9 +82,16 @@ module.exports = router;
 			verified: true,
 			type: 'generalUser'
 		});
-	
-		await newUser.save();
 
+		const savedUser = await newUser.save();
+
+		let userSettings = new AccountSetting({
+			user_id: savedUser._id,
+			email_newsletter: true
+		});
+
+		await userSettings.save();
+		
 	}
 
     function generatePass(length) {
@@ -113,7 +119,7 @@ module.exports = router;
             let hashedPassword = user.password;
             let result = await bcrypt.compare(password, hashedPassword);
             if(result){
-                return { id: user._id, username: user.username, verified: user.verified, admin: user.admin };
+                return { id: user._id, username: user.username, verified: user.verified, type: user.type };
             } else {
                 return null;
             }

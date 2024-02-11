@@ -48,17 +48,18 @@ class NavigationBar extends React.Component {
                     About
                 </a>
 
-                <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
-                    <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
-                    Verification
-                </a>
-
                 {token ? (
                     <>
-                    <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
+
+                <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
+                                    <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
+                                    Verification
+                </a>
+
+                    {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
                         <img src={activeOption === 'AdminTools' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                         Admin Tools
-                    </a>
+                    </a></> : <></>}
                         <b className="username">{jwtDecode(token).username} 
                         <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
                             <img id="download-img" src='/images/icons/settings.png'/>

@@ -7,6 +7,7 @@ const User = require('../models/User'); // adjust the path as needed
 const UserVerificationEmails = require('../models/UserVerificationEmails'); // adjust the path as needed
 const InputChecker = require('../helperClasses/inputChecker'); // adjust the path as needed
 const UserInterface = require('../helperClasses/userInterface');
+const AccountSetting = require('../models/accountSettings');
 
 /*************************** NODEMAILER ******************************/
 const nodemailer = require('nodemailer');
@@ -34,12 +35,21 @@ router.route('/signup')
 	.post(async (req, res) => {
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
-		const emailLower = email.toLowerCase().trim()
+		const emailLower = email.toLowerCase().trim();
 		if(await InputChecker.validateEmail(emailLower) && InputChecker.sanitizeInput(username) && InputChecker.sanitizeInput(password)){
-			if (await !UserInterface.getUserByEmail(emailLower)){
-				console
-				createUser(username, password, emailLower, res)
+			if (!await UserInterface.getUserByEmail(emailLower)){
+
+				let id = await createUser(username, password, emailLower, res)
+
+				const default_settings = AccountSetting({
+					user_id: id,
+					email_newsletter: 1
+				})
+
+				await default_settings.save();
+
 				res.status(200).json({ message: 'Signup successful' });
+
 			} else {
 				res.status(409).json({ message: 'Email already exists' });
 			}
@@ -189,6 +199,9 @@ async function createUser(username, password, email, res){
 		if(!result.verified)
 			sendVerificationEmail(newUser, res)
 	}
+
+	return result._id;
+
 }
 
 async function sendVerificationEmail({_id, email}, res){
