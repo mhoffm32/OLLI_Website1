@@ -28,7 +28,8 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 passport.use(new JwtStrategy({
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: process.env.SECRET_KEY // Replace with your own secret
+	secretOrKey: process.env.SECRET_KEY, // Replace with your own secret
+
 }, async (jwtPayload, done) => {
 	console.log("Authenticating")
 	try {
@@ -77,7 +78,6 @@ transporter.verify((error, success) => {
 
 /********************************** ROUTES *************************************/
 /************* USER ROUTES ***************/
-
 
 
 router.route('/signup')
@@ -413,7 +413,7 @@ router.route('/user/updateSettings')
 router.route('/user/send-ivey-message')
 	.post(async(req,res) => {
 		console.log('Sending message to Ivey')
-		const {name, email, message, subject, phoneNumber} =  req.body;
+		const {name, email, message, subject, phoneNumber} =  req.query;
 		const transport = nodemailer.createTransport({
 			service: "Gmail",
 			auth: {
