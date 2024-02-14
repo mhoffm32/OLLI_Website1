@@ -915,6 +915,7 @@
 .drop-in button:hover {
   background-color: #ddd;
   color: black;
+}
 
 #return-btn {
   position: fixed;
