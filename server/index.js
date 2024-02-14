@@ -410,21 +410,26 @@ router.route('/user/updateSettings')
         }
 });
 
-router.route('/user/send-ivey-message')
-	.post(async(req,res) => {
+
+app.post('/user/send-ivey-message', async(req,res) => {
+		try{
 		console.log('Sending message to Ivey')
-		const {name, email, message, subject, phoneNumber} =  req.query;
+		const {name, email, message, subject, phoneNumber} =  req.body;
+		console.log(name)
+		console.log(email)
+		console.log(message)
+		console.log(subject)
+		console.log(phoneNumber)
 		const transport = nodemailer.createTransport({
-			service: "Gmail",
+			service: 'Gmail',
 			auth: {
-				user: "CheerHomepage282@gmail.com",
-				pass: "3350Group25"
+				user: 'cheerhomepage282@gmail.com',
+				pass: 'ccurbpkzzbdzxlkq'
 			}
 		})
-		try {
 			await transport.sendMail({
-			  from: "CheerHomepage282@gmail.com",
-			  to: 'olivinglearn@gmail.com',
+			  from: "cheerhomepage282@gmail.com",
+			  to: 'olivinglearning@gmail.com',
 			  subject: subject,
 			  text: "Hello I'm " + name +'.\n\t' + message + '\nMy phone number is ' + phoneNumber + ' and my email for responding back to me is ' + email
 			});
