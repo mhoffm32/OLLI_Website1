@@ -161,7 +161,13 @@ router.route('/login')
 			} else if(!payload.verified){
 				res.status(410).json({ message: 'Email has not been verified' });
 			} else if(payload){
-				const token = jwt.sign(payload, process.env.SECRET_KEY); // Replace with your own secret
+				const tokenPayload = {
+					id: payload.id,
+					username: payload.username,
+					verified: payload.verified,
+					type: payload.type
+				};
+				const token = jwt.sign(tokenPayload, process.env.SECRET_KEY); // Replace with your own secret
 				res.status(200).json({ message: 'Login successful', token });
 			} else {
 				res.status(404).json({ message: `Account under ${email} does not exist` });

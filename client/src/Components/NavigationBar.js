@@ -6,7 +6,8 @@ class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeOption: props.activeOption
+            activeOption: props.activeOption,
+            userType: null
         };
     }
 
@@ -20,6 +21,7 @@ class NavigationBar extends React.Component {
         const { activeOption } = this.props;
 
         const token = localStorage.getItem('jwt');
+        const decoded = token ? jwtDecode(token): null;
 
         return (
             <div className="topnav">
