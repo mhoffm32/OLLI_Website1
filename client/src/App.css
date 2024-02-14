@@ -1116,3 +1116,18 @@ input, button, select, option {
 button:hover {
   cursor: pointer;
 }
+
+.eventCreatorBar {
+  width: 100%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  background-color: #6c7751;
+  color: white; /* Text color */
+  text-align: center; /* Centered text */ 
+}
+
+.eventCreatorBar::placeholder {
+  color: lightgrey;
+}

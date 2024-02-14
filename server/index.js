@@ -21,6 +21,7 @@ const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
 const userSettings = require('./routes/userSettings.js');
 const eventRegistration = require('./routes/eventRegistration.js');
+const eventRoutes = require('./routes/eventRoutes.js');
 
 /************ PASSPORT *******************/
 const passport = require('passport');
@@ -36,7 +37,7 @@ passport.use(new JwtStrategy({
 	console.log("Authenticating")
 	try {
 		console.log("JWT Payload: " + jwtPayload.id + " ; " + jwtPayload.username)
-		const user = await userCollection.findOne({_id : new ObjectId(jwtPayload.id)})  //User.findById(jwtPayload.id);
+		const user = await User.findOne({_id : new ObjectId(jwtPayload.id)})  //User.findById(jwtPayload.id);
 		return done(null, user);
 	} catch (err) {
 		return done(err, false);
@@ -260,6 +261,7 @@ app.use(userSignup);
 app.use(userLogin);
 app.use(userSettings);
 app.use(eventRegistration);
+app.use(eventRoutes);
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
