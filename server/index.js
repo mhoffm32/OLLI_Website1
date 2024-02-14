@@ -18,6 +18,7 @@ const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
 const userSettings = require('./routes/userSettings.js');
+const eventRegistration = require('./routes/eventRegistration.js');
 
 /************ PASSPORT *******************/
 const passport = require('passport');
@@ -49,7 +50,6 @@ app.use(passport.initialize());
 const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/User.js');
 const Requests = require('./models/requests');
-const eventRegistrations = require('./models/eventRegistrations');
 const Newsletters = require('./models/newsletters');
 const AccountSetting = require('./models/accountSettings');
 const { ObjectId } = require('mongodb');
@@ -78,19 +78,7 @@ transporter.verify((error, success) => {
 });
 
 /********************************** ROUTES *************************************/
-
-/******* EVENT REGISTRATION ROUTES *******/
-router.route('/dropins')
-	.post(async (req, res) => {
-		const { dropOff, pickUp } = req.body;
-		createRegistration("dropIn", "testemail", dropOff, pickUp);
-		console.log("Drop off: " + dropOff + " ; Pick up: " + pickUp);
-		res.json({ message: 'Drop in successful' });
-	});
-
 /************* USER ROUTES ***************/
-
-
 
 router.route('/signup')
 	.post(async (req, res) => {
@@ -310,13 +298,10 @@ router.route('/user/verify/:userID/:uniqueString')
 		}
 	})
 
-//=======
 app.use(userSignup);
 app.use(userLogin);
 app.use(userSettings);
-//>>>>>>> main
-
-
+app.use(eventRegistration);
 
 	router.route('/user/changePassword')
 	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
@@ -394,7 +379,6 @@ router.route('/user/viewNewsletters')
             return res.status(500).json({ error: "Internal Server Error" });
         }
 });
-
 
 router.route('/user/newsletterData/:id')
     .get(async (req, res) => {
@@ -509,9 +493,6 @@ router.route('/user/send-ivey-message')
 
 	});
 
-
-
-
 /****************************** FINISH INITIALIZATION **************************/
 
 app.get("/api", (req, res) => {
@@ -524,14 +505,3 @@ app.use("/api", router);
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
-async function createRegistration(type, email, pickup, dropoff) {
-	const newRegistration = new eventRegistrations({
-		event: type,
-		userEmail: email,
-		pickup: pickup,
-		dropoff: dropoff
-	});
-
-	await newRegistration.save();
-}
