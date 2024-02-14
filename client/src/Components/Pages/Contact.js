@@ -3,35 +3,24 @@ import React, { Component, useState } from 'react';
 class Contact extends Component {
         // DO NOT USE IVEYS EMAIL
         // const emailAddress = "ihartmancheer@gmail.com";
+
         
         //Email sending function
-        sendMessage = async() => {
-
-            const { name, email, message, subject, phoneNumber } = this.state;
+        sendMessage = async (event) => {
             try {
                 const response = await fetch ('http://localhost:3000/user/send-ivey-message',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type
                 },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    message,
-                    subject,
-                    phoneNumber
-                })
+                body: JSON.stringify({})
             });
             if(response.ok){
                 alert("Email sent Successfully")
             }else{
                 alert('Failed to send email')
             }
-                console.log(name)
-                console.log(email)
-                console.log(message)
-                console.log(subject)
-                console.log(phoneNumber)
+                
 
             }catch(error){
                 console.error('Error sending message:',error)
@@ -51,19 +40,19 @@ class Contact extends Component {
                                 <h3 id="instructions">Send an Email to Ivey Hartman:</h3>
                             </div>
 
-                            <form onSubmit={this.sendMessage}>
+                            <form onSubmit={sendMessage}>
                             <div class="messageOptions1">
-                                <input type='text' id='contactName' placeholder='Enter name here'></input>
-                                <input type='text' id='contactEmail'  placeholder='Enter email here'></input>
+                                <input type='text' id='contactName' value={formData.name} placeholder='Enter name here'></input>
+                                <input type='text' id='contactEmail' value={formData.email} placeholder='Enter email here'></input>
                             </div>
 
                             <div class="messageOptions2">
-                                <input type='text' id='subject' placeholder='Enter message subject here'></input>
-                                <input type='text' id='contactPhone'  placeholder='Enter Phone Number here'></input>
+                                <input type='text' id='subject'value={formData.subject} placeholder='Enter message subject here'></input>
+                                <input type='text' id='contactPhone' value={formData.phone} placeholder='Enter Phone Number here'></input>
                             </div>
 
                             <div class="messageOptions3">
-                                <input type='text' id='contactMessage'  placeholder='Enter message here'></input>
+                                <input type='text' id='contactMessage' value={formData.message} placeholder='Enter message here'></input>
                             </div>
 
                             <div class="submit button">
