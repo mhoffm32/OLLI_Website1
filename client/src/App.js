@@ -10,6 +10,7 @@ import Fundraising from './Components/Pages/Fundraising';
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
 import Verification from './Components/Pages/Verification';
+import DropIns from './Components/Pages/DropIns';
 import ValidateEmail from "./Components/Pages/ValidateEmail"
 import AdminTools from './Components/Pages/AdminTools';
 import UploadLetter from './Components/Pages/UploadLetter';
@@ -50,6 +51,9 @@ class App extends React.Component {
         break;
       case 'News':
         page = <News/>;
+        break;
+      case 'Drop Ins':
+        page = <DropIns />;
         break;
       case 'Verification':
         page = <Verification />

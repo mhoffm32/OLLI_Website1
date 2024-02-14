@@ -49,6 +49,7 @@ app.use(passport.initialize());
 const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/User.js');
 const Requests = require('./models/requests');
+const eventRegistrations = require('./models/eventRegistrations');
 const Newsletters = require('./models/newsletters');
 const AccountSetting = require('./models/accountSettings');
 const { ObjectId } = require('mongodb');
@@ -58,6 +59,7 @@ const path = require('path');
 
 const nodemailer = require('nodemailer');
 const {v4: uuidv4} = require('uuid');
+const { create } = require('./models/eventRegistrations');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -76,6 +78,16 @@ transporter.verify((error, success) => {
 });
 
 /********************************** ROUTES *************************************/
+
+/******* EVENT REGISTRATION ROUTES *******/
+router.route('/dropins')
+	.post(async (req, res) => {
+		const { dropOff, pickUp } = req.body;
+		createRegistration("dropIn", "testemail", dropOff, pickUp);
+		console.log("Drop off: " + dropOff + " ; Pick up: " + pickUp);
+		res.json({ message: 'Drop in successful' });
+	});
+
 /************* USER ROUTES ***************/
 
 
@@ -242,6 +254,62 @@ function generatePass(length) {
 	return password;
 }
 	
+router.route('/user/getUsers')
+  .get(async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+  })
+
+
+router.route('/user/verify/:userID/:uniqueString')
+	.get(async (req, res) => {
+		const uniqueString = req.params.uniqueString;
+		const userID = req.params.userID.trim();
+
+		let user = await UserVerificationEmails.findOne({userID: userID})
+	
+		if(user){
+			const {expireAt} = user;
+			const hashedUniqueString = user.uniqueString;
+			if(Date.now() > expireAt){
+				await UserVerificationEmails.deleteOne({userID})
+				await User.deleteOne({_id: userID})
+				res.json({
+					status: 'Please Sign Up Again',
+					message: 'Verification code has been expired. Please Sign Up Again'
+				})
+			} else {
+				bcrypt.compare(uniqueString, hashedUniqueString)
+					.then( async (result) => {
+						if(result){
+							let result = await User.updateOne({_id: new ObjectId(userID)}, {$set: {verified: true}})
+							console.log(result)
+							await UserVerificationEmails.deleteOne({userID})
+
+							res.sendFile(path.join(__dirname, './UserValidated.html'))
+
+							/*res.json({
+								status: 'success',
+								message: 'Email has been verified'
+							})*/
+						} else {
+							res.json({
+								status: 'error',
+								message: 'Verification code is invalid'
+							})
+						}
+					})
+					.catch((error) => {
+						console.log("Error in compare" + error);
+						res.json({
+							status: 'error',
+							message: 'Something went wrong while comparing the unique string'
+						})
+					})
+			}
+		}
+	})
+
 //=======
 app.use(userSignup);
 app.use(userLogin);
@@ -384,7 +452,6 @@ router.route('/user/deleteNewsletter')
         }
 });
 
-
 router.route('/user/settings/:id')
     .get(async (req, res) => {
 		try {
@@ -458,3 +525,13 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
+async function createRegistration(type, email, pickup, dropoff) {
+	const newRegistration = new eventRegistrations({
+		event: type,
+		userEmail: email,
+		pickup: pickup,
+		dropoff: dropoff
+	});
+
+	await newRegistration.save();
+}
