@@ -6,7 +6,8 @@ class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeOption: props.activeOption
+            activeOption: props.activeOption,
+            userType: null
         };
     }
 
@@ -20,6 +21,7 @@ class NavigationBar extends React.Component {
         const { activeOption } = this.props;
 
         const token = localStorage.getItem('jwt');
+        const decoded = token ? jwtDecode(token): null;
 
         return (
             <div className="topnav">
@@ -47,7 +49,13 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
+                <a className={activeOption === 'Drop Ins' ? 'active' : ''} onClick={() => this.props.changePage('Drop Ins')}>
+                    <img src={activeOption === 'Drop Ins' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Drop Ins'/>
+                    Drop Ins
+                </a>
 
+            
+                
                 {token ? (
                     <>
 
@@ -57,7 +65,7 @@ class NavigationBar extends React.Component {
                 </a>
 
                     {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
-                        <img src={activeOption === 'AdminTools' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
+                        <img src={activeOption === 'AdminTools' ? "/images/icons/tools-green.png" : '/images/icons/tools.png'} className="nav-icon" alt='Verification'/>
                         Admin Tools
                     </a></> : <></>}
                         <b className="username">{jwtDecode(token).username} 

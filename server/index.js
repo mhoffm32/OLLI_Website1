@@ -20,6 +20,7 @@ const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
 const userSettings = require('./routes/userSettings.js');
+const eventRegistration = require('./routes/eventRegistration.js');
 
 /************ PASSPORT *******************/
 const passport = require('passport');
@@ -60,6 +61,7 @@ const path = require('path');
 
 const nodemailer = require('nodemailer');
 const {v4: uuidv4} = require('uuid');
+const { create } = require('./models/eventRegistrations');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -132,7 +134,6 @@ router.route('/request')
 	
 	});
 
-
 router.route('/google-auth')
 	.post(async (req, res) => {
 
@@ -199,13 +200,66 @@ function generatePass(length) {
 	return password;
 }
 	
-//=======
+router.route('/user/getUsers')
+  .get(async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+  })
+
+
+router.route('/user/verify/:userID/:uniqueString')
+	.get(async (req, res) => {
+		const uniqueString = req.params.uniqueString;
+		const userID = req.params.userID.trim();
+
+		let user = await UserVerificationEmails.findOne({userID: userID})
+	
+		if(user){
+			const {expireAt} = user;
+			const hashedUniqueString = user.uniqueString;
+			if(Date.now() > expireAt){
+				await UserVerificationEmails.deleteOne({userID})
+				await User.deleteOne({_id: userID})
+				res.json({
+					status: 'Please Sign Up Again',
+					message: 'Verification code has been expired. Please Sign Up Again'
+				})
+			} else {
+				bcrypt.compare(uniqueString, hashedUniqueString)
+					.then( async (result) => {
+						if(result){
+							let result = await User.updateOne({_id: new ObjectId(userID)}, {$set: {verified: true}})
+							console.log(result)
+							await UserVerificationEmails.deleteOne({userID})
+
+							res.sendFile(path.join(__dirname, './UserValidated.html'))
+
+							/*res.json({
+								status: 'success',
+								message: 'Email has been verified'
+							})*/
+						} else {
+							res.json({
+								status: 'error',
+								message: 'Verification code is invalid'
+							})
+						}
+					})
+					.catch((error) => {
+						console.log("Error in compare" + error);
+						res.json({
+							status: 'error',
+							message: 'Something went wrong while comparing the unique string'
+						})
+					})
+			}
+		}
+	})
+
 app.use(userSignup);
 app.use(userLogin);
 app.use(userSettings);
-//>>>>>>> main
-
-
+app.use(eventRegistration);
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -260,7 +314,6 @@ router.route('/user/viewNewsletters')
             return res.status(500).json({ error: "Internal Server Error" });
         }
 });
-
 
 router.route('/user/newsletterData/:id')
     .get(async (req, res) => {
@@ -317,7 +370,6 @@ router.route('/user/deleteNewsletter')
             return res.status(500).json({ error: "Internal Server Error" });
         }
 });
-
 
 router.route('/user/settings/:id')
     .get(async (req, res) => {
@@ -376,9 +428,6 @@ router.route('/user/send-ivey-message')
 
 	});
 
-
-
-
 /****************************** FINISH INITIALIZATION **************************/
 
 app.get("/api", (req, res) => {
@@ -391,4 +440,3 @@ app.use("/api", router);
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
