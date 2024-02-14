@@ -58,18 +58,11 @@ router.route('/request')
 	});
 
 router.route('/user/changePassword')
-	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
-		console.log("Changing Password: " + req.user.username)
-		let user = await getUser(req.user.username)
-		let {password} = req.body;
+	.post(async (req, res) => {
+		console.log("Changing Password: " + req.user.email)
+		let user = await User.getUserByEmail(req.user.email)
 		if(user){
-			let hashedPassword = await bcrypt.hash(password, 10);
-			let result = await userCollection.updateOne({username: req.user.username}, {$set: {password: hashedPassword}})
-			console.log(result)
-			res.json({
-				status: 'success',
-				message: 'Password has been changed'
-			})
+			
 		} else {
 			res.json({
 				status: 'error',
@@ -81,3 +74,22 @@ router.route('/user/changePassword')
 module.exports = router;
 
 /********************************************** HELPER FUNCTIONS *******************************************/
+
+async function changePassword(email, password){
+	console.log("Changing Password: " + email)
+	let user = await User.getUserByEmail(email)
+	if(user){
+		let hashedPassword = await bcrypt.hash(password, 10);
+		let result = await userCollection.updateOne({username: email}, {$set: {password: hashedPassword}})
+		console.log(result)
+		return {
+			status: 'success',
+			message: 'Password has been changed'
+		}
+	} else {
+		return {
+			status: 'error',
+			message: 'Email is invalid'
+		}
+	}
+}

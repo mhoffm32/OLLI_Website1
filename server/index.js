@@ -244,7 +244,7 @@ app.use(userSettings);
 
 
 
-	router.route('/user/changePassword')
+router.route('/user/changePassword')
 	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
 		console.log("Changing Password: " + req.user.username)
 		let user = await getUser(req.user.username)

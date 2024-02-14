@@ -14,6 +14,7 @@ import ValidateEmail from "./Components/Pages/ValidateEmail"
 import AdminTools from './Components/Pages/AdminTools';
 import UploadLetter from './Components/Pages/UploadLetter';
 import UserSettings from './Components/Pages/UserSettings';
+import ForgotPassword from './Components/Pages/ForgotPassword';
 
 class App extends React.Component {
   constructor(props) {
@@ -74,6 +75,9 @@ class App extends React.Component {
         console.log('Changing page to ValidateEmail');
         page = <ValidateEmail changePage={this.changePage}/>;
         break;
+      case 'ForgotPassword':
+        page = <ForgotPassword changePage={this.changePage}/>;
+        break;
       default:
         page = <Home changePage={this.changePage}/>;
   }
@@ -81,7 +85,7 @@ class App extends React.Component {
     return (
       <div className="App">
       <header className="App-header">
-        {this.state.activeOption !== 'Login' && this.state.activeOption !== 'Sign Up' && this.state.activeOption !== 'ValidateEmail' &&
+        {this.state.activeOption !== 'Login' && this.state.activeOption !== 'Sign Up' && this.state.activeOption !== 'ValidateEmail' && this.state.activeOption !== 'ForgotPassword' &&
           <NavigationBar activeOption={this.state.activeOption} changePage={this.changePage} />
         }
         {page}

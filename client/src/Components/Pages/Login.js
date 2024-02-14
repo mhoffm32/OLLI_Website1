@@ -120,6 +120,7 @@ class Login extends Component {
                     
                     <p className='loginText'>{this.state.loginText}</p>
                 </form>
+                <button id="forgotPassword" onClick={() => this.props.changePage('ForgotPassword')}>Forgot Password?</button>
             </div>
         );
     }
