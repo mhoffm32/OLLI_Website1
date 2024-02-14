@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 3002;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json())
 
 const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
