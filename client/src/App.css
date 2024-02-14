@@ -21,7 +21,7 @@
 .topnav {
   background-color: #6c7751;
   overflow: hidden;
-  position: fixed;
+  /*position: fixed;*/
   z-index: 1;
   top: 0;
   left: 0;
@@ -278,7 +278,7 @@
   border-radius: 20px;
   width: 90%;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 
 .homePageDescription a{
@@ -773,7 +773,7 @@
   color: white;
   width: 60%;
   margin: auto;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   border-radius: 20px;
 }
 
@@ -815,7 +815,7 @@
   color: white;
   width: 60%;
   margin: auto;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   border-radius: 20px;
 }
 
@@ -865,7 +865,7 @@
   color: white;
   width: 60%;
   margin: auto;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   border-radius: 20px;
 }
 
@@ -925,9 +925,8 @@ a:hover {
 
 #newsletter-list{
   align-items: left;
-  margin-top: 50px;
-  margin-left: -150px;
-
+  margin-left: 30px;
+  /*margin-top: 50px;*/
 }
 
 .letter-info {
@@ -939,18 +938,12 @@ a:hover {
 }
 
 .newsletter-item {
+  width: 100%;
   display: flex;
   align-items: center; /* Align items vertically */
   margin-bottom: -25px; /* Adjust this value to reduce the space */
 }
 
-.info-container {
-  flex: 1; /* Take up remaining space */
-}
-
-.button-container {
-  display: flex;
-}
 
 .open-btn{
   margin-left: 10px;
@@ -990,8 +983,10 @@ a:hover {
 }
 
 .fundraising, .contact, .events, .homePage, .verification, .news, .about {
-  margin-top: 50px;
+  /*margin-top: 50px;*/
+  margin-bottom: 50px;
   text-align: center;
+  
 }
 
 input, button, select, option {
@@ -1000,7 +995,7 @@ input, button, select, option {
 
 .verification {
   max-width: 400px;
-  margin: 50px auto;
+  /*margin: 50px auto;*/
   padding: 20px;
   border-radius: 5px;
 }
@@ -1055,8 +1050,11 @@ input, button, select, option {
   text-align: center;
 }
 
-.letterheader{
+p.letterheader{
+  padding:0px;
+  margin-bottom: 15px;
   text-align: left;
+  margin-left: 30px;
 }
 
 #settings-icon {
@@ -1069,4 +1067,88 @@ input, button, select, option {
   margin-left: 20px;
   width: 20px;
   height: 20px;
+}
+
+#settings-icon{
+  padding: 0px;
+  margin-right: 20px;
+}
+
+#account-settings{
+  width: 100%;
+}
+
+#email-prefs{
+  text-align: left;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+ 
+}
+
+#email-prefs label.switch {
+  padding-right: 10px; /* Adjust padding for the switch label */
+
+}
+
+#email-prefs button {
+  padding: 5px 10px; /* Adjust padding for the button */
+}
+
+.news{
+  width: 100%;
+}
+
+.letterheader{
+  font-weight: bolder;
+}
+
+#admin-options, #admin-page, #upload-pdf{
+  width: 100%;
+}
+
+#upload-nl{
+  font-weight: bolder;
+  font-size: 25px;
+  margin-left: 30px;
+
+}
+
+#stuff-nl{
+  text-align: center;
+}
+
+#button-container{
+  text-align: right;
+}
+
+#newsletter-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+}
+
+.newsletter-item {
+  position: relative;
+  width: 100%; /* Ensures the item occupies the full width */
+  display: flex;
+  justify-content: flex-start; /* Aligns items (info-container and button-container) to the start of the container */
+  margin-bottom: -15px;
+}
+
+.info-container {
+  display: flex;
+  align-items: center; /* Aligns items vertically within the info container */
+}
+
+.button-container {
+  position:absolute;
+  right: 0;
+  margin-right: 200px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.button-container button {
+  margin-right: 10px; /* Adjust as needed */
 }

@@ -65,6 +65,10 @@ const UploadLetter = ({ changePage , user}) => {
         if (response.ok) {
           const data = await response.json();
           let newsletters =  data.newsletters;
+
+          for (let n of newsletters){
+            n.date = n.date.split('T')[0]
+          }
   
           if(!lettersLoaded){
             let dStates = {}
@@ -190,14 +194,16 @@ const UploadLetter = ({ changePage , user}) => {
       document.body.style.cursor = 'auto';
     }
 
-     
+
   return (
     <div id="upload-pdf">
-       <h1> Upload Newsletter </h1>
+       <p id="upload-nl"> Upload Newsletter </p>
+
+       <div id="stuff-nl">
        <input type="file" onChange={handleFileChange}/>
         Newsletter Title: <input type="text" onChange={(e)=> setName(e.target.value)}></input>
        <button onClick={handleUpload}>Upload</button>
-
+       </div>
        <p>{uploadText}</p>
        <div id='newsletter-list'>
                 {newsletters !== null ? newsletters.map((newsletter, index) => (

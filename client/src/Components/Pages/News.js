@@ -10,12 +10,15 @@ const News = () => {
   
     const getNewsletters = async () => {
         try {
-         
           const response = await fetch('http://localhost:3002/api/user/viewNewsletters');
           if (response.ok) {
             const data = await response.json();
             let newsletters =  data.newsletters;
-    
+            
+            for (let n of newsletters){
+              n.date = n.date.split('T')[0]
+            }
+            console.log(newsletters)
             setNewsletters(newsletters)
   
             } else {
