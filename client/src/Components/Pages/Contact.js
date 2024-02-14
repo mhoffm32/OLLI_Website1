@@ -17,6 +17,8 @@ class Contact extends Component {
         }
 
         handleChange = (e) => {
+            console.log("Handling Change.. ");
+            console.log("Event: ", e.target)
             this.setState({ [e.target.name]: e.target.value });
         };
         
@@ -26,8 +28,8 @@ class Contact extends Component {
             const { name, email, message, subject, phoneNumber } = this.state;
             try {
                 const response = await axios.post('http://localhost:3000/user/send-ivey-message', {name, email, message, subject, phoneNumber});
-                console.log(response.data)
-            if(response.ok){
+                console.log(response)
+            if(response.data === 'Email sent successfully'){
                 alert("Email sent Successfully")
             }else{
                 alert('Failed to send email')
@@ -52,21 +54,21 @@ class Contact extends Component {
 
                             <form onSubmit={this.sendMessage}>
                             <div class="messageOptions1">
-                                <input type='text' id='contactName' value={this.state.name} onChange={this.handleChange} placeholder='Enter name here'></input>
-                                <input type='text' id='contactEmail'  value={this.state.email} onChange={this.handleChange} placeholder='Enter email here'></input>
+                                <input type='text' id='contactName' name='name' value={this.state.name} onChange={(e) => this.handleChange(e)} placeholder='Enter name here'></input>
+                                <input type='text' id='contactEmail' name='email' value={this.state.email} onChange={this.handleChange} placeholder='Enter email here'></input>
                             </div>
 
                             <div class="messageOptions2">
-                                <input type='text' id='subject' value={this.state.subject} onChange={this.handleChange} placeholder='Enter message subject here'></input>
-                                <input type='text' id='contactPhone' value={this.state.phoneNumber} onChange={this.handleChange} placeholder='Enter Phone Number here'></input>
+                                <input type='text' id='subject' name='subject' value={this.state.subject} onChange={this.handleChange} placeholder='Enter message subject here'></input>
+                                <input type='text' id='contactPhone' name='phoneNumber' value={this.state.phoneNumber} onChange={this.handleChange} placeholder='Enter Phone Number here'></input>
                             </div>
 
                             <div class="messageOptions3">
-                                <input type='text' id='contactMessage'  value={this.state.message} onChange={this.handleChange} placeholder='Enter message here'></input>
+                                <input type='text' id='contactMessage' name='message' value={this.state.message} onChange={this.handleChange} placeholder='Enter message here'></input>
                             </div>
 
                             <div class="submit button">
-                                <button type='submit' id='sendButton' onClick={this.sendMessage}>Send Email</button>
+                                <button type='submit' id='sendButton'>Send Email</button>
                             </div>
                             </form>
                             
