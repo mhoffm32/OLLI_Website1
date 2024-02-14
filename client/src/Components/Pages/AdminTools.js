@@ -25,6 +25,9 @@ const AdminTools = ({ changePage , user}) => {
         <button id='admin-menu-btn' onClick={()=>setPage("manageSchedule")}>
            Manage Schedule
         </button>
+        <button id='admin-menu-btn' onClick={()=>setPage("manageUser")}>
+           Manage Users
+        </button>
         </> : <>
         <button id='return-btn' onClick={()=> setPage("adminHome")}>
             Return
