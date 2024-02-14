@@ -1055,6 +1055,35 @@ a:hover {
   cursor: not-allowed;
 }
 
+#admin-menu-btn{
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px;
+  vertical-align: auto;
+  margin: 5px;
+}
+
+#return-btn{
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px;
+  vertical-align: auto;
+  margin: 5px;
+}
+#return-btn:hover{
+  background-color: #ddd;
+}
+
+#admin-menu-btn:hover{
+  background-color: #ddd;
+}
+
 .error-message {
   color: #ff0000;
   margin-top: 10px;
@@ -1101,3 +1130,20 @@ input, button, select, option {
 button:hover {
   cursor: pointer;
 }
+
+
+#fullcalendar{
+  width: 1000px;
+  
+}
+
+#admin-title{
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 5px;
+
+}
+
+
+

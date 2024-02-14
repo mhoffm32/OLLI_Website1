@@ -4,11 +4,12 @@ const router = express.Router();
 const eventRegistrations = require('../models/eventRegistrations');
 
 router.route('/getRegistrations')
-	.get(async (req, res) =>{
-		const registrations = await eventRegistrations.find({}, {pickup: 1, dropoff: 1, _id: 0});
-		res.json(registrations);
+  .get(async (req, res) => {
+	const bookings = await eventRegistrations.find({}, {event: 1, pickup: 1, dropoff: 1, _id: 0});
+	res.json(bookings);
+    
+  });
 
-	});
 
 router.route('/dropins')
 	.post(async (req, res) => {

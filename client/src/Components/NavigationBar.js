@@ -50,7 +50,7 @@ class NavigationBar extends React.Component {
                     About
                 </a>
                 <a className={activeOption === 'Drop Ins' ? 'active' : ''} onClick={() => this.props.changePage('Drop Ins')}>
-                    <img src={activeOption === 'Drop Ins' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Drop Ins'/>
+                    <img src={activeOption === 'Drop Ins' ? "/images/icons/dropoff-green.png" : '/images/icons/dropoff.png'} className="nav-icon" alt='Drop Ins'/>
                     Drop Ins
                 </a>
 
