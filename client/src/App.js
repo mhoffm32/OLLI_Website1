@@ -11,6 +11,7 @@ import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
 import Verification from './Components/Pages/Verification';
 import ValidateEmail from './Components/Pages/ValidateEmail';
+import DropIns from './Components/Pages/DropIns';
 
 class App extends React.Component {
   constructor(props) {
@@ -47,6 +48,9 @@ class App extends React.Component {
         break;
       case 'News':
         page = <News />;
+        break;
+      case 'Drop Ins':
+        page = <DropIns />;
         break;
       case 'Verification':
         page = <Verification />
