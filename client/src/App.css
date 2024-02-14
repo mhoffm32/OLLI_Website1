@@ -902,6 +902,20 @@
   display: none;
 }
 
+/* DROP-IN PAGE */
+.drop-in button {
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+}
+
+.drop-in button:hover {
+  background-color: #ddd;
+  color: black;
+}
 
 #return-btn {
   position: fixed;
@@ -989,13 +1003,17 @@ a:hover {
   height: 50px;
 }
 
-.fundraising, .contact, .events, .homePage, .verification, .news, .about {
+.fundraising, .contact, .events, .homePage, .verification, .news, .about, .drop-in {
   margin-top: 50px;
   text-align: center;
 }
 
 input, button, select, option {
   font-family: 'Nunito', sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .verification {
