@@ -18,7 +18,7 @@ class ForgotPassword extends Component {
         alert("Please enter a valid email");
         return;
     } else {
-        fetch(`http://localhost:3002/user/forgotPassword`, {
+        fetch(`http://localhost:3002/user/changePassword`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ class ForgotPassword extends Component {
             type="text"
             name="email"
             value={email}
-            onChange={this.handleInputChange}
+            onChange={this.handleChange}
             className='usernameBar'
             placeholder="Email..."
         />

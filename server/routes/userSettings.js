@@ -4,6 +4,28 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User'); // adjust the path as needed
 const passport = require('passport');
 const InputChecker = require('../helperClasses/inputChecker'); // adjust the path as needed
+const PasswordChangeRequest = require('../models/passwordChangeRequest');
+const UserInterface = require('../helperClasses/userInterface');
+const { ObjectId } = require('mongodb');
+
+const nodemailer = require('nodemailer');
+const {v4: uuidv4} = require('uuid');
+
+let transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: process.env.AUTH_EMAIL,
+		pass: process.env.AUTH_PASS
+	}
+});
+
+transporter.verify((error, success) => {
+	if(error){
+		console.log(error);
+	} else {
+		console.log("Server is ready to take messages");
+	}
+});
 
 router.route('/request')
 	.post(async (req, res) =>{
@@ -59,10 +81,59 @@ router.route('/request')
 
 router.route('/user/changePassword')
 	.post(async (req, res) => {
-		console.log("Changing Password: " + req.user.email)
-		let user = await User.getUserByEmail(req.user.email)
+		console.log("Changing Password: " + req.body.email)
+		let user = await UserInterface.getUserByEmail(req.body.email)
 		if(user){
-			
+			const currentURL = "http://localhost:3002";
+
+			const uniqueString = uuidv4() + user._id;
+
+			const mailOptions = {
+				from: process.env.AUTH_EMAIL,
+				to: req.body.email.toLowerCase(),
+				subject: 'Password Change Request',
+				html: `Hello,<br> Please Click on the link to change your password.<br><a href=${currentURL}/user/changePassword/${user._id}/${uniqueString}>Click here to change Password</a>`
+			};
+
+			bcrypt.hash(uniqueString, 10)
+				.then(async (hashedUniqueString) => {
+					console.log("Hashing")
+					const newVerification = PasswordChangeRequest({
+						userID: user._id.toString(),
+						uniqueString: hashedUniqueString,
+						createdAt: Date.now(),
+						expireAt: Date.now() + 21600000 // 6 hours
+					});
+
+					console.log("Verification Created")
+
+					await newVerification.save();
+
+					console.log("Sending Email")
+
+					transporter.sendMail(mailOptions, (error, info) => {
+						if (error) {
+							console.log("Error in Sending Email " + error);
+							res.json({
+								status: 'failed',
+								message: 'Error occurred while sending email'
+							})
+						} else {
+							console.log('Email sent: ' + info.response);
+							res.json({
+								status: 'PENDING',
+								message: 'Verification email sent'
+							})
+						}
+					});
+				})
+				.catch(() => {
+					console.log("Error in Hashing")
+					res.json({
+						status: 'failed',
+						message: 'Error occurred while hashing the password'
+					})
+				});
 		} else {
 			res.json({
 				status: 'error',
@@ -70,6 +141,93 @@ router.route('/user/changePassword')
 			})
 		}
 	})
+
+router.route('/user/changePassword/:userID/:uniqueString')
+.get(async (req, res) => {
+	const uniqueString = req.params.uniqueString;
+	const userID = req.params.userID.trim();
+
+	let user = await PasswordChangeRequest.findOne({userID: userID})
+
+	if(user){
+		const {expireAt} = user;
+		const hashedUniqueString = user.uniqueString;
+		if(Date.now() > expireAt){
+			await PasswordChangeRequest.deleteOne({userID})
+			res.json({
+				status: 'Please Sign Up Again',
+				message: 'Verification code has been expired. Please Sign Up Again'
+			})
+		} else {
+			bcrypt.compare(uniqueString, hashedUniqueString)
+				.then( async (result) => {
+					if(result){
+						console.log(result)
+
+						res.render('ChangePassword', { userID: userID, uniqueString: uniqueString });
+					} else {
+						res.json({
+							status: 'error',
+							message: 'Verification code is invalid'
+						})
+					}
+				})
+				.catch((error) => {
+					console.log("Error in compare" + error);
+					res.json({
+						status: 'error',
+						message: 'Something went wrong while comparing the unique string'
+					})
+				})
+		}
+	}
+})
+
+router.route('/user/changePassword/:userID/:uniqueString/setPassword')
+	.post(async (req, res) => {
+		const uniqueString = req.params.uniqueString;
+		const userID = req.params.userID.trim();
+		const password = req.body.password;
+		console.log("Changing Password: " + password)
+
+		let user = await PasswordChangeRequest.findOne({userID: userID})
+
+		if(user){
+			const {expireAt} = user;
+			const hashedUniqueString = user.uniqueString;
+			if(Date.now() > expireAt){
+				await PasswordChangeRequest.deleteOne({userID})
+				res.json({
+					status: 'Please Sign Up Again',
+					message: 'Verification code has been expired. Please Sign Up Again'
+				})
+			} else {
+				bcrypt.compare(uniqueString, hashedUniqueString)
+					.then( async (result) => {
+						if(result){
+							console.log(result)
+
+							let hashedPassword = await bcrypt.hash(password, 10);
+							let oresult = await User.updateOne({_id: new ObjectId(userID)}, {$set: {password: hashedPassword}})
+							console.log("success");
+							await PasswordChangeRequest.deleteOne({userID});
+						} else {
+							res.json({
+								status: 'error',
+								message: 'Verification code is invalid'
+							})
+						}
+					})
+					.catch((error) => {
+						console.log("Error in compare" + error);
+						res.json({
+							status: 'error',
+							message: 'Something went wrong while comparing the unique string'
+						})
+					})
+			}
+		}	
+	});
 
 module.exports = router;
 

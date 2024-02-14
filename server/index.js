@@ -14,6 +14,8 @@ const PORT = process.env.PORT || 3002;
 app.use(cors());
 app.use(bodyParser.json());
 
+app.set('view engine', 'ejs');
+
 const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
@@ -80,7 +82,7 @@ transporter.verify((error, success) => {
 
 
 
-router.route('/signup')
+/*router.route('/signup')
 	.post(async (req, res) => {
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
@@ -91,7 +93,7 @@ router.route('/signup')
 		} else {
 			res.status(400).json({ message: 'Signup failed' });
 		}
-	});
+	});*/
 
 router.route('/request')
 	.post(async (req, res) =>{
@@ -145,7 +147,7 @@ router.route('/request')
 	
 	});
 
-router.route('/login')
+/*router.route('/login')
 	.post(async (req, res) => {
 		const { email, password } = req.body;
 		const emailLower = email.toLowerCase().trim()
@@ -167,7 +169,7 @@ router.route('/login')
 				res.status(404).json({ message: `Account under ${email} does not exist` });
 			}
 		}
-	});
+	});*/
 
 
 router.route('/google-auth')
@@ -244,7 +246,7 @@ app.use(userSettings);
 
 
 
-router.route('/user/changePassword')
+/*router.route('/user/changePassword')
 	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
 		console.log("Changing Password: " + req.user.username)
 		let user = await getUser(req.user.username)
@@ -263,7 +265,7 @@ router.route('/user/changePassword')
 				message: 'Email is invalid'
 			})
 		}
-	})
+	})*/
 
 
 
