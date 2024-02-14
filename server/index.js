@@ -46,6 +46,7 @@ app.use(passport.initialize());
 const UserVerificationEmails = require('./models/UserVerificationEmails');
 const User = require('./models/user');
 const Requests = require('./models/requests');
+const eventRegistrations = require('./models/eventRegistrations');
 const { ObjectId } = require('mongodb');
 const path = require('path');
 
@@ -53,6 +54,7 @@ const path = require('path');
 
 const nodemailer = require('nodemailer');
 const {v4: uuidv4} = require('uuid');
+const { create } = require('./models/eventRegistrations');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -71,6 +73,16 @@ transporter.verify((error, success) => {
 });
 
 /********************************** ROUTES *************************************/
+
+/******* EVENT REGISTRATION ROUTES *******/
+router.route('/dropins')
+	.post(async (req, res) => {
+		const { dropOff, pickUp } = req.body;
+		createRegistration("dropIn", "testemail", dropOff, pickUp);
+		console.log("Drop off: " + dropOff + " ; Pick up: " + pickUp);
+		res.json({ message: 'Drop in successful' });
+	});
+
 /************* USER ROUTES ***************/
 
 router.route('/signup')
@@ -229,9 +241,6 @@ function generatePass(length) {
 	return password;
 }
 	
-
-
-
 router.route('/user/getUsers')
   .get(async (req, res) => {
     const users = await User.find();
@@ -433,7 +442,6 @@ async function createUser(username, password, email, res){
 	}
 }
 
-
 async function getUserByEmail(mail){
 	//const database = client.db('se3316-lab4-superheroLists');
 	//const collection = database.collection('Users');
@@ -559,4 +567,15 @@ async function validateEmail(email){
 	} else {
 		return false;
 	}
+}
+
+async function createRegistration(type, email, pickup, dropoff) {
+	const newRegistration = new eventRegistrations({
+		event: type,
+		userEmail: email,
+		pickup: pickup,
+		dropoff: dropoff
+	});
+
+	await newRegistration.save();
 }
