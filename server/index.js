@@ -15,6 +15,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json())
 
+app.set('view engine', 'ejs');
+
 const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
@@ -96,6 +98,7 @@ router.route('/signup')
 		}
 	});
 
+
 router.route('/request')
 	.post(async (req, res) =>{
 		console.log("Requesting verification")
@@ -147,37 +150,6 @@ router.route('/request')
 		}
 	
 	});
-
-router.route('/login')
-	.post(async (req, res) => {
-		const { email, password } = req.body;
-		const emailLower = email.toLowerCase().trim()
-
-		if(inputSanitization(password) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailLower)){
-			console.log("Valid entries")
-			const payload = await validatePassword(emailLower, password);
-
-			if(!payload){
-				res.status(400).json({ message: 'Please try another password or log in using google.'})
-			} else if (payload == "disabled"){
-				res.status(409).json({ message: 'This account has been disabled' });
-			} else if(!payload.verified){
-				res.status(410).json({ message: 'Email has not been verified' });
-			} else if(payload){
-				const tokenPayload = {
-					id: payload.id,
-					username: payload.username,
-					verified: payload.verified,
-					type: payload.type
-				};
-				const token = jwt.sign(tokenPayload, process.env.SECRET_KEY); // Replace with your own secret
-				res.status(200).json({ message: 'Login successful', token });
-			} else {
-				res.status(404).json({ message: `Account under ${email} does not exist` });
-			}
-		}
-	});
-
 
 router.route('/google-auth')
 	.post(async (req, res) => {
@@ -305,29 +277,6 @@ app.use(userSignup);
 app.use(userLogin);
 app.use(userSettings);
 app.use(eventRegistration);
-
-	router.route('/user/changePassword')
-	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
-		console.log("Changing Password: " + req.user.username)
-		let user = await getUser(req.user.username)
-		let {password} = req.body;
-		if(user){
-			let hashedPassword = await bcrypt.hash(password, 10);
-			let result = await userCollection.updateOne({username: req.user.username}, {$set: {password: hashedPassword}})
-			console.log(result)
-			res.json({
-				status: 'success',
-				message: 'Password has been changed'
-			})
-		} else {
-			res.json({
-				status: 'error',
-				message: 'Email is invalid'
-			})
-		}
-	})
-
-
 
 const multer = require("multer");
 const storage = multer.memoryStorage();

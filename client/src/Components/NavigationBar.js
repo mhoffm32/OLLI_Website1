@@ -54,10 +54,7 @@ class NavigationBar extends React.Component {
                     Drop Ins
                 </a>
 
-                <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
-                    <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
-                    Verification
-                </a>
+            
                 
                 {token ? (
                     <>
@@ -68,7 +65,7 @@ class NavigationBar extends React.Component {
                 </a>
 
                     {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
-                        <img src={activeOption === 'AdminTools' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
+                        <img src={activeOption === 'AdminTools' ? "/images/icons/tools-green.png" : '/images/icons/tools.png'} className="nav-icon" alt='Verification'/>
                         Admin Tools
                     </a></> : <></>}
                         <b className="username">{jwtDecode(token).username} 
