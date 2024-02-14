@@ -1,11 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 class Contact extends Component {
-    render() {
         // DO NOT USE IVEYS EMAIL
         // const emailAddress = "ihartmancheer@gmail.com";
-        const emailAddress = 'olivinglearning@gmail.com';
+        
+        //Email sending function
+        sendMessage = async() => {
 
+            const { name, email, message, subject, phoneNumber } = this.state;
+            try {
+                const response = await fetch ('http://localhost:3000/user/send-ivey-message',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Specify the content type
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message,
+                    subject,
+                    phoneNumber
+                })
+            });
+            if(response.ok){
+                alert("Email sent Successfully")
+            }else{
+                alert('Failed to send email')
+            }
+                console.log(name)
+                console.log(email)
+                console.log(message)
+                console.log(subject)
+                console.log(phoneNumber)
+
+            }catch(error){
+                console.error('Error sending message:',error)
+                alert('Error sending message')
+            }
+        }
+
+
+    render() {
         return (
             <div className="contact">
                 <div>
@@ -16,23 +51,25 @@ class Contact extends Component {
                                 <h3 id="instructions">Send an Email to Ivey Hartman:</h3>
                             </div>
 
+                            <form onSubmit={this.sendMessage}>
                             <div class="messageOptions1">
                                 <input type='text' id='contactName' placeholder='Enter name here'></input>
-                                <input type='text' id='contactEmail' placeholder='Enter email here'></input>
+                                <input type='text' id='contactEmail'  placeholder='Enter email here'></input>
                             </div>
 
                             <div class="messageOptions2">
                                 <input type='text' id='subject' placeholder='Enter message subject here'></input>
-                                <input type='text' id='contactPhone' placeholder='Enter Phone Number here'></input>
+                                <input type='text' id='contactPhone'  placeholder='Enter Phone Number here'></input>
                             </div>
 
                             <div class="messageOptions3">
-                                <input type='text' id='contactMessage' placeholder='Enter message here'></input>
+                                <input type='text' id='contactMessage'  placeholder='Enter message here'></input>
                             </div>
 
                             <div class="submit button">
-                                <button type='button' id='sendButton'>Send Email</button>
+                                <button type='submit' id='sendButton'>Send Email</button>
                             </div>
+                            </form>
                         </div>
 
                         <div class = "contact-right">

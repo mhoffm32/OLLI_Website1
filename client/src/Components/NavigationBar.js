@@ -6,7 +6,8 @@ class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeOption: props.activeOption
+            activeOption: props.activeOption,
+            userType: null
         };
     }
 
@@ -20,6 +21,7 @@ class NavigationBar extends React.Component {
         const { activeOption } = this.props;
 
         const token = localStorage.getItem('jwt');
+        const decoded = token ? jwtDecode(token): null;
 
         return (
             <div className="topnav">
@@ -47,7 +49,6 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
-
                 <a className={activeOption === 'Drop Ins' ? 'active' : ''} onClick={() => this.props.changePage('Drop Ins')}>
                     <img src={activeOption === 'Drop Ins' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Drop Ins'/>
                     Drop Ins
@@ -60,9 +61,24 @@ class NavigationBar extends React.Component {
                 
                 {token ? (
                     <>
-                        <b className="username">{jwtDecode(token).username}</b>
+
+                <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
+                                    <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
+                                    Verification
+                </a>
+
+                    {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
+                        <img src={activeOption === 'AdminTools' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
+                        Admin Tools
+                    </a></> : <></>}
+                        <b className="username">{jwtDecode(token).username} 
+                        <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
+                            <img id="download-img" src='/images/icons/settings.png'/>
+                        </a>
+                    </b>
                         <button className="signout" onClick={this.handleSignOut}>Sign Out</button>
                     </>
+
                 ) : (
                     <>
                         <button className="login" onClick={evt => this.props.changePage('Login')}>Login</button>
