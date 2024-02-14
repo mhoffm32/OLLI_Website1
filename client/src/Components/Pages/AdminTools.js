@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import UploadLetter from "../Pages/UploadLetter";
+import ManageUser from "../Pages/manageUser";
 
 
 const AdminTools = ({ changePage , user}) => {
     const [page, setPage] = useState("adminHome");
 
     const getCurrentPage = () => {
-        let pages = {"uploadLetter" : <UploadLetter/>}
+        let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>}
         return pages[page];
     }
 
@@ -25,6 +26,7 @@ const AdminTools = ({ changePage , user}) => {
         <button id='admin-menu-btn' onClick={()=>setPage("manageSchedule")}>
            Manage Schedule
         </button>
+        <br/>
         <button id='admin-menu-btn' onClick={()=>setPage("manageUser")}>
            Manage Users
         </button>
