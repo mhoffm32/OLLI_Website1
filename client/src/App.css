@@ -946,8 +946,8 @@ h1 {
 /* ??? */
 
 #return-btn {
-  position: fixed;
-  top: 120px;
+  position:absolute;
+  top: 140px;
   left: 20px;
 }
 
@@ -1023,11 +1023,14 @@ a:hover {
   height: 50px;
 }
 
-.fundraising, .contact, .events, .homePage, .verification, .news, .about {
+.fundraising, .contact, .events, .homePage, .verification, .news, .about, .admin-stuff {
   /*margin-top: 50px;*/
   margin-bottom: 50px;
   text-align: center;
   
+}
+.admin-stuff{
+  margin-bottom: 300px;
 }
 
 input, button, select, option {
@@ -1217,5 +1220,9 @@ input, button, select, option {
 
 button:hover {
   cursor: pointer;
+}
+
+#ul-txt{
+  text-align: center;
 }
 

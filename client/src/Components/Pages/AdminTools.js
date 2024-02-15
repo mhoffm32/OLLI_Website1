@@ -12,7 +12,7 @@ const AdminTools = ({ changePage , user}) => {
 
   return (
 
-    <div id="admin-options">
+    <div id="admin-options" className="admin-stuff">
     <h1>Admin Tools Home</h1>
     <div id="admin-page">
   

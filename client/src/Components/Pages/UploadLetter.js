@@ -204,7 +204,7 @@ const UploadLetter = ({ changePage , user}) => {
         Newsletter Title: <input type="text" onChange={(e)=> setName(e.target.value)}></input>
        <button onClick={handleUpload}>Upload</button>
        </div>
-       <p>{uploadText}</p>
+       <p id="ul-txt">{uploadText}</p>
        <div id='newsletter-list'>
                 {newsletters !== null ? newsletters.map((newsletter, index) => (
             <div className="newsletter-item" key={index}>
