@@ -16,6 +16,10 @@
   color: #6c7751;
 }
 
+h1 {
+  color: #333;
+}
+
 /* NAVIGATION */
 
 .topnav {
@@ -185,6 +189,7 @@
 }
 
 .logo {
+  margin-top: 20px;
   width: 4px;
   height: 4px;
   margin-right: 5px;
@@ -265,6 +270,20 @@
 .loginBtn:hover {
   background-color: #ddd;
   color: black;
+}
+
+#forgotPassword {
+  background-color: #6c7751; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 40px 2px;
+  cursor: pointer;
+  border-radius: 20px;
 }
 
 /* HOME PAGE */ 
@@ -902,6 +921,29 @@
   display: none;
 }
 
+/* DROP-IN PAGE */
+.drop-in button {
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px;
+  vertical-align: auto;
+}
+
+.drop-in button:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.drop-in .DateTimePicker {
+  display: flex;
+  align-items: center;
+
+}
+
+/* ??? */
 
 #return-btn {
   position: fixed;
@@ -971,7 +1013,6 @@ a:hover {
 }
 
 
-
 .backArrowImg {
   width: 60px;
   height: 50px;
@@ -992,6 +1033,7 @@ a:hover {
 input, button, select, option {
   font-family: 'Nunito', sans-serif;
 }
+
 
 .verification {
   max-width: 400px;
@@ -1068,6 +1110,7 @@ p.letterheader{
   width: 20px;
   height: 20px;
 }
+
 
 #settings-icon{
   padding: 0px;
@@ -1151,4 +1194,28 @@ p.letterheader{
 
 .button-container button {
   margin-right: 10px; /* Adjust as needed */
+
+/* RANDOM STUFF */
+
+.backArrowImg {
+  width: 60px;
+  height: 50px;
+}
+
+.backArrowImg {
+  width: 60px;
+  height: 50px;
+}
+
+.fundraising, .contact, .events, .homePage, .verification, .news, .about, .drop-in {
+  margin-top: 50px;
+  text-align: center;
+}
+
+input, button, select, option {
+  font-family: 'Nunito', sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
 }

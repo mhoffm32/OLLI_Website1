@@ -13,11 +13,15 @@ const PORT = process.env.PORT || 3002;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json())
+
+app.set('view engine', 'ejs');
 
 const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
 const userSettings = require('./routes/userSettings.js');
+const eventRegistration = require('./routes/eventRegistration.js');
 
 /************ PASSPORT *******************/
 const passport = require('passport');
@@ -28,7 +32,8 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 passport.use(new JwtStrategy({
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: process.env.SECRET_KEY // Replace with your own secret
+	secretOrKey: process.env.SECRET_KEY, // Replace with your own secret
+
 }, async (jwtPayload, done) => {
 	console.log("Authenticating")
 	try {
@@ -58,6 +63,7 @@ const path = require('path');
 
 const nodemailer = require('nodemailer');
 const {v4: uuidv4} = require('uuid');
+const { create } = require('./models/eventRegistrations');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -77,34 +83,200 @@ transporter.verify((error, success) => {
 
 /********************************** ROUTES *************************************/
 /************* USER ROUTES ***************/
-app.use(userSignup);
-app.use(userLogin);
-app.use(userSettings);
 
 
-
-	router.route('/user/changePassword')
-	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
-		console.log("Changing Password: " + req.user.username)
-		let user = await getUser(req.user.username)
-		let {password} = req.body;
-		if(user){
-			let hashedPassword = await bcrypt.hash(password, 10);
-			let result = await userCollection.updateOne({username: req.user.username}, {$set: {password: hashedPassword}})
-			console.log(result)
-			res.json({
-				status: 'success',
-				message: 'Password has been changed'
-			})
+router.route('/signup')
+	.post(async (req, res) => {
+		console.log("Signing Up")
+		const { email, username, password } = req.body;
+		const emailLower = email.toLowerCase().trim()
+		if(await validateEmail(emailLower) && inputSanitization(username) && inputSanitization(password)){
+			createUser(username, password, emailLower, res)
+			res.status(200).json({ message: 'Signup successful' });
 		} else {
-			res.json({
-				status: 'error',
-				message: 'Email is invalid'
-			})
+			res.status(400).json({ message: 'Signup failed' });
+		}
+	});
+
+
+router.route('/request')
+	.post(async (req, res) =>{
+		console.log("Requesting verification")
+		const { email, password, type} = req.body;
+
+		console.log("recieving: ", req.body)
+
+		if(!email || !password || !type){
+			console.log('all fields required')
+			return res.status(400).json({message: 'Username, password, and type are required'});
+		}
+		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !inputSanitization(password)){
+			console.log('Invalid entries')
+			return res.status(400).json({message: 'Invalid entries for email/password'});
+		}
+		try{
+			const emailLower = email.toLowerCase.trim()
+			const user = await User.findOne({emailLower});
+			if(!user){
+				console.log('User not found')
+				return res.status(404).json({message: 'User not found'});
+			}
+
+			const validPass = await bcrypt.compare(password, user.password);
+			if(!validPass){
+				console.log("invalid password")
+				return res.status(400).json({message: 'Invalid password'});
+			}
+			
+			const hashed = await bcrypt.hash(password, 10);	
+
+			const request = {
+				email: email,
+				password: hashed,
+				type: type
+			}
+
+			Requests.create(request).then((request) => {
+				console.log('Request created:', request);
+			}).catch((error) => {
+				console.error('Error creating request:', error);
+			});			
+
+			return res.status(200).json({message: "Verification request submitted"});
+
+		} catch (error){
+			console.log("Error in verification process:", error);
+			return res.status(500).json({message: 'Internal server error'});
+		}
+	
+	});
+
+router.route('/google-auth')
+	.post(async (req, res) => {
+
+		const { code } = req.body;
+		const decoded_info = jwtDecode.jwtDecode(code);
+		const email = decoded_info.email.toLowerCase().trim();
+		
+
+		const user = await getUserByEmail(email)
+
+		if(!user){
+			const username = email.split("@")[0].replace(/\s/g, '') + (Math.floor(Math.random() * (10)) + 1) + (Math.floor(Math.random() * (10)) + 1);
+	
+			const pass = generatePass(12);
+			createGUser(username, pass, email, res)
+
+		}else{
+			const payload = { id: user._id, username: user.username, verified: user.verified, admin: user.admin }
+			console.log(payload)
+			if(payload == "disabled"){
+				res.status(409).json({ message: 'This account has been disabled' });
+			} else if(!payload.verified){
+				res.status(410).json({ message: 'Email has not been verified' });
+			} else if(payload){
+				const token = jwt.sign(payload, process.env.SECRET_KEY); // Replace with your own secret
+				res.status(200).json({ message: 'Login successful', token });
+			} else {
+				res.status(400).json({ message: 'Login failed' });
+			}
+
+		}
+
+	});
+
+
+	async function createGUser(username, password, email, res){
+		//const database = client.db('se3316-lab4-superheroLists');
+		//const collection = database.collection('Users')
+
+		console.log("Create the User: " + username + " ; " + password + " ; " + email)
+	
+		let hashedPassword = await bcrypt.hash(password, 10);
+	
+		let newUser = new User({
+			username: username,
+			email: email,
+			password: hashedPassword,
+			verified: true,
+			type: 'generalUser'
+		});
+	
+		await newUser.save();
+
+	}
+
+function generatePass(length) {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
+	let password = '';
+	
+	for (let i = 0; i < length; i++) {
+		const randomIndex = Math.floor(Math.random() * charset.length);
+		password += charset.charAt(randomIndex);
+	}
+	return password;
+}
+	
+router.route('/user/getUsers')
+  .get(async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+  })
+
+
+router.route('/user/verify/:userID/:uniqueString')
+	.get(async (req, res) => {
+		const uniqueString = req.params.uniqueString;
+		const userID = req.params.userID.trim();
+
+		let user = await UserVerificationEmails.findOne({userID: userID})
+	
+		if(user){
+			const {expireAt} = user;
+			const hashedUniqueString = user.uniqueString;
+			if(Date.now() > expireAt){
+				await UserVerificationEmails.deleteOne({userID})
+				await User.deleteOne({_id: userID})
+				res.json({
+					status: 'Please Sign Up Again',
+					message: 'Verification code has been expired. Please Sign Up Again'
+				})
+			} else {
+				bcrypt.compare(uniqueString, hashedUniqueString)
+					.then( async (result) => {
+						if(result){
+							let result = await User.updateOne({_id: new ObjectId(userID)}, {$set: {verified: true}})
+							console.log(result)
+							await UserVerificationEmails.deleteOne({userID})
+
+							res.sendFile(path.join(__dirname, './UserValidated.html'))
+
+							/*res.json({
+								status: 'success',
+								message: 'Email has been verified'
+							})*/
+						} else {
+							res.json({
+								status: 'error',
+								message: 'Verification code is invalid'
+							})
+						}
+					})
+					.catch((error) => {
+						console.log("Error in compare" + error);
+						res.json({
+							status: 'error',
+							message: 'Something went wrong while comparing the unique string'
+						})
+					})
+			}
 		}
 	})
 
-
+app.use(userSignup);
+app.use(userLogin);
+app.use(userSettings);
+app.use(eventRegistration);
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -159,7 +331,6 @@ router.route('/user/viewNewsletters')
             return res.status(500).json({ error: "Internal Server Error" });
         }
 });
-
 
 router.route('/user/newsletterData/:id')
     .get(async (req, res) => {
@@ -217,7 +388,6 @@ router.route('/user/deleteNewsletter')
         }
 });
 
-
 router.route('/user/settings/:id')
     .get(async (req, res) => {
 		try {
@@ -250,7 +420,35 @@ router.route('/user/updateSettings')
 });
 
 
+app.post('/user/send-ivey-message', async(req,res) => {
+		try{
+		console.log('Sending message to Ivey')
+		const {name, email, message, subject, phoneNumber} =  req.body;
+		console.log(name)
+		console.log(email)
+		console.log(message)
+		console.log(subject)
+		console.log(phoneNumber)
+		const transport = nodemailer.createTransport({
+			service: 'Gmail',
+			auth: {
+				user: 'cheerhomepage282@gmail.com',
+				pass: 'ccurbpkzzbdzxlkq'
+			}
+		})
+			await transport.sendMail({
+			  from: "cheerhomepage282@gmail.com",
+			  to: 'olivinglearning@gmail.com',
+			  subject: subject,
+			  text: "Hello I'm " + name +'.\n\t' + message + '\nMy phone number is ' + phoneNumber + ' and my email for responding back to me is ' + email
+			});
+			res.status(200).send('Email sent successfully');
+		  } catch (error) {
+			console.error('Error sending email:', error);
+			res.status(500).send('Error sending email');
+		  }
 
+	});
 
 /****************************** FINISH INITIALIZATION **************************/
 
@@ -264,4 +462,3 @@ app.use("/api", router);
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-

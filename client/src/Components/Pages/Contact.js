@@ -1,11 +1,47 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import axios from 'axios'
 
 class Contact extends Component {
-    render() {
         // DO NOT USE IVEYS EMAIL
         // const emailAddress = "ihartmancheer@gmail.com";
-        const emailAddress = 'olivinglearning@gmail.com';
+        
+        constructor(props) {
+            super(props);
+            this.state = {
+                name: '',
+                email: '',
+                message: '',
+                subject: '',
+                phoneNumber: ''
+            };
+        }
 
+        handleChange = (e) => {
+            console.log("Handling Change.. ");
+            console.log("Event: ", e.target)
+            this.setState({ [e.target.name]: e.target.value });
+        };
+        
+        //Email sending function
+        sendMessage = async (e) => {
+            e.preventDefault();
+            const { name, email, message, subject, phoneNumber } = this.state;
+            try {
+                const response = await axios.post('http://localhost:3000/user/send-ivey-message', {name, email, message, subject, phoneNumber});
+                console.log(response)
+            if(response.data === 'Email sent successfully'){
+                alert("Email sent Successfully")
+            }else{
+                alert('Failed to send email')
+            }
+            }catch(error){
+                console.error('Error sending message:',error)
+                alert('Error sending message')
+            }
+        }
+
+
+    render() {
         return (
             <div className="contact">
                 <div>
@@ -16,23 +52,26 @@ class Contact extends Component {
                                 <h3 id="instructions">Send an Email to Ivey Hartman:</h3>
                             </div>
 
+                            <form onSubmit={this.sendMessage}>
                             <div class="messageOptions1">
-                                <input type='text' id='contactName' placeholder='Enter name here'></input>
-                                <input type='text' id='contactEmail' placeholder='Enter email here'></input>
+                                <input type='text' id='contactName' name='name' value={this.state.name} onChange={(e) => this.handleChange(e)} placeholder='Enter name here'></input>
+                                <input type='text' id='contactEmail' name='email' value={this.state.email} onChange={this.handleChange} placeholder='Enter email here'></input>
                             </div>
 
                             <div class="messageOptions2">
-                                <input type='text' id='subject' placeholder='Enter message subject here'></input>
-                                <input type='text' id='contactPhone' placeholder='Enter Phone Number here'></input>
+                                <input type='text' id='subject' name='subject' value={this.state.subject} onChange={this.handleChange} placeholder='Enter message subject here'></input>
+                                <input type='text' id='contactPhone' name='phoneNumber' value={this.state.phoneNumber} onChange={this.handleChange} placeholder='Enter Phone Number here'></input>
                             </div>
 
                             <div class="messageOptions3">
-                                <input type='text' id='contactMessage' placeholder='Enter message here'></input>
+                                <input type='text' id='contactMessage' name='message' value={this.state.message} onChange={this.handleChange} placeholder='Enter message here'></input>
                             </div>
 
                             <div class="submit button">
-                                <button type='button' id='sendButton'>Send Email</button>
+                                <button type='submit' id='sendButton'>Send Email</button>
                             </div>
+                            </form>
+                            
                         </div>
 
                         <div class = "contact-right">
