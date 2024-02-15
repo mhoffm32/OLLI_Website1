@@ -1195,12 +1195,11 @@ p.letterheader{
 .button-container button {
   margin-right: 10px; /* Adjust as needed */
 
+}
+
 /* RANDOM STUFF */
 
-.backArrowImg {
-  width: 60px;
-  height: 50px;
-}
+
 
 .backArrowImg {
   width: 60px;
@@ -1219,3 +1218,4 @@ input, button, select, option {
 button:hover {
   cursor: pointer;
 }
+
