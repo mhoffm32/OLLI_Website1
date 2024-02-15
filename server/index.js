@@ -26,7 +26,7 @@ const eventRegistration = require('./routes/eventRegistration.js');
 /************ PASSPORT *******************/
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const jwtDecode = require("jwt-decode")
+const jwtDecode = require("jwt-decode");
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 

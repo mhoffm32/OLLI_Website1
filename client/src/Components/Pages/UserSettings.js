@@ -68,7 +68,7 @@ const UserSettings = () => {
     };
     
 
-    return (<div id="account-settings"><br/><br/><br/>
+    return (<div id="account-settings">
     <h1>Account Settings</h1> 
 
     {userSettings !== null ? <>
@@ -76,13 +76,11 @@ const UserSettings = () => {
     <p>
         Monthly Email Newsletter
     </p>
-
     <label class="switch">
     <input 
     type="checkbox" 
     onChange={(e) => updateEmailPref(e.target.checked)} 
-    checked={userSettings && userSettings.email_newsletter}
-/>
+    checked={userSettings && userSettings.email_newsletter}/>
         <span class="slider round"></span></label>
         <button onClick={()=>updateSettings()}>Save</button>
     </div>

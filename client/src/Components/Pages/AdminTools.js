@@ -14,7 +14,6 @@ const AdminTools = ({ changePage , user}) => {
 
     <div id="admin-options">
     <h1>Admin Tools Home</h1>
-
     <div id="admin-page">
   
         {page === "adminHome" ? <>
