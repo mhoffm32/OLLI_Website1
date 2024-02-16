@@ -945,12 +945,6 @@ h1 {
 
 /* ??? */
 
-#return-btn {
-  position:absolute;
-  top: 140px;
-  left: 20px;
-}
-
 #download-img {
   margin-left: 10px;
   width: 25px;
@@ -1018,10 +1012,6 @@ a:hover {
   height: 50px;
 }
 
-.backArrowImg {
-  width: 60px;
-  height: 50px;
-}
 
 .fundraising, .contact, .events, .homePage, .verification, .news, .about, .admin-stuff {
   /*margin-top: 50px;*/
@@ -1203,14 +1193,14 @@ p.letterheader{
 /* RANDOM STUFF */
 
 
-
 .backArrowImg {
   width: 60px;
   height: 50px;
 }
 
+
 .fundraising, .contact, .events, .homePage, .verification, .news, .about, .drop-in {
-  margin-top: 50px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -1225,4 +1215,80 @@ button:hover {
 #ul-txt{
   text-align: center;
 }
+
+.admin-btn{
+  background-color: #df7958;
+  padding: 10px;
+  margin: 20px;
+  border-width: 1px;
+  border-radius: 8px;
+  border-width: 1px;
+}
+
+#confirm-delete{
+  background-color:#df7958;
+  font-weight: 200;
+  padding: 5px;
+  margin: 20px;
+  font-weight: bolder;
+  border-width: 0.2px;
+  border-radius: 8px;
+}
+
+#delete1{
+  background-color: #cd8783fc;
+  font-weight: bolder;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+}
+
+#upload-file{
+  background-color:#859262;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  font-weight: bolder;
+}
+
+#return-btn {
+  position:absolute;
+  background-color: #a2a2a3;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  top: 120px;
+  left: 10px;
+}
+
+
+.backBtn2{
+  position:absolute;
+  background-color: #a2a2a3;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  top: 115px;
+  left: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.backArrowImg2 {
+  width: 40px;
+  height: 30px;
+}
+
+
+
+
+
+
+
+
 
