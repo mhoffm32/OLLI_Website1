@@ -12,22 +12,22 @@ const AdminTools = ({ changePage , user}) => {
 
   return (
 
-    <div id="admin-options">
-    <h1>Admin Tools Home</h1>
+    <div id="admin-options" className="admin-stuff">
+    <h1>Admin Tools</h1>
     <div id="admin-page">
   
         {page === "adminHome" ? <>
-        <button id='admin-menu-btn' onClick={()=>setPage("uploadLetter")}>
+        <div id="a-menu-btns">
+        <button id='admin-menu-btn' className="admin-btn" onClick={()=>setPage("uploadLetter")}>
            Upload Newsletters
         </button>
-        <br/>
-        <button id='admin-menu-btn' onClick={()=>setPage("manageSchedule")}>
+        <button id='admin-menu-btn'className="admin-btn" onClick={()=>setPage("manageSchedule")}>
            Manage Schedule
         </button>
+        </div>
         </> : <>
-        <button id='return-btn' onClick={()=> setPage("adminHome")}>
-            Return
-        </button>
+        
+        <button onClick={()=> setPage("adminHome")} className='backBtn2'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg2' /></button>
         {getCurrentPage()}
         </>}
     </div>

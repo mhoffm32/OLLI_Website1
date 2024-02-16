@@ -198,13 +198,12 @@ const UploadLetter = ({ changePage , user}) => {
   return (
     <div id="upload-pdf">
        <p id="upload-nl"> Upload Newsletter </p>
-
        <div id="stuff-nl">
        <input type="file" onChange={handleFileChange}/>
-        Newsletter Title: <input type="text" onChange={(e)=> setName(e.target.value)}></input>
-       <button onClick={handleUpload}>Upload</button>
+        Title: <input type="text" onChange={(e)=> setName(e.target.value)}></input>
+       <button id="upload-file" onClick={handleUpload}>Upload</button>
        </div>
-       <p>{uploadText}</p>
+       <p id="ul-txt">{uploadText}</p>
        <div id='newsletter-list'>
                 {newsletters !== null ? newsletters.map((newsletter, index) => (
             <div className="newsletter-item" key={index}>
@@ -222,11 +221,11 @@ const UploadLetter = ({ changePage , user}) => {
               <div className="button-container">
                 {letterStates[newsletter._id] === 1 ? (
                   <>
-                    <button className="delete-nl" onClick={() => deleteNewsletter(newsletter._id)}>Confirm</button>
-                    <button className="cancel-nl" onClick={() => handleCancel(newsletter._id)}>Cancel</button>
+                    <button className="delete-nl"  id="confirm-delete" style={{backgroundColor:"#cd8783fc"}} onClick={() => deleteNewsletter(newsletter._id)}>Confirm</button>
+                    <button className="cancel-b" id="delete1" style={{backgroundColor:  "#a2a2a3"}} onClick={() => handleCancel(newsletter._id)}>Cancel</button>
                   </>
                 ) : (
-                  <button className="delete-nl" onClick={() => handleDelete(newsletter._id)}>Delete</button>
+                  <button className="delete-nl" id='delete1' onClick={() => handleDelete(newsletter._id)}>Delete</button>
                 )}
               </div>
             </div>
