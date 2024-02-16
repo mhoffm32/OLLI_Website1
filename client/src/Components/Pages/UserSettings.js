@@ -4,13 +4,44 @@ const UserSettings = () => {
     const [userSettings, setSettings] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
+    const [userDetails, setUserDetails] = useState({
+        firstname: '',
+        lastname: '',
+        email: '', // Assuming the user's details include these fields
+    });
     const [selectedPfp, setSelectedPfp] = useState('');
 
-    const user = jwtDecode(localStorage.getItem('jwt'));
+    const token = localStorage.getItem('jwt');
+    const user = jwtDecode(token);
 
     useEffect(()=>{
-        getCurrentSettings()
-    },[])
+        getCurrentSettings();
+        getUserDetails();
+    },[]);
+
+    const getUserDetails = async () => {
+        try {
+            const response = await fetch(`http://localhost:3002/user/details`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setUserDetails({
+                    firstname: data.firstname,
+                    lastname: data.lastname,
+                    email: data.email,
+                });
+            } else {
+                console.error('Failed to fetch user details:', response.statusText);
+            }
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+        }
+    };
 
     const getCurrentSettings = async () => {
         try{
@@ -97,9 +128,11 @@ const UserSettings = () => {
             console.error("Failed to update name:", error);
             alert("Failed to update name due to an error.");
         }
+        getUserDetails();
     };
     
     const updatePfp = async () => {
+        console.log(selectedPfp);
         const token = localStorage.getItem('jwt');
         try {
             const response = await fetch('http://localhost:3002/user/updatePfp', {
@@ -115,19 +148,25 @@ const UserSettings = () => {
                 alert('Profile picture updated successfully');
                 // Optionally, refresh the user settings here
             } else {
-                alert('Failed to update profile picture');
+                const errorText = await response.text();
+                alert(`Failed to update profile picture: ${errorText}`);
             }
         } catch (error) {
             console.error("Failed to update profile picture:", error);
             alert("Failed to update profile picture due to an error.");
         }
-    };
+    };    
     
     return (
         <div id="account-settings"><br/><br/><br/>
             <h1>Account Settings</h1> 
 
             {userSettings !== null ? <>
+                <div id="user-details">
+                    <p>Email: {userDetails.email}</p>
+                    <p>First Name: {userDetails.firstname}</p>
+                    <p>Last Name: {userDetails.lastname}</p>
+                </div>
                 <div id="email-prefs">
                     <p>
                         Monthly Email Newsletter
@@ -153,8 +192,8 @@ const UserSettings = () => {
                 <div id="pfp-pref">
                     <p>Choose Profile Picture</p>
                     <div>
-                        <button id="pfp" className={selectedPfp === 'blue' ? 'selected' : ''} onClick={() => setSelectedPfp('blue')}><img src="/images/icons/pfp1.png"/></button>
-                        <button id="pfp" className={selectedPfp === 'green' ? 'selected' : ''} onClick={() => setSelectedPfp('green')}><img src="/images/icons/pfp2.png"/></button>
+                        <button id="pfp" className={selectedPfp === 'blue' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/pfp1.png')}><img src="/images/icons/pfp1.png"/></button>
+                        <button id="pfp" className={selectedPfp === 'green' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/pfp2.png')}><img src="/images/icons/pfp2.png"/></button>
                     </div>
                     <button onClick={updatePfp}>Save</button>
                 </div>

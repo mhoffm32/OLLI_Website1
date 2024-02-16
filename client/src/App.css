@@ -133,6 +133,15 @@ h1 {
   width: 30px;
 }
 
+.topnav #pfp, .topnav #settings-icon {
+  margin: 5px;
+  vertical-align:middle;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  
+}
+
 .group1{
   text-align: left;
   font-size: medium;
@@ -1126,6 +1135,18 @@ p.letterheader{
 #account-settings{
   width: 100%;
 }
+
+#account-settings .selected {
+  border: 2px solid #007bff; /* Blue border for selected item */
+  border-radius: 4px; /* Optional: adds rounded corners to the border */
+}
+
+#account-settings #pfp1.selected img, #account-settings #pfp2.selected img {
+  /* Additional styles for the img inside the selected button, if needed */
+  border: 2px solid #007bff; /* Blue border for selected item */
+  border-radius: 4px; /* Optional: adds rounded corners to the border */
+}
+
 
 #email-prefs{
   text-align: left;
