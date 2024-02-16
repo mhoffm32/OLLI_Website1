@@ -13,6 +13,9 @@ const PORT = process.env.PORT || 3002;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json())
+
+app.set('view engine', 'ejs');
 
 const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
@@ -23,13 +26,14 @@ const eventRegistration = require('./routes/eventRegistration.js');
 /************ PASSPORT *******************/
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const jwtDecode = require("jwt-decode")
+const jwtDecode = require("jwt-decode");
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 passport.use(new JwtStrategy({
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: process.env.SECRET_KEY // Replace with your own secret
+	secretOrKey: process.env.SECRET_KEY, // Replace with your own secret
+
 }, async (jwtPayload, done) => {
 	console.log("Authenticating")
 	try {
@@ -80,6 +84,7 @@ transporter.verify((error, success) => {
 /********************************** ROUTES *************************************/
 /************* USER ROUTES ***************/
 
+
 router.route('/signup')
 	.post(async (req, res) => {
 		console.log("Signing Up")
@@ -92,6 +97,7 @@ router.route('/signup')
 			res.status(400).json({ message: 'Signup failed' });
 		}
 	});
+
 
 router.route('/request')
 	.post(async (req, res) =>{
@@ -144,37 +150,6 @@ router.route('/request')
 		}
 	
 	});
-
-router.route('/login')
-	.post(async (req, res) => {
-		const { email, password } = req.body;
-		const emailLower = email.toLowerCase().trim()
-
-		if(inputSanitization(password) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailLower)){
-			console.log("Valid entries")
-			const payload = await validatePassword(emailLower, password);
-
-			if(!payload){
-				res.status(400).json({ message: 'Please try another password or log in using google.'})
-			} else if (payload == "disabled"){
-				res.status(409).json({ message: 'This account has been disabled' });
-			} else if(!payload.verified){
-				res.status(410).json({ message: 'Email has not been verified' });
-			} else if(payload){
-				const tokenPayload = {
-					id: payload.id,
-					username: payload.username,
-					verified: payload.verified,
-					type: payload.type
-				};
-				const token = jwt.sign(tokenPayload, process.env.SECRET_KEY); // Replace with your own secret
-				res.status(200).json({ message: 'Login successful', token });
-			} else {
-				res.status(404).json({ message: `Account under ${email} does not exist` });
-			}
-		}
-	});
-
 
 router.route('/google-auth')
 	.post(async (req, res) => {
@@ -302,29 +277,6 @@ app.use(userSignup);
 app.use(userLogin);
 app.use(userSettings);
 app.use(eventRegistration);
-
-	router.route('/user/changePassword')
-	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
-		console.log("Changing Password: " + req.user.username)
-		let user = await getUser(req.user.username)
-		let {password} = req.body;
-		if(user){
-			let hashedPassword = await bcrypt.hash(password, 10);
-			let result = await userCollection.updateOne({username: req.user.username}, {$set: {password: hashedPassword}})
-			console.log(result)
-			res.json({
-				status: 'success',
-				message: 'Password has been changed'
-			})
-		} else {
-			res.json({
-				status: 'error',
-				message: 'Email is invalid'
-			})
-		}
-	})
-
-
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -467,21 +419,26 @@ router.route('/user/updateSettings')
         }
 });
 
-router.route('/user/send-ivey-message')
-	.post(async(req,res) => {
+
+app.post('/user/send-ivey-message', async(req,res) => {
+		try{
 		console.log('Sending message to Ivey')
 		const {name, email, message, subject, phoneNumber} =  req.body;
+		console.log(name)
+		console.log(email)
+		console.log(message)
+		console.log(subject)
+		console.log(phoneNumber)
 		const transport = nodemailer.createTransport({
-			service: "Gmail",
+			service: 'Gmail',
 			auth: {
-				user: "CheerHomepage282@gmail.com",
-				pass: "3350Group25"
+				user: 'cheerhomepage282@gmail.com',
+				pass: 'ccurbpkzzbdzxlkq'
 			}
 		})
-		try {
 			await transport.sendMail({
-			  from: "CheerHomepage282@gmail.com",
-			  to: 'olivinglearn@gmail.com',
+			  from: "cheerhomepage282@gmail.com",
+			  to: 'olivinglearning@gmail.com',
 			  subject: subject,
 			  text: "Hello I'm " + name +'.\n\t' + message + '\nMy phone number is ' + phoneNumber + ' and my email for responding back to me is ' + email
 			});

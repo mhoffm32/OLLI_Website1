@@ -25,7 +25,7 @@ h1 {
 .topnav {
   background-color: #6c7751;
   overflow: hidden;
-  position: fixed;
+  /*position: fixed;*/
   z-index: 1;
   top: 0;
   left: 0;
@@ -189,6 +189,7 @@ h1 {
 }
 
 .logo {
+  margin-top: 20px;
   width: 4px;
   height: 4px;
   margin-right: 5px;
@@ -271,6 +272,20 @@ h1 {
   color: black;
 }
 
+#forgotPassword {
+  background-color: #6c7751; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 40px 2px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
 /* HOME PAGE */ 
 
 .homePageDescription{
@@ -282,7 +297,7 @@ h1 {
   border-radius: 20px;
   width: 90%;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 
 .homePageDescription a{
@@ -777,7 +792,7 @@ h1 {
   color: white;
   width: 60%;
   margin: auto;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   border-radius: 20px;
 }
 
@@ -819,7 +834,7 @@ h1 {
   color: white;
   width: 60%;
   margin: auto;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   border-radius: 20px;
 }
 
@@ -869,7 +884,7 @@ h1 {
   color: white;
   width: 60%;
   margin: auto;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   border-radius: 20px;
 }
 
@@ -930,12 +945,6 @@ h1 {
 
 /* ??? */
 
-#return-btn {
-  position: fixed;
-  top: 120px;
-  left: 20px;
-}
-
 #download-img {
   margin-left: 10px;
   width: 25px;
@@ -952,9 +961,8 @@ a:hover {
 
 #newsletter-list{
   align-items: left;
-  margin-top: 50px;
-  margin-left: -150px;
-
+  margin-left: 30px;
+  /*margin-top: 50px;*/
 }
 
 .letter-info {
@@ -966,18 +974,12 @@ a:hover {
 }
 
 .newsletter-item {
+  width: 100%;
   display: flex;
   align-items: center; /* Align items vertically */
   margin-bottom: -25px; /* Adjust this value to reduce the space */
 }
 
-.info-container {
-  flex: 1; /* Take up remaining space */
-}
-
-.button-container {
-  display: flex;
-}
 
 .open-btn{
   margin-left: 10px;
@@ -1004,9 +1006,31 @@ a:hover {
   border-radius: 20px; /* Rounded sides */
 }
 
+
+.backArrowImg {
+  width: 60px;
+  height: 50px;
+}
+
+
+.fundraising, .contact, .events, .homePage, .verification, .news, .about, .admin-stuff {
+  /*margin-top: 50px;*/
+  margin-bottom: 50px;
+  text-align: center;
+  
+}
+.admin-stuff{
+  margin-bottom: 300px;
+}
+
+input, button, select, option {
+  font-family: 'Nunito', sans-serif;
+}
+
+
 .verification {
   max-width: 400px;
-  margin: 50px auto;
+  /*margin: 50px auto;*/
   padding: 20px;
   border-radius: 5px;
 }
@@ -1061,8 +1085,11 @@ a:hover {
   text-align: center;
 }
 
-.letterheader{
+p.letterheader{
+  padding:0px;
+  margin-bottom: 15px;
   text-align: left;
+  margin-left: 30px;
 }
 
 #settings-icon {
@@ -1091,18 +1118,102 @@ a:hover {
 
 /* RANDOM STUFF */
 
-.backArrowImg {
-  width: 60px;
-  height: 50px;
+#settings-icon{
+  padding: 0px;
+  margin-right: 20px;
 }
+
+#account-settings{
+  width: 100%;
+}
+
+#email-prefs{
+  text-align: left;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+ 
+}
+
+#email-prefs label.switch {
+  padding-right: 10px; /* Adjust padding for the switch label */
+
+}
+
+#email-prefs button {
+  padding: 5px 10px; /* Adjust padding for the button */
+}
+
+.news{
+  width: 100%;
+}
+
+.letterheader{
+  font-weight: bolder;
+}
+
+#admin-options, #admin-page, #upload-pdf{
+  width: 100%;
+}
+
+#upload-nl{
+  font-weight: bolder;
+  font-size: 25px;
+  margin-left: 30px;
+
+}
+
+#stuff-nl{
+  text-align: center;
+}
+
+#button-container{
+  text-align: right;
+}
+
+#newsletter-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+}
+
+.newsletter-item {
+  position: relative;
+  width: 100%; /* Ensures the item occupies the full width */
+  display: flex;
+  justify-content: flex-start; /* Aligns items (info-container and button-container) to the start of the container */
+  margin-bottom: -15px;
+}
+
+.info-container {
+  display: flex;
+  align-items: center; /* Aligns items vertically within the info container */
+}
+
+.button-container {
+  position:absolute;
+  right: 0;
+  margin-right: 200px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.button-container button {
+  margin-right: 10px; /* Adjust as needed */
+
+}
+
+/* RANDOM STUFF */
+
 
 .backArrowImg {
   width: 60px;
   height: 50px;
 }
+
 
 .fundraising, .contact, .events, .homePage, .verification, .news, .about, .drop-in {
-  margin-top: 50px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -1113,3 +1224,84 @@ input, button, select, option {
 button:hover {
   cursor: pointer;
 }
+
+#ul-txt{
+  text-align: center;
+}
+
+.admin-btn{
+  background-color: #df7958;
+  padding: 10px;
+  margin: 20px;
+  border-width: 1px;
+  border-radius: 8px;
+  border-width: 1px;
+}
+
+#confirm-delete{
+  background-color:#df7958;
+  font-weight: 200;
+  padding: 5px;
+  margin: 20px;
+  font-weight: bolder;
+  border-width: 0.2px;
+  border-radius: 8px;
+}
+
+#delete1{
+  background-color: #cd8783fc;
+  font-weight: bolder;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+}
+
+#upload-file{
+  background-color:#859262;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  font-weight: bolder;
+}
+
+#return-btn {
+  position:absolute;
+  background-color: #a2a2a3;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  top: 120px;
+  left: 10px;
+}
+
+
+.backBtn2{
+  position:absolute;
+  background-color: #a2a2a3;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  top: 115px;
+  left: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.backArrowImg2 {
+  width: 40px;
+  height: 30px;
+}
+
+
+
+
+
+
+
+
+

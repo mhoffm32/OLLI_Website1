@@ -99,7 +99,6 @@ const UserSettings = () => {
         }
     };
     
-
     const updatePfp = async () => {
         const token = localStorage.getItem('jwt');
         try {
