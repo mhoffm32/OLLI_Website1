@@ -22,6 +22,7 @@ class NavigationBar extends React.Component {
 
         const token = localStorage.getItem('jwt');
         const decoded = token ? jwtDecode(token): null;
+        const userProfilePic = decoded && decoded.pfp && decoded.pfp.trim() !== '' ? decoded.pfp : '/images/icons/default_pfp.png';
 
         return (
             <div className="topnav">
@@ -65,11 +66,13 @@ class NavigationBar extends React.Component {
                         <img src={activeOption === 'AdminTools' ? "/images/icons/tools-green.png" : '/images/icons/tools.png'} className="nav-icon" alt='Verification'/>
                         Admin Tools
                     </a></> : <></>}
-                        <b className="username">{jwtDecode(token).username} 
-                        <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
-                            <img id="download-img" src='/images/icons/settings.png'/>
-                        </a>
-                    </b>
+                        <b className="username">
+                            {jwtDecode(token).username} 
+                            <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
+                                <img id="download-img" src='/images/icons/settings.png'/>
+                            </a>
+                            <img src={userProfilePic} id="pfp" alt="User" /> {/* Display user profile picture */}
+                        </b>
                         <button className="signout" onClick={this.handleSignOut}>Sign Out</button>
                     </>
 
