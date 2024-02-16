@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UploadLetter from "../Pages/UploadLetter";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import ManageUser from "../Pages/manageUser";
 
 const AdminTools = ({ changePage, user }) => {
   const [page, setPage] = useState("adminHome");
@@ -23,9 +24,12 @@ const AdminTools = ({ changePage, user }) => {
       
     } catch (error) {
       console.log("Error:", error);
+    const getCurrentPage = () => {
+        let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>}
+        return pages[page];
     }
   };
-
+  }
   const eventClicked = (info) => {
     const title = info.event.title;
     const start = info.event.start;
@@ -87,6 +91,27 @@ const AdminTools = ({ changePage, user }) => {
           </>
         )}
       </div>
+    <div id="admin-page">
+  
+        {page === "adminHome" ? <>
+        <button id='admin-menu-btn' onClick={()=>setPage("uploadLetter")}>
+           Upload Newsletters
+        </button>
+        <br/>
+        <button id='admin-menu-btn' onClick={()=>setPage("manageSchedule")}>
+           Manage Schedule
+        </button>
+        <br/>
+        <button id='admin-menu-btn' onClick={()=>setPage("manageUser")}>
+           Manage Users
+        </button>
+        </> : <>
+        <button id='return-btn' onClick={()=> setPage("adminHome")}>
+            Return
+        </button>
+        {getCurrentPage()}
+        </>}
+    </div>
     </div>
   );
 };

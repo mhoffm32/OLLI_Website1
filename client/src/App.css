@@ -1311,3 +1311,34 @@ button:hover {
 
 
 
+
+/* Status buttons */
+
+.approvalControls{
+  display: flex;
+}
+
+#approvalButton{
+  background-color: #6c7751;
+  color: black;
+  width: 200px;
+  height: 100px;
+}
+
+#denyButton{
+  background-color: #df7958;
+  color: black;
+  width: 200px;
+  height: 100px;
+}
+
+.userMenu {
+  margin-bottom: 10px; /* Adds space between each user menu */
+  font-size: 16px; /* Increases font size for better visibility */
+}
+
+#pendingUsers{
+  width: 400px;
+  height: 100px;
+}
+
