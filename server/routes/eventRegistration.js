@@ -3,6 +3,13 @@ const express = require('express');
 const router = express.Router();
 const eventRegistrations = require('../models/eventRegistrations');
 
+router.route('/getRegistrations')
+  .get(async (req, res) => {
+	const bookings = await eventRegistrations.find({}, {event: 1, pickup: 1, dropoff: 1, _id: 0});
+	res.json(bookings);
+    
+  });
+
 
 router.route('/dropins')
 	.post(async (req, res) => {
@@ -11,6 +18,9 @@ router.route('/dropins')
 		console.log("Drop off: " + dropOff + " ; Pick up: " + pickUp);
 		res.json({ message: 'Drop in successful' });
 	});
+
+
+
 
 module.exports = router;
 

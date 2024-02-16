@@ -20,11 +20,35 @@ const AdminTools = ({ changePage, user }) => {
       }
       const data = await response.json();
       setBookedDates(data);
+      console.log(bookedDates.map(date => ({
+        title: date.event,
+        start: date.pickup,
+        end: date.dropoff
+      })));
+      
     } catch (error) {
       console.log("Error:", error);
     }
   };
 
+  const eventClicked = (info) => {
+    const title = info.event.title;
+    const start = info.event.start;
+    const end = info.event.end;
+  
+    let alertMessage = "Event: " + title + " From: " + start;
+  
+    // Check if end time is available
+    if (end) {
+      alertMessage += " To: " + end;
+    } else {
+      alertMessage += " (No end time)";
+    }
+  
+    alert(alertMessage);
+    
+  };
+  
   const getCurrentPage = () => {
     let pages = { uploadLetter: <UploadLetter /> };
     return pages[page];
@@ -55,10 +79,15 @@ const AdminTools = ({ changePage, user }) => {
                 initialView="dayGridMonth"
                 events={bookedDates.map((date) => ({
                   title: date.event,
-                  start: date.dropoff,
-                  end: date.pickup
+                  start: date.pickup,
+                  end: date.dropoff,
+                  
                 }))}
+                timeZone="UTC"
+                eventClick={eventClicked}
+            
               />
+
             </div>
           </>
         )}
