@@ -20,11 +20,6 @@ const AdminTools = ({ changePage, user }) => {
       }
       const data = await response.json();
       setBookedDates(data);
-      console.log(bookedDates.map(date => ({
-        title: date.event,
-        start: date.pickup,
-        end: date.dropoff
-      })));
       
     } catch (error) {
       console.log("Error:", error);
