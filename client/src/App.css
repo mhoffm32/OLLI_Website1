@@ -1104,6 +1104,19 @@ p.letterheader{
   height: 20px;
 }
 
+/* ACCOUNT SETTINGS */
+
+ #account-settings img {
+  height: 50px;
+  width: 50px;
+}
+
+#account-settings #pfp {
+  border: none;
+  background: none;
+}
+
+/* RANDOM STUFF */
 
 #settings-icon{
   padding: 0px;

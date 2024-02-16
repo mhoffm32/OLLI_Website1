@@ -142,6 +142,46 @@ router.route('/user/changePassword')
 		}
 	})
 
+router.route('/user/changeName')
+	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
+		console.log("Changing Name for: " + req.user.email)
+		let user = await UserInterface.getUserByEmail(req.user.email)
+		let {firstname, lastname} = req.body;
+		if(user){
+			let result = await User.updateOne({email: req.user.email}, {$set: {firstname: firstname, lastname: lastname}})
+			console.log(result)
+			res.json({
+				status: 'success',
+				message: 'Name has been changed to ' + firstname + " " + lastname
+			})
+		} else {
+			res.json({
+				status: 'error',
+				message: 'Email is invalid'
+			})
+		}
+	})
+
+router.route('/user/changePfp') 
+	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
+		console.log("Changing Profile Picture: " + req.user.email)
+		let user = await UserInterface.getUserByEmail(req.user.email)
+		let {pfp} = req.body;
+		if(user){
+			let result = await User.updateOne({email: req.user.email}, {$set: {pfp: pfp}})
+			console.log(result)
+			res.json({
+				status: 'success',
+				message: 'Profile picture has been changed'
+			})
+		} else {
+			res.json({
+				status: 'error',
+				message: 'Email is invalid'
+			})
+		}
+	})
+
 router.route('/user/changePassword/:userID/:uniqueString')
 .get(async (req, res) => {
 	const uniqueString = req.params.uniqueString;

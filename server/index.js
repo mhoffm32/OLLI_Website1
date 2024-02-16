@@ -38,7 +38,7 @@ passport.use(new JwtStrategy({
 	console.log("Authenticating")
 	try {
 		console.log("JWT Payload: " + jwtPayload.id + " ; " + jwtPayload.username)
-		const user = await userCollection.findOne({_id : new ObjectId(jwtPayload.id)})  //User.findById(jwtPayload.id);
+		const user = await User.findOne({_id : new ObjectId(jwtPayload.id)})  //User.findById(jwtPayload.id);
 		return done(null, user);
 	} catch (err) {
 		return done(err, false);
