@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
   
 const manageUser = ({ changePage, user }) => {
 
-    const menuItems = [
+    const users = [
         { username: 'User 1' },
         { username: 'User 2' },
         { username: 'User 3' },
@@ -18,7 +18,7 @@ const manageUser = ({ changePage, user }) => {
     <div class="approvalControls">
         <div class='userMenu'>
             <select id='pendingUsers'>
-            {menuItems.map((item, index) => (
+            {users.map((item, index) => (
                             <option key={index} value={`user${index + 1}`}>{item.username}</option>
                         ))}
             </select>
