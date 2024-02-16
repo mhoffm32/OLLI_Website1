@@ -1145,5 +1145,19 @@ button:hover {
 
 }
 
+/* Custom styles for FullCalendar events */
+.fc-event {
+  background-color: #6c7751; /* Change background color */
+  color: #ffffff; /* Change text color */
+  border: 1px solid #6c7751; /* Add border */
+  border-radius: 5px; /* Add border radius */
+  padding: 5px; /* Add padding */
+}
+
+/* Hover effect */
+.fc-event:hover {
+  background-color: #0056b3; /* Change background color on hover */
+  border-color: #0056b3; /* Change border color on hover */
+}
 
 

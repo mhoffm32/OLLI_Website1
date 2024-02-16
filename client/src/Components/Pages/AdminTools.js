@@ -55,8 +55,8 @@ const AdminTools = ({ changePage, user }) => {
                 initialView="dayGridMonth"
                 events={bookedDates.map((date) => ({
                   title: date.event,
-                  start: date.dropoff, // Assuming dropoff is the start date
-                  end: date.pickup, // Assuming pickup is the end date
+                  start: date.dropoff,
+                  end: date.pickup
                 }))}
               />
             </div>
