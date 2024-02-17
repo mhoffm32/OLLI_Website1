@@ -30,10 +30,6 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'Home' ? '/images/icons/house-green.png' : '/images/icons/house.png'} className="nav-icon" alt="Home" />
                     Home
                 </a>                
-                <a className={activeOption === 'News' ? 'active' : ''} onClick={evt => this.props.changePage('News')}>
-                    <img src={activeOption === 'News' ? "/images/icons/news-green.png" : '/images/icons/news.png'} className="nav-icon" alt="News" />
-                    News
-                </a>
                 <a className={activeOption === 'Events' ? 'active' : ''} onClick={evt => this.props.changePage('Events')}>
                     <img src={activeOption === 'Events' ? "/images/icons/event-green.png" : '/images/icons/event.png'} className="nav-icon" alt="Events" />
                     Events
@@ -53,6 +49,10 @@ class NavigationBar extends React.Component {
                 
                 {token ? (
                     <>
+                <a className={activeOption === 'News' ? 'active' : ''} onClick={evt => this.props.changePage('News')}>
+                    <img src={activeOption === 'News' ? "/images/icons/news-green.png" : '/images/icons/news.png'} className="nav-icon" alt="News" />
+                    News
+                </a>
                 <a className={activeOption === 'Drop Ins' ? 'active' : ''} onClick={() => this.props.changePage('Drop Ins')}>
                     <img src={activeOption === 'Drop Ins' ? "/images/icons/dropin-green.png" : '/images/icons/dropin.png'} className="nav-icon" alt='Drop Ins'/>
                     Drop Ins
