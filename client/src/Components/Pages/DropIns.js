@@ -25,6 +25,20 @@ class DropIns extends Component {
     handleSubmit = (event) => { 
         event.preventDefault();
         const { dropOffTime, pickUpTime } = this.state;
+
+            // Convert times to dayjs objects for easy comparison
+        const dropOffDayjs = dayjs(dropOffTime);
+        const pickUpDayjs = dayjs(pickUpTime);
+
+        // Define the start and end times for comparison
+        const startTime = dropOffDayjs.hour(9).minute(0); // 9:00 AM
+        const endTime = dropOffDayjs.hour(17).minute(0); // 5:00 PM
+
+        // Check if drop-off and pick-up times are within the allowed range
+        if (dropOffDayjs.isBefore(startTime) || dropOffDayjs.isAfter(endTime) || pickUpDayjs.isBefore(startTime) || pickUpDayjs.isAfter(endTime)) {
+            this.setState({ submissionMessage: 'Please only select times between 9 AM and 5 PM.' });
+            return; // Prevent the form from being submitted
+        }
     
         const formattedDropOff = dayjs(dropOffTime).format('YYYY-MM-DD hh:mm A');
         const formattedPickUp = dayjs(pickUpTime).format('YYYY-MM-DD hh:mm A');
@@ -53,16 +67,24 @@ class DropIns extends Component {
 
     render() {
         const { dropOffTime, pickUpTime, submissionMessage } = this.state;
+        const now = dayjs(); // Get the current date and time
+
+        const disableWeekends = (date) => {
+            return dayjs(date).day() === 0 || dayjs(date).day() === 6;
+        };
 
         return (
             <div className="drop-in">
                 <form onSubmit={this.handleSubmit}>
                     <h1>Drop In Page</h1>
+                    <p>Please enter a drop-off and pick-up time if you would like to register for a drop-in day.</p>
                     <LocalizationProvider dateAdapter={AdapterDayjs} className="date-picker">
                         <DateTimePicker
                             label="Drop Off Time"
                             value={dayjs(dropOffTime)}
                             onChange={this.handleDropOffTimeChange}
+                            shouldDisableDate={disableWeekends}
+                            minDateTime={now} // Prevent selection of past dates and times
                         />
                     </LocalizationProvider>
                     <LocalizationProvider dateAdapter={AdapterDayjs} className="date-picker">
@@ -70,12 +92,13 @@ class DropIns extends Component {
                             label="Pick Up Time"
                             value={dayjs(pickUpTime)}
                             onChange={this.handlePickUpTimeChange}
+                            shouldDisableDate={disableWeekends}
+                            minDateTime={now} // Prevent selection of past dates and times
                         />
                     </LocalizationProvider>
                     <br></br>
                     <button type="submit" className="button">Submit</button>  
                 </form>
-                {/* Display the submission message */}
                 {submissionMessage && <p>{submissionMessage}</p>}
             </div>
         );
