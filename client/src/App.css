@@ -20,6 +20,10 @@ h1 {
   color: #333;
 }
 
+a:hover {
+  cursor:pointer;
+}
+
 /* NAVIGATION */
 
 .topnav {
@@ -108,6 +112,19 @@ h1 {
   color: black;
 }
 
+.topnav #settings-icon, .topnav #settings-icon img {
+  border-radius: 50%;
+  height: 30px;
+}
+
+.topnav #pfp {
+  margin: 5px;
+  vertical-align:middle;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
 /* HOME PAGE */
 
 .opening{
@@ -131,15 +148,6 @@ h1 {
   vertical-align:middle;
   height: 30px;
   width: 30px;
-}
-
-.topnav #pfp, .topnav #settings-icon {
-  margin: 5px;
-  vertical-align:middle;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  
 }
 
 .group1{
@@ -931,6 +939,10 @@ h1 {
 }
 
 /* DROP-IN PAGE */
+.drop-in {
+  padding: 20px;
+}
+
 .drop-in button {
   background-color: #df7958;
   color: black;
@@ -946,51 +958,68 @@ h1 {
   color: black;
 }
 
-.drop-in .DateTimePicker {
-  display: flex;
-  align-items: center;
-
+.drop-in .date-picker {
+  padding: 10px;
 }
 
-/* ??? */
+.drop-in .datetime-boxes {
+  display: flex;
+  justify-content: space-between; /* This will space out the children evenly */
+  align-items: center; /* This will ensure they are aligned nicely */
+  width: 55%;
+  margin: auto;
+}
 
-#download-img {
+.drop-in .date-picker {
+  flex: 1; /* Makes each date picker flex to fill the space */
+  margin: 0 10px; /* Adds horizontal margin */
+}
+
+/* NEWS PAGE */
+
+.news .info-container {
+  margin: auto;
+}
+
+.news #download-img {
   margin-left: 10px;
   width: 25px;
   vertical-align: middle;
 }
 
-a:hover {
-  cursor:pointer;
-}
-
-.letter-info{
+.news .letter-info {
  text-align: left;
+ border: rgb(238, 231, 221) 1px solid;
+ border-radius: 20px;
+ padding: 20px;
+ background-color: rgb(238, 231, 221);
 }
 
-#newsletter-list{
+.news .letter-info:hover {
+  text-align: left;
+  border: rgb(238, 231, 221) 1px solid;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: rgb(205, 201, 196);
+ }
+
+.news #newsletter-list {
   align-items: left;
-  margin-left: 30px;
   /*margin-top: 50px;*/
 }
 
-.letter-info {
-  text-align: left; /* Align text to the left within the paragraphs */
-}
-
-#upload-pdf {
+.news #upload-pdf {
   text-align: left; /* Align content to the left side of the page */
 }
 
-.newsletter-item {
+.news .newsletter-item {
   width: 100%;
   display: flex;
   align-items: center; /* Align items vertically */
   margin-bottom: -25px; /* Adjust this value to reduce the space */
 }
 
-
-.open-btn{
+.news .open-btn {
   margin-left: 10px;
 }
 
@@ -1097,14 +1126,7 @@ input, button, select, option {
 p.letterheader{
   padding:0px;
   margin-bottom: 15px;
-  text-align: left;
-  margin-left: 30px;
-}
-
-#settings-icon {
-  width: 20px;
-  height: 20px;
-  filter: invert(100%);
+  
 }
 
 .switch input {
@@ -1114,6 +1136,25 @@ p.letterheader{
 }
 
 /* ACCOUNT SETTINGS */
+
+#account-settings{
+  width: 100%;
+}
+
+#account-settings #email-prefs{
+  text-align: center;
+  margin-left: 20px;
+
+}
+
+#account-settings #email-prefs label.switch {
+  padding-right: 10px; /* Adjust padding for the switch label */
+
+}
+
+#account-settings #email-prefs button {
+  padding: 5px 10px; /* Adjust padding for the button */
+}
 
  #account-settings img {
   height: 50px;
@@ -1126,44 +1167,6 @@ p.letterheader{
 }
 
 /* RANDOM STUFF */
-
-#settings-icon{
-  padding: 0px;
-  margin-right: 20px;
-}
-
-#account-settings{
-  width: 100%;
-}
-
-#account-settings .selected {
-  border: 2px solid #007bff; /* Blue border for selected item */
-  border-radius: 4px; /* Optional: adds rounded corners to the border */
-}
-
-#account-settings #pfp1.selected img, #account-settings #pfp2.selected img {
-  /* Additional styles for the img inside the selected button, if needed */
-  border: 2px solid #007bff; /* Blue border for selected item */
-  border-radius: 4px; /* Optional: adds rounded corners to the border */
-}
-
-
-#email-prefs{
-  text-align: left;
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
- 
-}
-
-#email-prefs label.switch {
-  padding-right: 10px; /* Adjust padding for the switch label */
-
-}
-
-#email-prefs button {
-  padding: 5px 10px; /* Adjust padding for the button */
-}
 
 .news{
   width: 100%;

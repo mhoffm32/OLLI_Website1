@@ -93,7 +93,7 @@ const News = () => {
     return (
         <div className="news">
             <h1>News</h1>
-            <p className='letterheader'> Newsletters </p>
+            <p className='letterheader'> Below are our recent newsletters. Click to view or download any!</p>
             {localStorage.getItem('jwt') ?
             <div id='newsletter-list'>
                 {newsletters !== null ? newsletters.map((newsletter, index) => (
@@ -102,10 +102,10 @@ const News = () => {
                 <p className="letter-info">
                   {newsletter.letter_name} {newsletter.date} 
                   <a onClick={() => { downloadPdf(newsletter._id, newsletter.pdf_name) }} download={newsletter.pdf_name}>
-                    <img id="download-img" src='/images/icons/download.png' alt="Download" />
+                    <img id="download-img" src='/images/icons/download.png' alt="Download" title="Download PDF" />
                   </a>
                   <a onClick={() => { openPdf(newsletter._id, newsletter.pdf_name,newsletter.letter_name)}} download={newsletter.pdf_name}>
-                    <img id="download-img" src='/images/icons/open.png' alt="Download" />
+                    <img id="download-img" src='/images/icons/open.png' alt="Download" title="Open PDF" />
                   </a>
                 </p>
               </div>
