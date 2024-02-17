@@ -133,6 +133,15 @@ h1 {
   width: 30px;
 }
 
+.topnav #pfp, .topnav #settings-icon {
+  margin: 5px;
+  vertical-align:middle;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  
+}
+
 .group1{
   text-align: left;
   font-size: medium;
@@ -1127,6 +1136,18 @@ p.letterheader{
   width: 100%;
 }
 
+#account-settings .selected {
+  border: 2px solid #007bff; /* Blue border for selected item */
+  border-radius: 4px; /* Optional: adds rounded corners to the border */
+}
+
+#account-settings #pfp1.selected img, #account-settings #pfp2.selected img {
+  /* Additional styles for the img inside the selected button, if needed */
+  border: 2px solid #007bff; /* Blue border for selected item */
+  border-radius: 4px; /* Optional: adds rounded corners to the border */
+}
+
+
 #email-prefs{
   text-align: left;
   margin-left: 20px;
@@ -1340,3 +1361,39 @@ button:hover {
   background-color: #ddd;
   color: black;
 }
+
+
+
+
+
+
+/* Status buttons */
+
+.approvalControls{
+  display: flex;
+}
+
+#approvalButton{
+  background-color: #6c7751;
+  color: black;
+  width: 200px;
+  height: 100px;
+}
+
+#denyButton{
+  background-color: #df7958;
+  color: black;
+  width: 200px;
+  height: 100px;
+}
+
+.userMenu {
+  margin-bottom: 10px; /* Adds space between each user menu */
+  font-size: 16px; /* Increases font size for better visibility */
+}
+
+#pendingUsers{
+  width: 400px;
+  height: 100px;
+}
+
