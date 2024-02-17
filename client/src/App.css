@@ -1268,7 +1268,7 @@ button:hover {
 
 #return-btn {
   position:absolute;
-  background-color: #a2a2a3;
+  background-color: #df7958;
   padding: 5px;
   margin: 20px;
   border-width: 0.2px;
@@ -1276,6 +1276,11 @@ button:hover {
   top: 120px;
   left: 10px;
 }
+
+#return-btn:hover {
+  background-color: #ddd;
+  color: black;
+} 
 
 
 .backBtn2{
@@ -1297,17 +1302,41 @@ button:hover {
   height: 30px;
 }
 
-.fc-event{
+
+.fc-daygrid-event-harness{
   background-color: #6c7751;
   color: white;
 }
 
+.fc-daygrid-event-harness:hover{
+  background-color: #df7958;
+  color: black;
+}
 
+#admin-menu-btn{
+  background-color: #df7958;
+  padding: 10px;
+  margin: 20px;
+  border-width: 1px;
+  border-radius: 8px;
+  border-width: 1px;
+}
 
+#admin-menu-btn:hover{
+  background-color: #ddd;
+  color: black;
+}
 
+#admin-sched-btn{
+  background-color: #df7958;
+  padding: 10px;
+  margin: 20px;
+  border-width: 1px;
+  border-radius: 8px;
+  border-width: 1px;
+}
 
-
-
-
-
-
+#admin-sched-btn:hover{
+  background-color: #ddd;
+  color: black;
+}
