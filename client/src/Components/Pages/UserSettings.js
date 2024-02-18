@@ -34,6 +34,7 @@ const UserSettings = () => {
                     firstname: data.firstname,
                     lastname: data.lastname,
                     email: data.email,
+                    pfp: data.pfp,
                 });
             } else {
                 console.error('Failed to fetch user details:', response.statusText);
@@ -155,22 +156,26 @@ const UserSettings = () => {
             console.error("Failed to update profile picture:", error);
             alert("Failed to update profile picture due to an error.");
         }
+        getUserDetails();
     };    
     
     return (
-        <div id="account-settings"><br/><br/><br/>
+        <div id="account-settings">
             <h1>Account Settings</h1> 
 
             {userSettings !== null ? <>
                 <div id="user-details">
+                    <h3>Current Profile Details</h3>
+                    <hr></hr>
                     <p>Email: {userDetails.email}</p>
                     <p>First Name: {userDetails.firstname}</p>
                     <p>Last Name: {userDetails.lastname}</p>
+                    <p>Profile Photo: {userDetails.pfp}</p>
                 </div>
                 <div id="email-prefs">
-                    <p>
+                    <h3>
                         Monthly Email Newsletter
-                    </p>
+                    </h3>
 
                     <label class="switch">
                     <input 
@@ -182,21 +187,22 @@ const UserSettings = () => {
                         <button onClick={()=>updateSettings()}>Save</button>
                 </div>
                 <div id="name-pref">
-                    <p>
+                    <h3>
                         Change Name
-                    </p>
+                    </h3>
                     <input type="text" name="first_name" value={firstName || ''} onChange={(e) => setFirstName(e.target.value)} placeholder="First Name"/>
                     <input type="text" name="last_name" value={lastName || ''} onChange={(e) => setLastName(e.target.value)} placeholder="Last Name"/>
                     <button onClick={updateName}>Save</button>
                 </div>
                 <div id="pfp-pref">
-                    <p>Choose Profile Picture</p>
+                    <h3>Choose Profile Picture</h3>
                     <div>
                         <button id="pfp" className={selectedPfp === 'blue' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/pfp1.png')}><img src="/images/icons/pfp1.png"/></button>
                         <button id="pfp" className={selectedPfp === 'green' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/pfp2.png')}><img src="/images/icons/pfp2.png"/></button>
                     </div>
                     <button onClick={updatePfp}>Save</button>
                 </div>
+                <br></br>
             </> : <></>}
         </div>
     );
