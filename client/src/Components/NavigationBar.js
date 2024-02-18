@@ -69,7 +69,7 @@ class NavigationBar extends React.Component {
                         <b className="username">
                             {jwtDecode(token).username} 
                             <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
-                                <img id="download-img" src='/images/icons/settings.png'/>
+                                <img id="settings-img" src='/images/icons/settings.png'/>
                             </a>
                             <img src={userProfilePic} id="pfp" alt="User" /> {/* Display user profile picture */}
                         </b>

@@ -102,12 +102,12 @@ a:hover {
   color: black;
 }
 
-.topnav button.signup {
+.topnav button.signup, .topnav button.signout{
   background-color: #ffd7c7;
   color: black;
 }
 
-.topnav button.signup:hover {
+.topnav button.signup:hover, .topnav button.signout:hover {
   background-color: #ddd;
   color: black;
 }
@@ -115,6 +115,7 @@ a:hover {
 .topnav #settings-icon, .topnav #settings-icon img {
   border-radius: 50%;
   height: 30px;
+  vertical-align: middle;
 }
 
 .topnav #pfp {
@@ -1144,7 +1145,6 @@ p.letterheader{
 #account-settings #email-prefs{
   text-align: center;
   margin-left: 20px;
-
 }
 
 #account-settings #email-prefs label.switch {
@@ -1164,6 +1164,20 @@ p.letterheader{
 #account-settings #pfp {
   border: none;
   background: none;
+}
+
+#account-settings p {
+  font-weight: bolder;
+}
+
+#account-settings #user-details {
+  border: rgb(238, 231, 221) 1px solid;
+  border-radius: 20px;
+  padding: 20px;
+  width: 40%;
+  margin: auto;
+  background-color: rgb(238, 231, 221);
+  font-weight: 300;
 }
 
 /* RANDOM STUFF */
