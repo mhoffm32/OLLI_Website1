@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadLetter from "../Pages/UploadLetter";
+import ManageSchedule from "../Pages/ManageSchedule";
 
+import ManageUser from "../Pages/manageUser";
 
-const AdminTools = ({ changePage , user}) => {
-    const [page, setPage] = useState("adminHome");
+const AdminTools = ({ changePage, user }) => {
+  const [page, setPage] = useState("adminHome");
 
-    const getCurrentPage = () => {
-        let pages = {"uploadLetter" : <UploadLetter/>}
-        return pages[page];
-    }
+ 
+  const getCurrentPage = () => {
+    let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>, "manageSchedule" : <ManageSchedule/>}
+    return pages[page];
+}
 
   return (
-
-    <div id="admin-options">
-    <h1>Admin Tools Home</h1>
-
+   
     <div id="admin-page">
   
         {page === "adminHome" ? <>
@@ -25,6 +25,10 @@ const AdminTools = ({ changePage , user}) => {
         <button id='admin-menu-btn' onClick={()=>setPage("manageSchedule")}>
            Manage Schedule
         </button>
+        <br/>
+        <button id='admin-menu-btn' onClick={()=>setPage("manageUser")}>
+           Manage Users
+        </button>
         </> : <>
         <button id='return-btn' onClick={()=> setPage("adminHome")}>
             Return
@@ -32,7 +36,7 @@ const AdminTools = ({ changePage , user}) => {
         {getCurrentPage()}
         </>}
     </div>
-    </div>
+
   );
 };
 

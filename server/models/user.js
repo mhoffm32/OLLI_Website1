@@ -5,11 +5,12 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     verified: Boolean,
-    type: String //eg. client, parent/guardian, staff, owner
+    type: String, //eg. client, parent/guardian, staff, owner
+    firstname: String,
+    lastname: String,
+    pfp: String,
 });
-
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
-

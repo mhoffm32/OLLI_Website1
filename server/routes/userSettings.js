@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User'); // adjust the path as needed
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const InputChecker = require('../helperClasses/inputChecker'); // adjust the path as needed
 const PasswordChangeRequest = require('../models/passwordChangeRequest');
 const UserInterface = require('../helperClasses/userInterface');
@@ -26,6 +27,17 @@ transporter.verify((error, success) => {
 		console.log("Server is ready to take messages");
 	}
 });
+
+const verifyToken = (req, res, next) => {
+	const token = req.headers['authorization']?.split(' ')[1];
+	if (!token) return res.status(403).send({ message: 'No token provided.' });
+
+	jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+		if (err) return res.status(401).send({ message: 'Failed to authenticate token.' });
+		req.userId = decoded.id;
+		next();
+	});
+};
 
 router.route('/request')
 	.post(async (req, res) =>{
@@ -142,6 +154,44 @@ router.route('/user/changePassword')
 		}
 	})
 
+router.route('/user/changeName')
+	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
+		console.log("Changing Name for: " + req.user.email)
+		let user = await UserInterface.getUserByEmail(req.user.email)
+		let {firstname, lastname} = req.body;
+		if(user){
+			let result = await User.updateOne({email: req.user.email}, {$set: {firstname: firstname, lastname: lastname}})
+			console.log(result)
+			res.json({
+				status: 'success',
+				message: 'Name has been changed to ' + firstname + " " + lastname
+			})
+		} else {
+			res.json({
+				status: 'error',
+				message: 'Email is invalid'
+			})
+		}
+	})
+
+	router.route('/user/updatePfp')
+		.post(verifyToken, async (req, res) => {
+			const { pfp } = req.body;
+			if (!pfp) return res.status(400).send('Profile picture URL is required.');
+		
+			try {
+				let result = await User.updateOne({_id: new ObjectId(req.userId)}, {$set: {pfp: pfp}})
+				console.log(result)
+				res.json({
+					status: 'success',
+					message: 'PFP has been changed to ' + pfp
+				})			
+				} catch (error) {
+				console.error(error);
+				res.status(500).send('Internal server error.');
+			}
+	});
+
 router.route('/user/changePassword/:userID/:uniqueString')
 .get(async (req, res) => {
 	const uniqueString = req.params.uniqueString;
@@ -229,6 +279,18 @@ router.route('/user/changePassword/:userID/:uniqueString/setPassword')
 		}	
 	});
 
+router.route('/user/details')
+	.get(verifyToken, async (req, res) => {
+		console.log("Getting User Details: " + req.userId)
+	try {
+		const user = await User.findById(req.userId).select('-password'); // Exclude the password from the result
+		if (!user) return res.status(404).send({ message: 'User not found.' });
+		res.send(user);
+	} catch (error) {
+		res.status(500).send({ message: 'There was a problem finding the user.' });
+	}
+});
+
 module.exports = router;
 
 /********************************************** HELPER FUNCTIONS *******************************************/
@@ -251,3 +313,4 @@ async function changePassword(email, password){
 		}
 	}
 }
+

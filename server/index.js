@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 3002;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json())
 
 app.set('view engine', 'ejs');
 
@@ -26,13 +27,14 @@ const eventRoutes = require('./routes/eventRoutes.js');
 /************ PASSPORT *******************/
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const jwtDecode = require("jwt-decode")
+const jwtDecode = require("jwt-decode");
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 passport.use(new JwtStrategy({
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: process.env.SECRET_KEY // Replace with your own secret
+	secretOrKey: process.env.SECRET_KEY, // Replace with your own secret
+
 }, async (jwtPayload, done) => {
 	console.log("Authenticating")
 	try {
@@ -82,6 +84,21 @@ transporter.verify((error, success) => {
 
 /********************************** ROUTES *************************************/
 /************* USER ROUTES ***************/
+
+
+router.route('/signup')
+	.post(async (req, res) => {
+		console.log("Signing Up")
+		const { email, username, password } = req.body;
+		const emailLower = email.toLowerCase().trim()
+		if(await validateEmail(emailLower) && inputSanitization(username) && inputSanitization(password)){
+			createUser(username, password, emailLower, res)
+			res.status(200).json({ message: 'Signup successful' });
+		} else {
+			res.status(400).json({ message: 'Signup failed' });
+		}
+	});
+
 
 router.route('/request')
 	.post(async (req, res) =>{
@@ -404,21 +421,26 @@ router.route('/user/updateSettings')
         }
 });
 
-router.route('/user/send-ivey-message')
-	.post(async(req,res) => {
+
+app.post('/user/send-ivey-message', async(req,res) => {
+		try{
 		console.log('Sending message to Ivey')
 		const {name, email, message, subject, phoneNumber} =  req.body;
+		console.log(name)
+		console.log(email)
+		console.log(message)
+		console.log(subject)
+		console.log(phoneNumber)
 		const transport = nodemailer.createTransport({
-			service: "Gmail",
+			service: 'Gmail',
 			auth: {
-				user: "CheerHomepage282@gmail.com",
-				pass: "3350Group25"
+				user: 'cheerhomepage282@gmail.com',
+				pass: 'ccurbpkzzbdzxlkq'
 			}
 		})
-		try {
 			await transport.sendMail({
-			  from: "CheerHomepage282@gmail.com",
-			  to: 'olivinglearn@gmail.com',
+			  from: "cheerhomepage282@gmail.com",
+			  to: 'olivinglearning@gmail.com',
 			  subject: subject,
 			  text: "Hello I'm " + name +'.\n\t' + message + '\nMy phone number is ' + phoneNumber + ' and my email for responding back to me is ' + email
 			});
