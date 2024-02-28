@@ -1131,3 +1131,7 @@ button:hover {
 .eventCreatorBar::placeholder {
   color: lightgrey;
 }
+
+.createEventTitle {
+  margin-top: 100px;
+}

@@ -47,7 +47,7 @@ class EventCreator extends Component {
 
     return (
       <div>
-        <h2>Create Event</h2>
+        <h2 className='createEventTitle'>Create Event</h2>
         <form onSubmit={this.handleSubmit}>
             <input
               type="text"
