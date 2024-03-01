@@ -31,7 +31,7 @@ const UploadLetter = ({ changePage , user}) => {
           formData.append("file", selectedFile);
           formData.append("customName", letterName);
          
-          const response = await fetch('http://localhost:3002/api/admin/uploadNewsletter', {
+          const response = await fetch('/api/admin/uploadNewsletter', {
               method: "POST",
               body: formData
           });
@@ -61,7 +61,7 @@ const UploadLetter = ({ changePage , user}) => {
     const getNewsletters = async () => {
       try {
         console.log("get letters called")
-        const response = await fetch('http://localhost:3002/api/user/viewNewsletters');
+        const response = await fetch('/api/user/viewNewsletters');
         if (response.ok) {
           const data = await response.json();
           let newsletters =  data.newsletters;
@@ -97,7 +97,7 @@ const UploadLetter = ({ changePage , user}) => {
         try{
           document.body.style.cursor = 'wait';
 
-          const response = await fetch('http://localhost:3002/api/user/deleteNewsletter', {
+          const response = await fetch('/api/user/deleteNewsletter', {
             method: "POST",
             headers: {
               'Content-Type': 'application/json'
@@ -136,7 +136,7 @@ const UploadLetter = ({ changePage , user}) => {
     const downloadPdf = async(letter_id,file_name) => {
       try{
         document.body.style.cursor = 'wait';
-        const response = await fetch(`http://localhost:3002/api/user/downloadNewsletter/${letter_id}`);
+        const response = await fetch(`/api/user/downloadNewsletter/${letter_id}`);
         
         if (response.ok) {
 
@@ -165,7 +165,7 @@ const UploadLetter = ({ changePage , user}) => {
     const openPdf = async (letter_id, file_name) => {
       try {
         document.body.style.cursor = 'wait';
-        const response = await fetch(`http://localhost:3002/api/user/downloadNewsletter/${letter_id}`);
+        const response = await fetch(`/api/user/downloadNewsletter/${letter_id}`);
 
         if (response.ok) {
           const data = await response.json();
