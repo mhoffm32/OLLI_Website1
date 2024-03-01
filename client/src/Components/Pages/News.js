@@ -10,7 +10,7 @@ const News = () => {
   
     const getNewsletters = async () => {
         try {
-          const response = await fetch('http://localhost:3002/api/user/viewNewsletters');
+          const response = await fetch('/api/user/viewNewsletters');
           if (response.ok) {
             const data = await response.json();
             let newsletters =  data.newsletters;
@@ -32,7 +32,7 @@ const News = () => {
       const downloadPdf = async(letter_id,file_name) => {
         try{
           document.body.style.cursor = 'wait';
-          const response = await fetch(`http://localhost:3002/api/user/downloadNewsletter/${letter_id}`);
+          const response = await fetch(`/api/user/downloadNewsletter/${letter_id}`);
           
           if (response.ok) {
   
@@ -60,7 +60,7 @@ const News = () => {
       const openPdf = async (letter_id, file_name) => {
         try {
           document.body.style.cursor = 'wait';
-          const response = await fetch(`http://localhost:3002/api/user/downloadNewsletter/${letter_id}`);
+          const response = await fetch(`/api/user/downloadNewsletter/${letter_id}`);
   
           if (response.ok) {
             const data = await response.json();

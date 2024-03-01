@@ -21,7 +21,7 @@ const UserSettings = () => {
 
     const getUserDetails = async () => {
         try {
-            const response = await fetch(`http://localhost:3002/user/details`, {
+            const response = await fetch(`/user/details`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -47,7 +47,7 @@ const UserSettings = () => {
     const getCurrentSettings = async () => {
         try{
             const id =  jwtDecode(localStorage.getItem('jwt')).id
-            const response = await fetch(`http://localhost:3002/api/user/settings/${id}`);
+            const response = await fetch(`/api/user/settings/${id}`);
         
             if (response.ok) {
                 let data = await response.json()
@@ -65,7 +65,7 @@ const UserSettings = () => {
 
     const updateSettings = async () => {
         try{
-            const response = await fetch(`http://localhost:3002/api/user/updateSettings`, {
+            const response = await fetch(`/api/user/updateSettings`, {
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ const UserSettings = () => {
     const updateName = async () => {
         const token = localStorage.getItem('jwt'); // Retrieve the JWT token from localStorage
         try {
-            const response = await fetch('http://localhost:3002/user/changeName', {
+            const response = await fetch('/user/changeName', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ const UserSettings = () => {
         console.log(selectedPfp);
         const token = localStorage.getItem('jwt');
         try {
-            const response = await fetch('http://localhost:3002/user/updatePfp', {
+            const response = await fetch('/user/updatePfp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -43,7 +43,7 @@ class DropIns extends Component {
         const formattedDropOff = dayjs(dropOffTime).format('YYYY-MM-DD hh:mm A');
         const formattedPickUp = dayjs(pickUpTime).format('YYYY-MM-DD hh:mm A');
     
-        fetch(`http://localhost:3002/dropins/`, { 
+        fetch(`/dropins/`, { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
