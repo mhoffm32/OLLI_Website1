@@ -91,7 +91,7 @@ router.route('/signup')
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
 		const emailLower = email.toLowerCase().trim()
-		if(await validateEmail(emailLower) && inputSanitization(username) && inputSanitization(password)){
+		if(await validateEmail(emailLower) && sanitizeInput(username) && sanitizeInput(password)){
 			createUser(username, password, emailLower, res)
 			res.status(200).json({ message: 'Signup successful' });
 		} else {
@@ -111,12 +111,12 @@ router.route('/request')
 			console.log('all fields required')
 			return res.status(400).json({message: 'Username, password, and type are required'});
 		}
-		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !inputSanitization(password)){
+		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !sanitizeInput(password)){
 			console.log('Invalid entries')
 			return res.status(400).json({message: 'Invalid entries for email/password'});
 		}
 		try{
-			const emailLower = email.toLowerCase.trim()
+			const emailLower = email.toLowerCase().trim();
 			const user = await User.findOne({emailLower});
 			if(!user){
 				console.log('User not found')
@@ -280,6 +280,7 @@ app.use(userSettings);
 app.use(eventRegistration);
 
 const multer = require("multer");
+const { sanitizeInput } = require('./helperClasses/inputChecker.js');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 let uploadedpdf = null;
