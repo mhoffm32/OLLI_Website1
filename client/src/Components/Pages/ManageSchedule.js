@@ -29,13 +29,13 @@ const ManageSchedule = ({ changePage, user }) => {
     const end = info.event.end;
     
     // Convert start time to UTC time and format
-    const startTime = start.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit' });
+    const startTime = start.toLocaleString( { hour: 'numeric', minute: '2-digit' });
     let alertMessage = "Event: " + title + " From: " + startTime;
     
     // Check if end time is available
     if (end) {
       // Convert end time to UTC time and format
-      const endTime = end.toLocaleString('en-US', {  hour: 'numeric', minute: '2-digit' });
+      const endTime = end.toLocaleString( {  hour: 'numeric', minute: '2-digit' });
       alertMessage += " To: " + endTime;
     } else {
       alertMessage += " (No end time)";

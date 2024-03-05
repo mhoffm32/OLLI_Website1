@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UploadLetter from "../Pages/UploadLetter";
 import ManageSchedule from "../Pages/ManageSchedule";
 
-import ManageUser from "../Pages/manageUser";
+import ManageUser from "../Pages/ManageUser";
 
 const AdminTools = ({ changePage, user }) => {
   const [page, setPage] = useState("adminHome");
