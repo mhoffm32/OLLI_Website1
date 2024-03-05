@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import UploadLetter from "../Pages/UploadLetter";
 import ManageSchedule from "../Pages/ManageSchedule";
 
-import ManageUser from "../Pages/ManageUser";
+import ManageUser from "../Pages/manageUser";
 
 const AdminTools = ({ changePage, user }) => {
   const [page, setPage] = useState("adminHome");
 
  
   const getCurrentPage = () => {
-    let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>, "manageSchedule" : <ManageSchedule/>}
+    let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <manageUser/>, "manageSchedule" : <ManageSchedule/>}
     return pages[page];
 }
 
