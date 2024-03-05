@@ -984,8 +984,13 @@ a:hover {
 
 .news #download-img {
   margin-left: 10px;
-  width: 25px;
+  width: 2px;
   vertical-align: middle;
+}
+
+img#download-img{
+  margin-left: 10px;
+  width: 25px;
 }
 
 .news .letter-info {
@@ -1221,6 +1226,7 @@ p.letterheader{
   display: flex;
   justify-content: flex-start; /* Aligns items (info-container and button-container) to the start of the container */
   margin-bottom: -15px;
+  margin-left: 50px;
 }
 
 .info-container {
@@ -1308,7 +1314,7 @@ button:hover {
   position:absolute;
   background-color: #df7958;
   padding: 5px;
-  margin: 20px;
+  margin: 25px;
   border-width: 0.2px;
   border-radius: 8px;
   top: 120px;
