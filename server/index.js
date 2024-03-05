@@ -117,13 +117,22 @@ router.route('/request')
 		}
 		try{
 			const emailLower = email.toLowerCase().trim();
-			const user = await User.findOne({emailLower});
+			let user1 = await User.find({email: emailLower});
+			const user = user1[0]
+
+			console.log(user)
+		
 			if(!user){
-				console.log('User not found')
+				console.log('User not founddddd')
 				return res.status(404).json({message: 'User not found'});
+			}else{
+				console.log("user found")
 			}
 
+			console.log("password", password, "user.password", user)
+
 			const validPass = await bcrypt.compare(password, user.password);
+			console.log("pass done")
 			if(!validPass){
 				console.log("invalid password")
 				return res.status(400).json({message: 'Invalid password'});
@@ -170,7 +179,7 @@ router.route('/google-auth')
 
 		}else{
 			const payload = { id: user._id, username: user.username, verified: user.verified, admin: user.admin }
-			console.log(payload)
+			
 			if(payload == "disabled"){
 				res.status(409).json({ message: 'This account has been disabled' });
 			} else if(!payload.verified){
