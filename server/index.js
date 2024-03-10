@@ -57,6 +57,9 @@ const User = require('./models/User.js');
 const Requests = require('./models/requests');
 const Newsletters = require('./models/newsletters');
 const AccountSetting = require('./models/accountSettings');
+const ChatUser = require('./models/ChatUser');
+const ChatThread = require('./models/ChatThread');
+const ChatText = require('./models/ChatText');
 const { ObjectId } = require('mongodb');
 const path = require('path');
 
@@ -460,6 +463,237 @@ app.post('/user/send-ivey-message', async(req,res) => {
 		  }
 
 	});
+
+/****************************** CHAT STUFF **************************/
+
+router.route('/chat/getChatInfo/:id')
+    .get(async (req, res) => {
+		try {
+
+
+			const user_id = req.params.id;
+			const result = await ChatUser.find({ user_id: user_id });
+			const chatUser = result[0];
+			const threads = [];
+
+
+			//await ChatUser.updateMany({$set: {threads: []}});
+
+
+			for(let thread_id of chatUser.threads){
+
+				let thread = await ChatThread.find({ _id: thread_id}).lean();
+				thread = thread[0];
+				let p = {};
+
+				for(let u_id of thread.participant_ids){
+					let user = await User.find({ _id: u_id}).lean();
+					p[u_id] = {
+						username: user[0].username,
+						pfp: user[0].pfp
+					}
+				}
+
+				thread.participants = p;
+				delete thread.participant_ids;
+				
+				/*
+				const texts = await ChatText.find({
+					thread_id: thread_id,
+					viewers: { $nin: [user_id] }
+				}).lean()
+
+				const recentText = await ChatText.aggregate([
+					{ $match: { thread_id: thread_id } },
+					{ $sort: { date: -1 } }, 
+					{ $limit: 1 } 
+				]).date; */
+
+				//thread.date = recentText;
+				//thread.unread = texts.length;
+
+				let this_unread = thread.unread[user_id]
+				thread.unread = this_unread;
+				threads.push(thread);
+			}
+
+			threads.sort((a,b)=> a.date - b.date)
+
+			const info = {
+				chats_enabled: chatUser.chats_enabled,
+				threads: threads
+			}
+
+			res.json({ chat_info: info });
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+});
+
+
+router.route('/chat/getThread/:thread_id/:user_id')
+    .get(async (req, res) => {
+		try {
+
+			const user_id = req.params.user_id;
+			const thread_id = req.params.thread_id;
+			const result = await ChatThread.find({ _id: thread_id}).lean();
+			const thread = result[0];
+
+			//setting as read by user
+
+			console.log("usnejdn", user_id)
+
+			let t = await ChatThread.find({_id: thread_id}).lean();
+			t = t[0];
+			console.log("t",t)
+			let unread = t.unread;
+			unread[user_id] = 0;
+			console.log("unread", unread)
+
+
+			await ChatThread.findOneAndUpdate({_id: thread_id}, 
+			{ $set: { date: new Date(), unread: unread}});
+
+			let texts = await ChatText.find({
+				thread_id: thread_id
+			}).lean();
+
+			thread.texts = texts;
+			res.json({ thread_info : thread});
+
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+});
+
+
+router.route('/chat/getUsernames/:user_id')
+    .get(async (req, res) => {
+		try {
+
+			const user_id = req.params.user_id;
+			console.log("user id", user_id)
+
+			let users = await User.find(
+				{ _id: { $ne: user_id } },
+				{ id: 1, username: 1 }
+			).lean();
+		
+			res.json(users);
+
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+});
+
+
+router.route('/chat/send-message')
+    .post(async (req, res) => {
+		try {
+
+			const {thread_id, message, sender_id} =  req.body;
+
+			let newText = new ChatText({
+				thread_id: thread_id, 
+				sender_id: sender_id,
+				text: message,
+			});
+
+			let thread = await ChatThread.find({_id: thread_id}).lean();
+			thread = thread[0];
+			let unread = thread.unread;
+
+			for(let id in unread){
+				if (id != sender_id){
+					unread[id] +=1
+				}
+			}
+
+			await ChatThread.findOneAndUpdate({_id: thread_id}, 
+			{ $set: { date: new Date(), unread: unread}});
+
+			await newText.save();
+
+			res.json("Message sent successfully");
+
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+});
+
+
+router.route('/chat/create-thread')
+    .post(async (req, res) => {
+		try {
+
+			const {message, sender_id, participants } =  req.body;
+
+			let unread1 = {}
+
+			for(let id of participants){
+				unread1[id] = 1;
+			}
+			unread1[sender_id] = 0;
+
+			let newThread = new ChatThread({
+				participant_ids: participants,
+				unread: unread1
+			});
+
+			let t = await newThread.save();
+			let t_id = t.id;
+
+			let newText = new ChatText({
+				thread_id: t_id, 
+				sender_id: sender_id,
+				text: message,
+			});
+
+		
+			let txt = await newText.save();
+
+			let ps = {};
+
+			for(let p_id of participants){
+				await ChatUser.findOneAndUpdate(
+					{user_id: p_id},
+					{$push: {
+						threads: t_id
+					}}
+				)
+				let usrs = await User.find(
+					{_id: p_id},
+					{username: 1, pfp: 1}
+				).lean();
+
+				let usr = usrs[0];
+				delete usr._id;
+				ps[p_id] = usr;
+			}
+
+			let new_thread = {
+				participants: ps,
+				unread: 0,
+				date:t.date,
+				_id: t_id
+			}
+
+			res.json(new_thread);
+
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+});
+
+/****************************** FINISH CHAT STUFF **************************/
+
+
 
 /****************************** FINISH INITIALIZATION **************************/
 
