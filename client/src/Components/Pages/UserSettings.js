@@ -1,5 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 import { useState, useEffect} from 'react';
+
 const UserSettings = () => {
     const [userSettings, setSettings] = useState(null);
     const [firstName, setFirstName] = useState(null);
@@ -12,7 +13,6 @@ const UserSettings = () => {
     const [selectedPfp, setSelectedPfp] = useState('');
 
     const token = localStorage.getItem('jwt');
-    const user = jwtDecode(token);
 
     useEffect(()=>{
         getCurrentSettings();
@@ -147,7 +147,7 @@ const UserSettings = () => {
     
             if (response.ok) {
                 alert('Profile picture updated successfully');
-                // Optionally, refresh the user settings here
+
             } else {
                 const errorText = await response.text();
                 alert(`Failed to update profile picture: ${errorText}`);
@@ -167,10 +167,10 @@ const UserSettings = () => {
                 <div id="user-details">
                     <h3>Current Profile Details</h3>
                     <hr></hr>
+                    <img src={userDetails.pfp} className="pfp"></img>
                     <p>Email: {userDetails.email}</p>
                     <p>First Name: {userDetails.firstname}</p>
                     <p>Last Name: {userDetails.lastname}</p>
-                    <p>Profile Photo: {userDetails.pfp}</p>
                 </div>
                 <div id="email-prefs">
                     <h3>
@@ -197,8 +197,10 @@ const UserSettings = () => {
                 <div id="pfp-pref">
                     <h3>Choose Profile Picture</h3>
                     <div>
-                        <button id="pfp" className={selectedPfp === 'blue' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/pfp1.png')}><img src="/images/icons/pfp1.png"/></button>
-                        <button id="pfp" className={selectedPfp === 'green' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/pfp2.png')}><img src="/images/icons/pfp2.png"/></button>
+                        <button id="pfp" className={selectedPfp === 'racoon' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/icons/racoon.png')}><img src="/images/icons/racoon.png"/></button>
+                        <button id="pfp" className={selectedPfp === 'lion' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/icons/lion.png')}><img src="/images/icons/lion.png"/></button>
+                        <button id="pfp" className={selectedPfp === 'platypus' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/icons/platypus.png')}><img src="/images/icons/platypus.png"/></button>
+                        <button id="pfp" className={selectedPfp === 'bear' ? 'selected' : ''} onClick={() => setSelectedPfp('/images/icons/bear.png')}><img src="/images/icons/bear.png"/></button>
                     </div>
                     <button onClick={updatePfp}>Save</button>
                 </div>

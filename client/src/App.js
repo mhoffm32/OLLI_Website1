@@ -21,9 +21,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeOption: 'Home'
+      activeOption: 'Home',
+      userProfilePic: '', 
     };
     localStorage.removeItem('jwt');
+  }
+
+  updateUserProfilePic = (newPic) => {
+    this.setState({ userProfilePic: newPic });
   }
 
   changePage = (str) => {
