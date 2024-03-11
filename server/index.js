@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 
 
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json())
@@ -456,6 +457,7 @@ app.post('/user/send-ivey-message', async(req,res) => {
 
 	});
 
+
 app.post('/user/approveUser', async(req, res) =>{
 	try{
 		const {username, approveStatus, denyStatus} = req.body;
@@ -472,6 +474,17 @@ app.post('/user/approveUser', async(req, res) =>{
 		console.error('Error Approving Account:', error);
 		res.status(500).send('Cannot approve account');
 	  }
+})
+
+app.get('/user/unverifiedUsers', async(req, res) =>{
+	try{
+		const unverifiedUsers = await User.find({verified: false});
+		console.log(unverifiedUsers)
+		return unverifiedUsers;
+	}catch (error) {
+        console.error('Error fetching unverified users:', error);
+        throw error;
+    }
 })
 
 
