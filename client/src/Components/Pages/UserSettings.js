@@ -8,7 +8,7 @@ const UserSettings = () => {
     const [userDetails, setUserDetails] = useState({
         firstname: '',
         lastname: '',
-        email: '', // Assuming the user's details include these fields
+        email: '', 
     });
     const [selectedPfp, setSelectedPfp] = useState('');
 
