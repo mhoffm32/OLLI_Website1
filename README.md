@@ -6,5 +6,3 @@ cd into client folder:
 
 cd into server folder: 
 - npm i
-
-npm install express cors body-parser passport jsonwebtoken passport-jwt mongodb nodemailer uuid dotenv bcrypt path multer
