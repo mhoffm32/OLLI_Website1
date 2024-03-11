@@ -65,7 +65,7 @@ const ManageUser = ({ changePage }) => {
         // Handle error appropriately
       }
     }
-  
+  fetchUnverifiedUsers();
     
   return (
 
