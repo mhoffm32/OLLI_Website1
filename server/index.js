@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 
 
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json())
@@ -435,11 +436,6 @@ app.post('/user/send-ivey-message', async(req,res) => {
 		try{
 		console.log('Sending message to Ivey')
 		const {name, email, message, subject, phoneNumber} =  req.body;
-		console.log(name)
-		console.log(email)
-		console.log(message)
-		console.log(subject)
-		console.log(phoneNumber)
 		const transport = nodemailer.createTransport({
 			service: 'Gmail',
 			auth: {
@@ -460,6 +456,41 @@ app.post('/user/send-ivey-message', async(req,res) => {
 		  }
 
 	});
+
+
+app.post('/user/approveUser', async(req, res) =>{
+	try{
+		const {username, approveStatus, denyStatus} = req.body;
+		console.log('you pressed approve or deny')
+		const user1 = await User.findOne({username: username});
+		if(approveStatus)
+		{
+			user1.verified=true;
+
+		}else if(denyStatus){
+			user1.verified=false;
+		}
+		await user1.save();
+		console.log(user1)
+		res.status(200).json({ message: `User verification status updated` });
+	}
+	catch (error) {
+		console.error('Error Approving Account:', error);
+		res.status(500).send('Cannot approve account');
+	  }
+})
+
+app.get('/user/unverifiedUsers', async(req, res) =>{
+	try{
+		const unverifiedUsers = await User.find({verified: false});
+		console.log(unverifiedUsers)
+		return unverifiedUsers;
+	}catch (error) {
+        console.error('Error fetching unverified users:', error);
+        throw error;
+    }
+})
+
 
 /****************************** FINISH INITIALIZATION **************************/
 
