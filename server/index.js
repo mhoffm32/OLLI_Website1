@@ -461,14 +461,18 @@ app.post('/user/send-ivey-message', async(req,res) => {
 app.post('/user/approveUser', async(req, res) =>{
 	try{
 		const {username, approveStatus, denyStatus} = req.body;
-		let user1 = await User.find({username: username});
+		console.log('you pressed approve or deny')
+		const user1 = await User.findOne({username: username});
 		if(approveStatus)
 		{
 			user1.verified=true;
+
 		}else if(denyStatus){
 			user1.verified=false;
 		}
-		res.status(200).json({ message: `User verification status updated to ${verified}` });
+		await user1.save();
+		console.log(user1)
+		res.status(200).json({ message: `User verification status updated` });
 	}
 	catch (error) {
 		console.error('Error Approving Account:', error);
