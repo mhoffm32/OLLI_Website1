@@ -27,18 +27,24 @@ const ManageSchedule = ({ changePage, user }) => {
     const title = info.event.title;
     const start = info.event.start;
     const end = info.event.end;
-  
-    let alertMessage = "Event: " + title + " From: " + start;
-  
+    
+    // Convert start time to UTC time and format
+    const startTime = start.toLocaleString( { hour: 'numeric', minute: '2-digit' });
+    let alertMessage = "Event: " + title + " From: " + startTime;
+    
     // Check if end time is available
     if (end) {
-      alertMessage += " To: " + end;
+      // Convert end time to UTC time and format
+      const endTime = end.toLocaleString( {  hour: 'numeric', minute: '2-digit' });
+      alertMessage += " To: " + endTime;
     } else {
       alertMessage += " (No end time)";
     }
-  
+    
     alert(alertMessage);
   };
+  
+  
  
   return (
     <div id="fullcalendar">
@@ -47,10 +53,9 @@ const ManageSchedule = ({ changePage, user }) => {
         initialView="dayGridMonth"
         events={bookedDates.map((date) => ({
           title: date.event,
-          start: date.pickup,
-          end: date.dropoff,
+          start: date.pickup.toLocaleString([], {hour: 'numeric', minute: '2-digit'}),
+          end: date.dropoff.toLocaleString([], {hour: 'numeric', minute: '2-digit'})  
         }))}
-        timeZone="UTC"
         eventDisplay="list-item"
         eventClick={eventClicked}
       />

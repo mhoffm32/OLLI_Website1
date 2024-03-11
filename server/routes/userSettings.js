@@ -55,7 +55,7 @@ router.route('/request')
 			return res.status(400).json({message: 'Invalid entries for email/password'});
 		}
 		try{
-			const emailLower = email.toLowerCase.trim()
+			const emailLower = email.toLowerCase().trim()
 			const user = await User.findOne({emailLower});
 			if(!user){
 				console.log('User not found')

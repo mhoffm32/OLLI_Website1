@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UploadLetter from "../Pages/UploadLetter";
 import ManageSchedule from "../Pages/ManageSchedule";
-
 import ManageUser from "../Pages/manageUser";
 
 const AdminTools = ({ changePage, user }) => {

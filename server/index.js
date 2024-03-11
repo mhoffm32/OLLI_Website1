@@ -11,6 +11,8 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3002;
 
+
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json())
@@ -91,7 +93,7 @@ router.route('/signup')
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
 		const emailLower = email.toLowerCase().trim()
-		if(await validateEmail(emailLower) && inputSanitization(username) && inputSanitization(password)){
+		if(await validateEmail(emailLower) && sanitizeInput(username) && sanitizeInput(password)){
 			createUser(username, password, emailLower, res)
 			res.status(200).json({ message: 'Signup successful' });
 		} else {
@@ -111,19 +113,28 @@ router.route('/request')
 			console.log('all fields required')
 			return res.status(400).json({message: 'Username, password, and type are required'});
 		}
-		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !inputSanitization(password)){
+		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !sanitizeInput(password)){
 			console.log('Invalid entries')
 			return res.status(400).json({message: 'Invalid entries for email/password'});
 		}
 		try{
-			const emailLower = email.toLowerCase.trim()
-			const user = await User.findOne({emailLower});
+			const emailLower = email.toLowerCase().trim();
+			let user1 = await User.find({email: emailLower});
+			const user = user1[0]
+
+			console.log(user)
+		
 			if(!user){
-				console.log('User not found')
+				console.log('User not founddddd')
 				return res.status(404).json({message: 'User not found'});
+			}else{
+				console.log("user found")
 			}
 
+			console.log("password", password, "user.password", user)
+
 			const validPass = await bcrypt.compare(password, user.password);
+			console.log("pass done")
 			if(!validPass){
 				console.log("invalid password")
 				return res.status(400).json({message: 'Invalid password'});
@@ -170,7 +181,7 @@ router.route('/google-auth')
 
 		}else{
 			const payload = { id: user._id, username: user.username, verified: user.verified, admin: user.admin }
-			console.log(payload)
+			
 			if(payload == "disabled"){
 				res.status(409).json({ message: 'This account has been disabled' });
 			} else if(!payload.verified){
@@ -281,6 +292,7 @@ app.use(eventRegistration);
 app.use(eventRoutes);
 
 const multer = require("multer");
+const { sanitizeInput } = require('./helperClasses/inputChecker.js');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 let uploadedpdf = null;
@@ -426,11 +438,6 @@ app.post('/user/send-ivey-message', async(req,res) => {
 		try{
 		console.log('Sending message to Ivey')
 		const {name, email, message, subject, phoneNumber} =  req.body;
-		console.log(name)
-		console.log(email)
-		console.log(message)
-		console.log(subject)
-		console.log(phoneNumber)
 		const transport = nodemailer.createTransport({
 			service: 'Gmail',
 			auth: {
@@ -451,6 +458,41 @@ app.post('/user/send-ivey-message', async(req,res) => {
 		  }
 
 	});
+
+
+app.post('/user/approveUser', async(req, res) =>{
+	try{
+		const {username, approveStatus, denyStatus} = req.body;
+		console.log('you pressed approve or deny')
+		const user1 = await User.findOne({username: username});
+		if(approveStatus)
+		{
+			user1.verified=true;
+
+		}else if(denyStatus){
+			user1.verified=false;
+		}
+		await user1.save();
+		console.log(user1)
+		res.status(200).json({ message: `User verification status updated` });
+	}
+	catch (error) {
+		console.error('Error Approving Account:', error);
+		res.status(500).send('Cannot approve account');
+	  }
+})
+
+app.get('/user/unverifiedUsers', async(req, res) =>{
+	try{
+		const unverifiedUsers = await User.find({verified: false});
+		console.log(unverifiedUsers)
+		return unverifiedUsers;
+	}catch (error) {
+        console.error('Error fetching unverified users:', error);
+        throw error;
+    }
+})
+
 
 /****************************** FINISH INITIALIZATION **************************/
 
