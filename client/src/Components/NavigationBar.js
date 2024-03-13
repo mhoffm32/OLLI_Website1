@@ -3,11 +3,18 @@ import GLogin from "./Pages/GLogin";
 import { jwtDecode } from 'jwt-decode';
 
 class NavigationBar extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             activeOption: props.activeOption,
-            userType: null
+            userType: null,
+            userDetails: {
+                firstname: '',
+                lastname: '',
+                email: '',
+                pfp: ''
+            }
         };
     }
 
@@ -17,12 +24,41 @@ class NavigationBar extends React.Component {
         window.location.reload();
     };
 
+    getUserDetails = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const response = await fetch(`/user/details`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                this.setState({ userDetails: {
+                    firstname: data.firstname,
+                    lastname: data.lastname,
+                    email: data.email,
+                    pfp: data.pfp,
+                }});
+            } else {
+                console.error('Failed to fetch user details:', response.statusText);
+            }
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+        }
+    };
+
+    componentDidMount() {
+        this.getUserDetails();
+    }
+
     render() {
+        const { userDetails } = this.state;
         const { activeOption } = this.props;
 
         const token = localStorage.getItem('jwt');
-        const decoded = token ? jwtDecode(token): null;
-        const userProfilePic = decoded && decoded.pfp && decoded.pfp.trim() !== '' ? decoded.pfp : '/images/icons/default_pfp.png';
 
         return (
             <div className="topnav">
@@ -74,7 +110,7 @@ class NavigationBar extends React.Component {
                             <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
                                 <img id="settings-img" src='/images/icons/settings.png'/>
                             </a>
-                            <img src={userProfilePic} id="pfp" alt="User" /> {/* Display user profile picture */}
+                            <img src={userDetails.pfp} id="pfp" alt="User" /> {/* Display user profile picture */}
                         </b>
                         <button className="signout" onClick={this.handleSignOut}>Sign Out</button>
                     </>

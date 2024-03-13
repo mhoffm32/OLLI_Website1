@@ -22,9 +22,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeOption: 'Home'
+      activeOption: 'Home',
     };
-    localStorage.removeItem('jwt');
   }
 
   changePage = (str) => {

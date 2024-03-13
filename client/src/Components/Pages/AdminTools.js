@@ -3,12 +3,13 @@ import UploadLetter from "../Pages/UploadLetter";
 import ManageSchedule from "../Pages/ManageSchedule";
 import ManageUser from "../Pages/ManageUser";
 
+
 const AdminTools = ({ changePage, user }) => {
   const [page, setPage] = useState("adminHome");
 
  
   const getCurrentPage = () => {
-    let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <manageUser/>, "manageSchedule" : <ManageSchedule/>}
+    let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>, "manageSchedule" : <ManageSchedule/>}
     return pages[page];
 }
 
