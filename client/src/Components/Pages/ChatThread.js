@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 
-
-
 const ChatThread = ({ thread_info, user }) => {
   const [thread, setThread_info] = useState(thread_info);
   const [curr_user, setUser] = useState(user);
@@ -13,6 +11,18 @@ const ChatThread = ({ thread_info, user }) => {
     setMessages(thread.texts.sort((a,b) => b.time - a.time));
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   },[messages])
+
+  useEffect(() => {
+    scrollBottom();
+  }, [myMessage]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshMessages(thread._id);
+    }, 8000);  //every 8 seconds 
+  
+    return () => clearInterval(interval);
+  }, []);
 
   const sendMessage = async () => {
       if(myMessage.trim() !== ''){
@@ -28,23 +38,56 @@ const ChatThread = ({ thread_info, user }) => {
                 sender_id: user.id
             })            
         });
-        const result = await response.json();
-        console.log(result)
-        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-        
-        setMyMessage('')
 
-      }catch(error){
+        const result = await response.json();
+        const newMessage = {sender_id: user.id,
+        text: myMessage}
+        
+        let msg = messages;
+        msg.push(newMessage)
+        setMessages(msg)
+        setMyMessage('')
+        scrollBottom()
+
+      } catch(error) {
         console.log(error)
       }
     }
+    scrollBottom();
   }
 
-  const getTitle = () =>{
+  const scrollBottom = ()  => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }
+
+  const refreshMessages = async (thread_id) => {
+    try {
+      const response = await fetch(`/api/chat/getThread/${thread_id}/${curr_user.id}`);
+      const info = await response.json(); 
+
+      if (response.ok){
+        let nThread = info.thread_info;
+        nThread.participants = thread.participants
+        setThread_info(nThread);
+        setMessages(nThread.texts.sort((a,b) => b.time - a.time)); 
+
+      } else {
+        console.log("error occured: ", response)
+      }
+    } catch (error) {
+      console.log('Error retrieving thread info for user: '+ error.message);
+    }
+  }
+
+  const getTitle = () => {
 
     let title = "";
     for(let p of thread.participant_ids){
-      title += thread.participants[p].username + ", ";
+      if(p != user.id){
+        title += thread.participants[p].username + ", ";
+      }
     }
     title = title.slice(0, -2);
 
@@ -52,22 +95,22 @@ const ChatThread = ({ thread_info, user }) => {
   }
 
   const getMessages = () => {
-    let msgList = messages.map((message,index) => (
+    return(<ul id="chat-container" ref={chatContainerRef}>{messages.map((message,index) => (
         <li key={index} id={message.sender_id == curr_user.id ? "send-li-item" : "rcv-li-item"}>
         <p className='author' id={message.sender_id == curr_user.id ? "send-author" : "rcv-author"}>
           {message.sender_id === curr_user.id ? "You" : (thread.participants[message.sender_id]?.username || "Unknown")}
         </p>
         <p className="msg-item">{message.text}</p>    
         </li>
-    ));
-    return(<ul id="chat-container" ref={chatContainerRef}>{msgList}</ul>)
+      ))}
+      </ul>)
   }
 
   return (
     <div id="thread-page">
       {getTitle()}
       <div id="centered-margin">
-        <div id='chat-bg'>
+        <div id='chat-bg' >
           {getMessages()}
         </div>
         <input id='msg-input' value={myMessage} onChange={(e) => setMyMessage(e.target.value)} />

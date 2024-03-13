@@ -53,10 +53,11 @@ const ChatHome = ({ changePage }) => {
       const info = await response.json(); 
 
       if (response.ok){
+      
         let thread = info.thread_info;
+  
         thread.participants = chatInfo.threads[index].participants;
         setCurrThreadInfo(thread);
-
         let newInfo = chatInfo;
         newInfo.threads[index].unread = 0;
         setChatInfo(newInfo);   
@@ -140,7 +141,7 @@ const deleteChatMember = (member) => {
   setChatMembers(newMembers);
 }
 
-const createThread = async() => {
+const createThread = async () => {
 
   let recipient_ids = newChatMembers.map(member => member._id);
   recipient_ids.push(user.id);
@@ -253,34 +254,50 @@ return (
                   <></>
                 )}
               </datalist>
-              <div className="cont-outter-fx-cn">
-                <div>
-                  <p className="msg-label">To:</p><input autoComplete="on" id="username-input" onSelect={(e) => setNewMember(e.target.value)} list="suggestions" onChange={handleInputChange}/>
-                  <button onClick={addToChat}>Add</button> {memberList()}
+              <div className="cont-outter-fx-cn" style={{marginBottom:"0px"}}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ marginLeft: "23px", marginBottom: "0px", position: "sticky", textAlign: 'center' }}>
+                  <div style={{ marginBottom: "10px", position: "sticky" }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: "20px" }}>
+                     <p style={{ marginTop: "0px", marginBottom:"0" , marginRight:"10px"}} className="msg-label">Add User(s):</p>
+                      <input autoComplete="on" id="username-input" onSelect={(e) => setNewMember(e.target.value)} list="suggestions" onChange={handleInputChange} />
+                      <button style={{ marginLeft: "10px", position: "" }} className="submit-m" onClick={addToChat}>Add</button>
+                    </div>
+                  </div>
+                  {memberList()}
                 </div>
-                <div style={{display:"flex",alignItems:"flex-start",justifyContent:"center"}}>
-                  <p style={{margin:0}} className="msg-label" id="msg-box-label">Message: </p><textarea type="text" id='message-box1' style={{ width: '300px', height: '100px' }} onChange={(e)=> setMessage(e.target.value)}/>
-                </div>
-                <div>
-                  <button onClick={createThread}>Send</button> 
+              </div>
+                <div style={{display:"flex", alignItems:"flex-start", justifyContent:"center", marginTop:"10px", marginLeft:'20px'}}>
+                  <p style={{margin:0, marginRight:'10px'}} className="msg-label" id="msg-box-label">Message: 
+                  </p><textarea type="text" id='message-box1' style={{ width: '200px', height: '50px', fontFamily:"Nunito, sans-serif" }} onChange={(e)=> setMessage(e.target.value)}/>
+                  <button id="send-btn-8" className="submit-m" style={{marginLeft:"10px"}} onClick={createThread}>Send</button>
                 </div>
               </div>
             </div>
+            <div id='active-chat-div'>
             <h1 id='chat-header'>Active Chats</h1>
-            <div id="active-chat-list">
-            <ol>
-              {chatInfo.threads && chatInfo.threads.map((thread, index) => (
-                <li id="chat-list-item" key={index}>
-                  <div id="chat-item-div">
-                  {thread.unread !== 0 ? <>
-                  <div id="new-msg-bubble"><p id='unread-count'>{thread.unread}</p></div>
-                  </> : <></>}
-                  <p id="chat-name"> {getParticipants(thread._id)}</p>
-                  <button id="view-chat-btn" onClick={()=> viewThread(thread,index)}>View</button>
-                  </div>
-                </li>
-              ))}
-            </ol>
+              <div id="active-chat-list" style={{marginBottom:"10px"}}>
+              <ol style={{ listStyleType: "none", padding: 0 }}>
+                {chatInfo.threads && chatInfo.threads.map((thread, index) => (
+                  <li key={index} style={{ borderTop: "1px solid #6e6b6a", padding: "10px 0", }}>
+                    <div id="chat-item-div" style={{ margin: "0",marginLeft:"25px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <div style={{ width: "30px", marginRight: "25px" }}>
+                          {thread.unread !== 0 && (
+                            <div id="new-msg-bubble"><p id='unread-count'>{thread.unread}</p></div>
+                          )}
+                        </div>
+                        <p id="chat-name" style={{ margin: 0, fontWeight:"bolder" }}>{getParticipants(thread._id)}</p>
+                      </div>
+                      <div>
+                        <button id="view-chat-btn" style={{ marginRight: "50px" }} onClick={() => viewThread(thread, index)}>Open</button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              </div>
             </div>
           </> }
         </>) : (

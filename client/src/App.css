@@ -1430,6 +1430,15 @@ li {
 
 #view-chat-btn{
   margin: 10px;
+  background-color: #df7958;
+  cursor: pointer;
+  color: black;
+  font-weight:400;
+  align-items: center; 
+  padding: 5px;
+  width: 80px;
+  border-width: 0;
+  border-radius: 8px;
 }
 
 #added-member > button{
@@ -1473,7 +1482,7 @@ li {
 }
 
 .msg-label{
-  padding: 10px;
+ 
   display: inline-flex;
 }
 
@@ -1485,14 +1494,18 @@ li {
 }
 
 #new-msg-bubble{
+  background-color: #5f5d5d;
   border-radius: 50%;
-  height: 25px;
-  width: 25px;
+  width: 30px;
+  
+  /*
+  border-radius: 50%;
+  
   background-color: #5f5d5d;
   display: flex; 
   justify-content: center; 
   align-items: center; 
-  margin: 0 10px;
+  margin: 0 10px;*/
 }
 
 #new-msg-bubble > p {
@@ -1521,7 +1534,8 @@ li {
 
 #chat-header{
   font-size: 35px;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
+
 }
 
 #active-chat-list > ol{
@@ -1640,6 +1654,34 @@ li {
 
 #gc-title{
   font-size: 35px;
+}
+
+
+#send-btn-8 {
+  display: flex;
+}
+
+#msg-box-label{
+  display: flex;
+  
+}
+#message-box1{
+  display: flex
+}
+
+.submit-m {
+
+  margin: 10px;
+  background-color: #df7958;
+  cursor: pointer;
+  color: black;
+  font-weight:400;
+  align-items: center; 
+  padding: 5px;
+  width: 40px;
+  border-width: 0;
+  border-radius: 8px;
+
 }
 
 
