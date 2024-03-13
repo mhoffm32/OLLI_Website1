@@ -1,14 +1,15 @@
 # se3350-project-group25
 se3350-project-group25 created by GitHub Classroom
 
+Welcome to our Ongoing Living and Learning Inc. website. 
+We are currently working towards making this an easily accessible and informative website.
+
+HOW TO WORK ON IT: 
+
 cd into client folder:
-- npm install
-- npm install jwt-decode
+- npm i
 
 cd into server folder: 
-- npm install express
-- npm install mongoose
-- npm install mongodb
-- npm install nodemon
+- npm i
 
-npm install express cors body-parser passport jsonwebtoken passport-jwt mongodb nodemailer uuid dotenv bcrypt path
+add .env with proper variables

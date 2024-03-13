@@ -3,11 +3,18 @@ import GLogin from "./Pages/GLogin";
 import { jwtDecode } from 'jwt-decode';
 
 class NavigationBar extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             activeOption: props.activeOption,
-            userType: null
+            userType: null,
+            userDetails: {
+                firstname: '',
+                lastname: '',
+                email: '',
+                pfp: ''
+            }
         };
     }
 
@@ -17,11 +24,41 @@ class NavigationBar extends React.Component {
         window.location.reload();
     };
 
+    getUserDetails = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const response = await fetch(`/user/details`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                this.setState({ userDetails: {
+                    firstname: data.firstname,
+                    lastname: data.lastname,
+                    email: data.email,
+                    pfp: data.pfp,
+                }});
+            } else {
+                console.error('Failed to fetch user details:', response.statusText);
+            }
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+        }
+    };
+
+    componentDidMount() {
+        this.getUserDetails();
+    }
+
     render() {
+        const { userDetails } = this.state;
         const { activeOption } = this.props;
 
         const token = localStorage.getItem('jwt');
-        const decoded = token ? jwtDecode(token): null;
 
         return (
             <div className="topnav">
@@ -29,10 +66,6 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'Home' ? '/images/icons/house-green.png' : '/images/icons/house.png'} className="nav-icon" alt="Home" />
                     Home
                 </a>                
-                <a className={activeOption === 'News' ? 'active' : ''} onClick={evt => this.props.changePage('News')}>
-                    <img src={activeOption === 'News' ? "/images/icons/news-green.png" : '/images/icons/news.png'} className="nav-icon" alt="News" />
-                    News
-                </a>
                 <a className={activeOption === 'Events' ? 'active' : ''} onClick={evt => this.props.changePage('Events')}>
                     <img src={activeOption === 'Events' ? "/images/icons/event-green.png" : '/images/icons/event.png'} className="nav-icon" alt="Events" />
                     Events
@@ -49,30 +82,35 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'About' ? "/images/icons/about-green.png" : '/images/icons/about.png'} className="nav-icon" />
                     About
                 </a>
-                <a className={activeOption === 'Drop Ins' ? 'active' : ''} onClick={() => this.props.changePage('Drop Ins')}>
-                    <img src={activeOption === 'Drop Ins' ? "/images/icons/dropoff-green.png" : '/images/icons/dropoff.png'} className="nav-icon" alt='Drop Ins'/>
-                    Drop Ins
-                </a>
-
+                
             
                 
                 {token ? (
                     <>
-
+                <a className={activeOption === 'News' ? 'active' : ''} onClick={evt => this.props.changePage('News')}>
+                    <img src={activeOption === 'News' ? "/images/icons/news-green.png" : '/images/icons/news.png'} className="nav-icon" alt="News" />
+                    News
+                </a>
+                <a className={activeOption === 'Drop Ins' ? 'active' : ''} onClick={() => this.props.changePage('Drop Ins')}>
+                    <img src={activeOption === 'Drop Ins' ? "/images/icons/dropin-green.png" : '/images/icons/dropin.png'} className="nav-icon" alt='Drop Ins'/>
+                    Drop Ins
+                </a>
                 <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
-                                    <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
-                                    Verification
+                    <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
+                    Verification
                 </a>
 
                     {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
                         <img src={activeOption === 'AdminTools' ? "/images/icons/tools-green.png" : '/images/icons/tools.png'} className="nav-icon" alt='Verification'/>
                         Admin Tools
                     </a></> : <></>}
-                        <b className="username">{jwtDecode(token).username} 
-                        <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
-                            <img id="download-img" src='/images/icons/settings.png'/>
-                        </a>
-                    </b>
+                        <b className="username">
+                            {jwtDecode(token).username} 
+                            <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>
+                                <img id="settings-img" src='/images/icons/settings.png'/>
+                            </a>
+                            <img src={userDetails.pfp} id="pfp" alt="User" /> {/* Display user profile picture */}
+                        </b>
                         <button className="signout" onClick={this.handleSignOut}>Sign Out</button>
                     </>
 

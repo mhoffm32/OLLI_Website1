@@ -30,7 +30,7 @@ class Login extends Component {
             alert("Please enter a password");
             return;
         } else {
-            fetch(`http://localhost:3002/login/`, {
+            fetch(`/login/`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ class Login extends Component {
                 let resend = window.confirm("Would you like to resend the verification email?")
                 console.log(resend)
                 if(resend){
-                  fetch(`http://localhost:3002/user/resendVerification/`, {
+                  fetch(`/user/resendVerification/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -120,6 +120,7 @@ class Login extends Component {
                     
                     <p className='loginText'>{this.state.loginText}</p>
                 </form>
+                <button id="forgotPassword" onClick={() => this.props.changePage('ForgotPassword')}>Forgot Password?</button>
             </div>
         );
     }

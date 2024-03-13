@@ -24,7 +24,7 @@ const GLogin = ({ changePage }) => {
 
   const sendAuthorizationCode = async (code) => {
     try {
-      const response = await fetch('http://localhost:3002/google-auth', {
+      const response = await fetch('/google-auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

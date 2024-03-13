@@ -11,8 +11,13 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3002;
 
+
+
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json())
+
+app.set('view engine', 'ejs');
 
 const router = express.Router();
 const userSignup = require('./routes/userSignUp.js');
@@ -23,18 +28,19 @@ const eventRegistration = require('./routes/eventRegistration.js');
 /************ PASSPORT *******************/
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const jwtDecode = require("jwt-decode")
+const jwtDecode = require("jwt-decode");
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 passport.use(new JwtStrategy({
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: process.env.SECRET_KEY // Replace with your own secret
+	secretOrKey: process.env.SECRET_KEY, // Replace with your own secret
+
 }, async (jwtPayload, done) => {
 	console.log("Authenticating")
 	try {
 		console.log("JWT Payload: " + jwtPayload.id + " ; " + jwtPayload.username)
-		const user = await userCollection.findOne({_id : new ObjectId(jwtPayload.id)})  //User.findById(jwtPayload.id);
+		const user = await User.findOne({_id : new ObjectId(jwtPayload.id)})  //User.findById(jwtPayload.id);
 		return done(null, user);
 	} catch (err) {
 		return done(err, false);
@@ -80,18 +86,20 @@ transporter.verify((error, success) => {
 /********************************** ROUTES *************************************/
 /************* USER ROUTES ***************/
 
+
 router.route('/signup')
 	.post(async (req, res) => {
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
 		const emailLower = email.toLowerCase().trim()
-		if(await validateEmail(emailLower) && inputSanitization(username) && inputSanitization(password)){
+		if(await validateEmail(emailLower) && sanitizeInput(username) && sanitizeInput(password)){
 			createUser(username, password, emailLower, res)
 			res.status(200).json({ message: 'Signup successful' });
 		} else {
 			res.status(400).json({ message: 'Signup failed' });
 		}
 	});
+
 
 router.route('/request')
 	.post(async (req, res) =>{
@@ -104,19 +112,28 @@ router.route('/request')
 			console.log('all fields required')
 			return res.status(400).json({message: 'Username, password, and type are required'});
 		}
-		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !inputSanitization(password)){
+		if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)|| !sanitizeInput(password)){
 			console.log('Invalid entries')
 			return res.status(400).json({message: 'Invalid entries for email/password'});
 		}
 		try{
-			const emailLower = email.toLowerCase.trim()
-			const user = await User.findOne({emailLower});
+			const emailLower = email.toLowerCase().trim();
+			let user1 = await User.find({email: emailLower});
+			const user = user1[0]
+
+			console.log(user)
+		
 			if(!user){
-				console.log('User not found')
+				console.log('User not founddddd')
 				return res.status(404).json({message: 'User not found'});
+			}else{
+				console.log("user found")
 			}
 
+			console.log("password", password, "user.password", user)
+
 			const validPass = await bcrypt.compare(password, user.password);
+			console.log("pass done")
 			if(!validPass){
 				console.log("invalid password")
 				return res.status(400).json({message: 'Invalid password'});
@@ -145,37 +162,6 @@ router.route('/request')
 	
 	});
 
-router.route('/login')
-	.post(async (req, res) => {
-		const { email, password } = req.body;
-		const emailLower = email.toLowerCase().trim()
-
-		if(inputSanitization(password) && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailLower)){
-			console.log("Valid entries")
-			const payload = await validatePassword(emailLower, password);
-
-			if(!payload){
-				res.status(400).json({ message: 'Please try another password or log in using google.'})
-			} else if (payload == "disabled"){
-				res.status(409).json({ message: 'This account has been disabled' });
-			} else if(!payload.verified){
-				res.status(410).json({ message: 'Email has not been verified' });
-			} else if(payload){
-				const tokenPayload = {
-					id: payload.id,
-					username: payload.username,
-					verified: payload.verified,
-					type: payload.type
-				};
-				const token = jwt.sign(tokenPayload, process.env.SECRET_KEY); // Replace with your own secret
-				res.status(200).json({ message: 'Login successful', token });
-			} else {
-				res.status(404).json({ message: `Account under ${email} does not exist` });
-			}
-		}
-	});
-
-
 router.route('/google-auth')
 	.post(async (req, res) => {
 
@@ -194,7 +180,7 @@ router.route('/google-auth')
 
 		}else{
 			const payload = { id: user._id, username: user.username, verified: user.verified, admin: user.admin }
-			console.log(payload)
+			
 			if(payload == "disabled"){
 				res.status(409).json({ message: 'This account has been disabled' });
 			} else if(!payload.verified){
@@ -304,30 +290,8 @@ app.use(userLogin);
 app.use(userSettings);
 app.use(eventRegistration);
 
-	router.route('/user/changePassword')
-	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
-		console.log("Changing Password: " + req.user.username)
-		let user = await getUser(req.user.username)
-		let {password} = req.body;
-		if(user){
-			let hashedPassword = await bcrypt.hash(password, 10);
-			let result = await userCollection.updateOne({username: req.user.username}, {$set: {password: hashedPassword}})
-			console.log(result)
-			res.json({
-				status: 'success',
-				message: 'Password has been changed'
-			})
-		} else {
-			res.json({
-				status: 'error',
-				message: 'Email is invalid'
-			})
-		}
-	})
-
-
-
 const multer = require("multer");
+const { sanitizeInput } = require('./helperClasses/inputChecker.js');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 let uploadedpdf = null;
@@ -468,21 +432,21 @@ router.route('/user/updateSettings')
         }
 });
 
-router.route('/user/send-ivey-message')
-	.post(async(req,res) => {
+
+app.post('/user/send-ivey-message', async(req,res) => {
+		try{
 		console.log('Sending message to Ivey')
 		const {name, email, message, subject, phoneNumber} =  req.body;
 		const transport = nodemailer.createTransport({
-			service: "Gmail",
+			service: 'Gmail',
 			auth: {
-				user: "CheerHomepage282@gmail.com",
-				pass: "3350Group25"
+				user: 'cheerhomepage282@gmail.com',
+				pass: 'ccurbpkzzbdzxlkq'
 			}
 		})
-		try {
 			await transport.sendMail({
-			  from: "CheerHomepage282@gmail.com",
-			  to: 'olivinglearn@gmail.com',
+			  from: "cheerhomepage282@gmail.com",
+			  to: 'olivinglearning@gmail.com',
 			  subject: subject,
 			  text: "Hello I'm " + name +'.\n\t' + message + '\nMy phone number is ' + phoneNumber + ' and my email for responding back to me is ' + email
 			});
@@ -493,6 +457,41 @@ router.route('/user/send-ivey-message')
 		  }
 
 	});
+
+
+app.post('/user/approveUser', async(req, res) =>{
+	try{
+		const {username, approveStatus, denyStatus} = req.body;
+		console.log('you pressed approve or deny')
+		const user1 = await User.findOne({username: username});
+		if(approveStatus)
+		{
+			user1.verified=true;
+
+		}else if(denyStatus){
+			user1.verified=false;
+		}
+		await user1.save();
+		console.log(user1)
+		res.status(200).json({ message: `User verification status updated` });
+	}
+	catch (error) {
+		console.error('Error Approving Account:', error);
+		res.status(500).send('Cannot approve account');
+	  }
+})
+
+app.get('/user/unverifiedUsers', async(req, res) =>{
+	try{
+		const unverifiedUsers = await User.find({verified: false});
+		console.log(unverifiedUsers)
+		return unverifiedUsers;
+	}catch (error) {
+        console.error('Error fetching unverified users:', error);
+        throw error;
+    }
+})
+
 
 /****************************** FINISH INITIALIZATION **************************/
 

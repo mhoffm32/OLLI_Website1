@@ -1,9 +1,25 @@
 {
+  "name": "se3350-project-group25",
+    "description": "Simple hello world sample in Node",
+    "version": "1.0.0",
+    "private": true,
+    "main": "server/index.js",
+    "type": "module",
+    "scripts": {
+    "start:server": "node server/index.js",
+    "start:client": "cd client && npm start",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\""
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "author": "Google LLC",
+  "license": "Apache-2.0",
   "dependencies": {
-    "react-datetime-picker": "^5.6.0",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.3",
     "express": "^4.18.2",
@@ -11,11 +27,13 @@
     "jwt-decode": "^4.0.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.2",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.9",
     "nodemon": "^3.0.3",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "path": "^0.12.7",
+    "react-datetime-picker": "^5.6.0",
     "uuid": "^9.0.1"
   }
 }

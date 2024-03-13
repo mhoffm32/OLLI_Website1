@@ -190,7 +190,10 @@ async function createUser(username, password, email, res){
     	email: email,
 		password: hashedPassword,
 		verified: false,
-    	type: 'generalUser'
+    	type: 'generalUser',
+		firstname: '',
+		lastname: '',
+		pfp: ''
 	});
 
 	const result = await newUser.save();

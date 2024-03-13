@@ -46,7 +46,7 @@ class Signup extends Component {
             alert("Please enter a valid password");
             return;
         } else {
-            fetch('http://localhost:3002/signup', {
+            fetch('/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
