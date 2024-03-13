@@ -53,7 +53,7 @@ router.route('/events/createEvent')
         console.log("Date: " + date);
         console.log("Location: " + location);
         console.log("Waiver: " + waiver[0].header + " " + waiver[0].content)
-        
+
         if(!title || !description || !date || !location || !waiver) {
             return res.status(400).json({ message: 'Please enter all fields' });
         } else {
@@ -70,5 +70,15 @@ router.route('/events/createEvent')
           res.status(200).json({ message: 'Event created' });
         }
     });
+
+router.route('/events/getAllEvents')
+  .get(async (req, res) => {
+    try {
+      const events = await Event.find();
+      res.json(events);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
 
 module.exports = router;
