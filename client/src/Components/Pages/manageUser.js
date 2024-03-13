@@ -1,10 +1,9 @@
 import ReactDOM from 'react-dom';
 import React, { useState, useEffect } from 'react';
 
-function speak() {  
+function speak(text) {  
   // Create a SpeechSynthesisUtterance object
 
-  let text = "Here you can manage User verification status."
 
   const utterance = new SpeechSynthesisUtterance(text);
   
@@ -33,7 +32,8 @@ const ManageUser = ({ changePage }) => {
   
     // Fetch unverified users on component mount
     useEffect(() => {
-      speak();
+      let text = "Here you can manage User verification status."
+      speak(text);
       const fetchUsers = async () => {
         try {
           const users = await fetchUnverifiedUsers(); // Fetch unverified users
@@ -72,7 +72,7 @@ const ManageUser = ({ changePage }) => {
         const data = await response.json();
         console.log(data.message); // Log the response message
         let text = username + " has been updated"
-			  alert(text);
+			  speak(text);
 
 			  const utterance = new SpeechSynthesisUtterance(text);
   
