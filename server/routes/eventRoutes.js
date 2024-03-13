@@ -45,19 +45,30 @@ function isAdmin(req, res, next) {
 router.route('/events/createEvent')
     .post(isAdmin, async (req, res) => {
         console.log("Creating event");
-        let { title, description, date, location } = req.body;
+        let { title, description, date, location, waiver } = req.body;
         console.log("Date: " + date)
-       
-        const newEvent = new Event({
+
+        console.log("Title: " + title);
+        console.log("Description: " + description);
+        console.log("Date: " + date);
+        console.log("Location: " + location);
+        console.log("Waiver: " + waiver[0].header + " " + waiver[0].content)
+        
+        if(!title || !description || !date || !location || !waiver) {
+            return res.status(400).json({ message: 'Please enter all fields' });
+        } else {
+          const newEvent = new Event({
             title : title,
             description : description,
             date : date,
-            location : location
-        });
+            location : location,
+            waiver : waiver
+          });
 
-        await newEvent.save();
-        console.log("Event created");
-        res.status(200).json({ message: 'Event created' });
+          await newEvent.save();
+          console.log("Event created");
+          res.status(200).json({ message: 'Event created' });
+        }
     });
 
 module.exports = router;

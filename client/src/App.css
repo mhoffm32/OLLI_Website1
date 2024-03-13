@@ -1335,3 +1335,8 @@ input, button, select, option {
 .createEventTitle {
   margin-top: 100px;
 }
+
+.includeWaiverCheckbox {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -20,6 +20,10 @@ const eventSchema = new mongoose.Schema({
   attendees: {
     type: [String],
     default: []
+  },
+  waiver: {
+    type: [{header: String, content: String}],
+    default: []
   }
 });
 
