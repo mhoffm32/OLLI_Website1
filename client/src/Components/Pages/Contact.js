@@ -1,5 +1,16 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios'
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Welcome to Contact menu. Here you can see how to get in touch with us."
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
+
 
 class Contact extends Component {
         // DO NOT USE IVEYS EMAIL
@@ -42,6 +53,7 @@ class Contact extends Component {
 
 
     render() {
+        speak();
         return (
             <div className="contact">
                 <div>

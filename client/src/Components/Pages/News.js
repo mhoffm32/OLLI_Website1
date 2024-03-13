@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { useState,useEffect } from 'react';
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
 
+  let text = "Welcome to the News menu. View News events here."
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
 const News = () => {
     const [newsletters, setNewsletters] = useState(null);
 
     useEffect(()=>{
+      speak();
       getNewsletters()
     },[])
   

@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Welcome to the Fundraising menu. Here view organizations we support"
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 class Fundraising extends Component {
     render() {
+        speak();
         const style = {
             width: '300px',
             height: '150px'

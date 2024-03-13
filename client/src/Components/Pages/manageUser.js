@@ -1,6 +1,16 @@
 import ReactDOM from 'react-dom';
 import React, { useState, useEffect } from 'react';
 
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
+
+  let text = "Here you can manage User verification status."
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
 
   
 const ManageUser = ({ changePage }) => {
@@ -23,6 +33,7 @@ const ManageUser = ({ changePage }) => {
   
     // Fetch unverified users on component mount
     useEffect(() => {
+      speak();
       const fetchUsers = async () => {
         try {
           const users = await fetchUnverifiedUsers(); // Fetch unverified users
@@ -60,6 +71,17 @@ const ManageUser = ({ changePage }) => {
   
         const data = await response.json();
         console.log(data.message); // Log the response message
+        let text = username + " has been updated"
+			  alert(text);
+
+			  const utterance = new SpeechSynthesisUtterance(text);
+  
+  			// Speak the text
+  			window.speechSynthesis.speak(utterance);
+        const users = await fetchUnverifiedUsers(); // Fetch unverified users
+        setPendingUsers(users); // Set pending users state
+
+
       } catch (error) {
         console.error('Error:', error);
         // Handle error appropriately

@@ -1,7 +1,18 @@
 import React, { Component } from "react";
 
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Welcome to the O living learning homepage"
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 class Home extends Component {
     render() {
+        speak();
         console.log("Displaying Home page");
         return (
             <div className="homePage">
