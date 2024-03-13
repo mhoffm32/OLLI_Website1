@@ -11,8 +11,6 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json())
@@ -24,6 +22,7 @@ const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
 const userSettings = require('./routes/userSettings.js');
 const eventRegistration = require('./routes/eventRegistration.js');
+const review = require('./routes/reviews.js');
 
 /************ PASSPORT *******************/
 const passport = require('passport');
@@ -288,6 +287,7 @@ app.use(userSignup);
 app.use(userLogin);
 app.use(userSettings);
 app.use(eventRegistration);
+app.use(review);
 
 const multer = require("multer");
 const { sanitizeInput } = require('./helperClasses/inputChecker.js');
