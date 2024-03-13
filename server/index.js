@@ -60,6 +60,7 @@ const Newsletters = require('./models/newsletters');
 const AccountSetting = require('./models/accountSettings');
 const { ObjectId } = require('mongodb');
 const path = require('path');
+const Images = require('./models/images');
 
 /************** NODEMAILER *****************/
 
@@ -236,6 +237,7 @@ router.route('/user/getUsers')
 
 
 
+
 router.route('/user/verify/:userID/:uniqueString')
 	.get(async (req, res) => {
 		const uniqueString = req.params.uniqueString;
@@ -296,6 +298,16 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 let uploadedpdf = null;
 
+const imageUpload = multer({ 
+	dest: 'uploads/',
+	fileFilter: (req, file, cb) => {
+		if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)){
+			return cb(new Error('Please upload an image'), false)
+		}
+		cb(null, true)
+	}
+});
+
 router.route('/admin/uploadNewsletter')
 	.post(upload.single("file"), async (req, res) => {
 		try {
@@ -324,6 +336,30 @@ router.route('/admin/uploadNewsletter')
 			return res.status(500).json({ error: "Internal Server Error" });
 		  }
 })
+
+router.route('/admin/uploadImages')
+  .post(imageUpload.single("file"), async (req, res) => {
+	try{
+		uploadedImage = req.file;
+		if (!req.file) {
+			return res.status(400).json({ error: "No file uploaded." });
+		}
+		uploadedImage = req.file.buffer;
+		const customName = req.body.customName;
+		const imageDocument = new Images({
+			image_name: customName,
+			image: uploadedImage
+		});
+		await imageDocument.save();
+	
+  }
+  catch (error) {
+	console.error("Error:", error);
+	return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+);
+
 
 router.route('/user/viewNewsletters')
     .get(async (req, res) => {

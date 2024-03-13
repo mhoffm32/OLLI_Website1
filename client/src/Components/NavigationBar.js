@@ -99,6 +99,10 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
                     Verification
                 </a>
+                <a className={activeOption === 'Photo Gallery' ? 'active' : ''} onClick={() => this.props.changePage('Photo Gallery')}>
+                    <img src={activeOption === 'Photo Gallery' ? "/images/icons/photos.png" : '/images/icons/photos-green.png'} className="nav-icon" alt='Photo Gallery'/>
+                    Photo Gallery
+                </a>
 
                     {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
                         <img src={activeOption === 'AdminTools' ? "/images/icons/tools-green.png" : '/images/icons/tools.png'} className="nav-icon" alt='Verification'/>

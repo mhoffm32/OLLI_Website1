@@ -1023,6 +1023,21 @@ input, button, select, option {
   margin: 5px;
 }
 
+#add-images-btn{
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 10px;
+  vertical-align: auto;
+  margin: 5px;
+}
+
+#add-images-btn:hover{
+  background-color: #ddd;
+}
+
 #return-btn{
   background-color: #df7958;
   color: black;
