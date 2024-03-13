@@ -116,11 +116,22 @@ button:hover {
   color: black;
 }
 
-.topnav #settings-icon, .topnav #settings-icon img {
-  border-radius: 50%;
-  height: 30px;
+.topnav #settings-icon {
+  display: inline-block;
+  text-align: center;
   vertical-align: middle;
+  border-radius: 50%;
+  height: 20px; 
+  width: 20px;
 }
+
+.topnav #settings-img {
+  height: 30px;
+  width: auto;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
 
 .topnav #pfp {
   margin: 5px;
@@ -221,6 +232,7 @@ button:hover {
 #signout-button span {
   vertical-align: middle; 
 }
+
 
 /* LOGIN PAGE */ 
 
@@ -443,6 +455,27 @@ button:hover {
 .requestButton{
   font-size: larger;
   color: #6c7751;
+}
+
+.review-section .review-desc h1 {
+  margin-top: 100px;
+}
+
+.reviews {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.reviews .review {
+  width: 30%;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #6c7751;
+  border-radius: 20px;
+  background-color: #ffd7c7;
+  text-align: left;
 }
 
 /* EVENTS PAGE */
