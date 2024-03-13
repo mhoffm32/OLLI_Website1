@@ -299,7 +299,6 @@ const upload = multer({ storage: storage });
 let uploadedpdf = null;
 
 const imageUpload = multer({ 
-	dest: 'uploads/',
 	fileFilter: (req, file, cb) => {
 		if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)){
 			return cb(new Error('Please upload an image'), false)
@@ -345,12 +344,12 @@ router.route('/admin/uploadImages')
 			return res.status(400).json({ error: "No file uploaded." });
 		}
 		uploadedImage = req.file.buffer;
-		const customName = req.body.customName;
-		const imageDocument = new Images({
-			image_name: customName,
+		console.log(uploadedImage);
+		const image = new Images({
 			image: uploadedImage
 		});
-		await imageDocument.save();
+		await image.save();
+		console.log("Image uploaded successfully.");
 	
   }
   catch (error) {
