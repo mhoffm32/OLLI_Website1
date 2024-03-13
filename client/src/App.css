@@ -1290,6 +1290,8 @@ input, button, select, option {
 
 .approvalControls{
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #approvalButton{
