@@ -466,9 +466,15 @@ app.post('/user/approveUser', async(req, res) =>{
 		if(approveStatus)
 		{
 			user1.verified=true;
+			console.log(user1)
+			alert(user1 + "has been verified")
+
 
 		}else if(denyStatus){
 			user1.verified=false;
+			console.log(user1)
+			alert(user1 + "has been rejectec");
+
 		}
 		await user1.save();
 		console.log(user1)
@@ -484,7 +490,7 @@ app.get('/user/unverifiedUsers', async(req, res) =>{
 	try{
 		const unverifiedUsers = await User.find({verified: false});
 		console.log(unverifiedUsers)
-		return unverifiedUsers;
+		res.json(unverifiedUsers);
 	}catch (error) {
         console.error('Error fetching unverified users:', error);
         throw error;
