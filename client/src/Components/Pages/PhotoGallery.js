@@ -20,8 +20,7 @@ function formatDateAndTime(date){
         suffix = "AM";  
     }
     const minute = d.getMinutes();
-    const second = d.getSeconds();
-    return `${month}/${day}/${year} ${hour}:${minute}:${second}${suffix}`;
+    return `${month}/${day}/${year} ${hour}:${minute}${suffix}`;
 
 }
 function PhotoGallery() {
