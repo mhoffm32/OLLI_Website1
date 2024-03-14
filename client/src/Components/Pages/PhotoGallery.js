@@ -41,6 +41,7 @@ function PhotoGallery() {
             {images.map(image => (
                 <div key={image._id}>
                     <img src={`data:image/jpeg;base64,${image.image}`} alt="Uploaded" />
+                    <p>{image.caption}</p>
                     <p>{formatDateAndTime(image.uploadDate)}</p>
                 </div>
             ))}

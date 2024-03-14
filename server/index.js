@@ -349,10 +349,16 @@ router.route('/admin/uploadImages')
 		if (!req.file) {
 			return res.status(400).json({error: "No file uploaded."} );
 		}
+		if(!req.body.caption){
+			return res.status(400).json({error: "No caption included."} );
+		}
+		if(typeof(req.body.caption)!== 'string'){
+			return res.status(400).json({error: "Caption must be a string."} );
+		}
 		const uploadedImage = req.file.buffer;
-		console.log(uploadedImage);
 		const image = new Images({
-			image: uploadedImage
+			image: uploadedImage,
+			caption: req.body.caption
 		});
 		await image.save();
 		console.log("Image uploaded successfully.");
@@ -370,7 +376,8 @@ router.route('/displayImages')
 			const imageList = images.map(image => ({
 				_id: image._id,
 				image: Buffer.from(image.image, 'base64').toString('base64'),
-				uploadDate: image.uploadDate
+				uploadDate: image.uploadDate,
+				caption: image.caption
 			}));
 			res.json({images: imageList});
 		} catch (error) {

@@ -3,10 +3,15 @@ import React, { useState } from 'react';
 function AddImages() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [text, setText] = useState("");
+    const [caption, setCaption] = useState("");
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setSelectedImage(file);
+    };
+
+    const handleCaption = (event) => {
+        setCaption(event.target.value);
     };
 
     const handleFormSubmit = async (event) => {
@@ -15,6 +20,7 @@ function AddImages() {
 
         const formData = new FormData();
         formData.append('image', selectedImage);
+        formData.append('caption', caption)
 
         try{
 
@@ -29,7 +35,7 @@ function AddImages() {
             setText("File successfully uploaded")
         }
         else{
-            setText("No file included or invalid type")
+            setText("Empty field or invalid type for field. Files must be images and caption must be text.")
             console.log("error occured: ", res) 
         }
     }
@@ -45,6 +51,7 @@ function AddImages() {
             <h1>Upload Images</h1>
             <form onSubmit={handleFormSubmit}>
                 <input id='selectFile' type="file" onChange={handleImageUpload} />
+                <input id='caption' type="text" placeholder="Caption" value={caption} onChange={handleCaption}/>
                 <button id='submitButton' type="submit">Upload</button>
                 <p>{text}</p>
             </form>
