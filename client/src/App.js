@@ -17,6 +17,7 @@ import UploadLetter from './Components/Pages/UploadLetter';
 import UserSettings from './Components/Pages/UserSettings';
 import ForgotPassword from './Components/Pages/ForgotPassword';
 import ChatHome from './Components/Pages/ChatHome';
+import PhotoGallery from './Components/Pages/PhotoGallery';
 
 class App extends React.Component {
   constructor(props) {
@@ -61,6 +62,9 @@ class App extends React.Component {
         break;
       case 'AdminTools':
         page = <AdminTools changePage={this.changePage} />
+        break;
+      case 'Photo Gallery':
+        page = <PhotoGallery changePage={this.changePage} />
         break;
       case 'UserSettings':
           page = <UserSettings changePage={this.changePage} />

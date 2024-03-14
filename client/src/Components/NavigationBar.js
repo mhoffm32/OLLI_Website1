@@ -83,6 +83,8 @@ class NavigationBar extends React.Component {
                     About
                 </a>
                 
+            
+                
                 {token ? (
                     <>
                 <a className={activeOption === 'News' ? 'active' : ''} onClick={evt => this.props.changePage('News')}>
@@ -101,6 +103,11 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'ChatHome' ? "/images/icons/text-message-icon-green.png" : '/images/icons/text-message-icon-white.png'} className="nav-icon" alt='Verification'/>
                     Chats
                 </a>
+                <a className={activeOption === 'Photo Gallery' ? 'active' : ''} onClick={() => this.props.changePage('Photo Gallery')}>
+                    <img src={activeOption === 'Photo Gallery' ? "/images/icons/photos.png" : '/images/icons/photos-green.png'} className="nav-icon" alt='Photo Gallery'/>
+                    Photo Gallery
+                </a>
+
                     {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'AdminTools' ? 'active' : ''} onClick={() => this.props.changePage('AdminTools')}>
                         <img src={activeOption === 'AdminTools' ? "/images/icons/tools-green.png" : '/images/icons/tools.png'} className="nav-icon" alt='Verification'/>
                         Admin Tools

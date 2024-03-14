@@ -1045,6 +1045,50 @@ input, button, select, option {
   cursor: not-allowed;
 }
 
+#admin-menu-btn{
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px;
+  vertical-align: auto;
+  margin: 5px;
+}
+
+#add-images-btn{
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 10px;
+  vertical-align: auto;
+  margin: 5px;
+}
+
+#add-images-btn:hover{
+  background-color: #ddd;
+}
+
+#return-btn{
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px;
+  vertical-align: auto;
+  margin: 5px;
+}
+#return-btn:hover{
+  background-color: #ddd;
+}
+
+#admin-menu-btn:hover{
+  background-color: #ddd;
+}
+
 .error-message {
   color: #ff0000;
   margin-top: 10px;
@@ -1622,4 +1666,19 @@ li {
 
 
 
+
+
+#submitButton{
+  background-color: #df7958;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  font-weight: bolder;
+}
+
+#submitButton:hover{
+  background-color: #ddd;
+  color: black;
+}
 
