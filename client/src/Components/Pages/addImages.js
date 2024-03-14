@@ -16,26 +16,36 @@ function AddImages() {
         const formData = new FormData();
         formData.append('image', selectedImage);
 
-         const response = await fetch('/admin/uploadImages', {
+        try{
+
+         const response = await fetch('/api/admin/uploadImages', {
             method: 'POST',
-            body: formData,
+            body: formData
         });
         const res = await response.json();
+        console.log(res)
         if (response.ok){
             console.log("file successfully uploaded")
-            setText("Image successfully uploaded")
-        } else {
-            setText(res)
-            console.log("error occured: ", res)
+            setText("File successfully uploaded")
         }
+        else{
+            setText("No file included or invalid type")
+            console.log("error occured: ", res) 
+        }
+    }
+    catch(error) {
+
+        console.log(error);
+    }
+    
     };
 
     return (
         <div>
             <h1>Upload Images</h1>
             <form onSubmit={handleFormSubmit}>
-                <input type="file" onChange={handleImageUpload} />
-                <button type="submit">Upload</button>
+                <input id='selectFile' type="file" onChange={handleImageUpload} />
+                <button id='submitButton' type="submit">Upload</button>
                 <p>{text}</p>
             </form>
         </div>

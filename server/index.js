@@ -298,14 +298,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 let uploadedpdf = null;
 
-const imageUpload = multer({ 
-	fileFilter: (req, file, cb) => {
-		if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)){
-			return cb(new Error('Please upload an image'), false)
-		}
-		cb(null, true)
-	}
-});
+
+
 
 router.route('/admin/uploadNewsletter')
 	.post(upload.single("file"), async (req, res) => {
@@ -336,28 +330,66 @@ router.route('/admin/uploadNewsletter')
 		  }
 })
 
-router.route('/admin/uploadImages')
-  .post(imageUpload.single("file"), async (req, res) => {
-	try{
-		uploadedImage = req.file;
-		if (!req.file) {
-			return res.status(400).json({ error: "No file uploaded." });
+
+const imageUpload = multer({ 
+	fileFilter: (req, file, cb) => {
+		if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+			const error = new Error('Please upload an image');
+			error.status = 400;
+			console.log("Error: Please upload an image");
+			return cb(null, false);
 		}
-		uploadedImage = req.file.buffer;
+		cb(null, true);
+	}
+});
+
+router.route('/admin/uploadImages')
+  .post(imageUpload.single("image"), async (req, res) => {
+	try {
+		if (!req.file) {
+			return res.status(400).json({error: "No file uploaded."} );
+		}
+		const uploadedImage = req.file.buffer;
 		console.log(uploadedImage);
 		const image = new Images({
 			image: uploadedImage
 		});
 		await image.save();
 		console.log("Image uploaded successfully.");
-	
-  }
-  catch (error) {
-	console.error("Error:", error);
-	return res.status(500).json({ error: "Internal Server Error" });
-  }
-}
-);
+		return res.status(200).json({success: "Image uploaded successfully."});
+	} catch (error) {
+		console.error("Error:", error.message);
+		return res.status(500).send( "Internal Server Error" );
+	}
+});
+
+router.route('/displayImages')
+	.get(async (req, res) => {
+		try {
+			const images = await Images.find();
+			const imageList = images.map(image => ({
+				_id: image._id,
+				image: Buffer.from(image.image, 'base64').toString('base64'),
+				uploadDate: image.uploadDate
+			}));
+			res.json({images: imageList});
+		} catch (error) {
+			console.error("Error:", error);
+			return res.status(500).json({error: "Internal Server Error"});
+		}
+	});
+
+router.route('/admin/deleteAllImages')
+	.delete(async (req, res) => {
+		try {
+			await Images.deleteMany();
+			res.json({message: "All images deleted"});
+		} catch (error) {
+			console.error("Error:", error);
+			return res.status(500).json({error: "Internal Server Error"});
+		}
+	});
+
 
 
 router.route('/user/viewNewsletters')

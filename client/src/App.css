@@ -1360,3 +1360,18 @@ input, button, select, option {
   height: 100px;
 }
 
+
+#submitButton{
+  background-color: #df7958;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  font-weight: bolder;
+}
+
+#submitButton:hover{
+  background-color: #ddd;
+  color: black;
+}
+
