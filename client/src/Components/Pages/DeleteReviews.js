@@ -63,7 +63,7 @@ function DeleteReviews() {
                     </option>
                 ))}
             </select>
-            <button onClick={deleteReview}>Delete</button>
+            <button id='delete-review-btn' onClick={deleteReview}>Delete</button>
             <p>{text}</p>   
         </div>
     );

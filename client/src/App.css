@@ -1725,3 +1725,34 @@ li {
   color: black;
 }
 
+
+
+
+#delete-review-btn{
+  background-color: #df7958;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 8px;
+  font-weight: bolder;
+}
+
+#delete-review-btn:hover{
+  background-color: #ddd;
+  color: black;
+}
+
+#delete-rvw-btn{
+  background-color: #df7958;
+  padding: 10px;
+  margin: 20px;
+  font-size: medium;
+  border-width: 0px;
+  border-radius: 8px;
+  font-weight: normal;
+}
+
+#delete-rvw-btn:hover{
+  background-color: #ddd;
+}
+
