@@ -16,6 +16,7 @@ import AdminTools from './Components/Pages/AdminTools';
 import UploadLetter from './Components/Pages/UploadLetter';
 import UserSettings from './Components/Pages/UserSettings';
 import ForgotPassword from './Components/Pages/ForgotPassword';
+import EventCreator from './Components/EventCreator';
 import ChatHome from './Components/Pages/ChatHome';
 import PhotoGallery from './Components/Pages/PhotoGallery';
 
@@ -24,12 +25,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       activeOption: 'Home',
+      signUpOption: '',
     };
   }
 
   changePage = (str) => {
     this.setState({
       activeOption: str
+    });
+  }
+
+  changeSignUpOption = (str) => {
+    this.setState({
+      signUpOption: str
     });
   }
 
@@ -46,7 +54,7 @@ class App extends React.Component {
         page = <About />;
         break;
       case 'Events':
-        page = <Events />;
+        page = <Events changePage={this.changePage} changeSignUpOption={this.changeSignUpOption}/>;
         break;
       case 'Fundraising':
         page = <Fundraising />;
@@ -87,6 +95,9 @@ class App extends React.Component {
         break;
       case 'ForgotPassword':
         page = <ForgotPassword changePage={this.changePage}/>;
+        break;
+      case 'EventCreator':
+        page = <EventCreator changePage={this.changePage}/>;
         break;
       default:
         page = <Home changePage={this.changePage}/>;

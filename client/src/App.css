@@ -1395,6 +1395,49 @@ input, button, select, option {
   height: 100px;
 }
 
+
+.eventCreatorBar {
+  width: 100%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  background-color: #6c7751;
+  color: white; /* Text color */
+  text-align: center; /* Centered text */ 
+}
+
+.eventCreatorBar::placeholder {
+  color: lightgrey;
+}
+
+.createEventTitle {
+  margin-top: 100px;
+}
+
+.includeWaiverCheckbox {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.eventBox {
+  width: 100%;
+  margin-left: 0%;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 20px; /* Rounded sides */
+  background-color: #6c7751;
+  color: white; /* Text color */
+  text-align: center; /* Centered text */
+}
+
+.sigCanvas {
+  background-color: rgb(238, 235, 235);
+  width: 50%;
+  height: 200px;
+}
 li {
   list-style-type: none;
 }

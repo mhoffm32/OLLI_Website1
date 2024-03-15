@@ -22,6 +22,7 @@ const userSignup = require('./routes/userSignUp.js');
 const userLogin = require('./routes/userLogin.js');
 const userSettings = require('./routes/userSettings.js');
 const eventRegistration = require('./routes/eventRegistration.js');
+const eventRoutes = require('./routes/eventRoutes.js');
 const review = require('./routes/reviews.js');
 
 /************ PASSPORT *******************/
@@ -293,6 +294,7 @@ app.use(userSignup);
 app.use(userLogin);
 app.use(userSettings);
 app.use(eventRegistration);
+app.use(eventRoutes);
 app.use(review);
 
 const multer = require("multer");
