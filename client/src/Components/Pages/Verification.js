@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Here you can send request to the adminstrator to verify your account."
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 class Verification extends Component {
     constructor(props) {
         super(props);
@@ -70,6 +79,7 @@ class Verification extends Component {
     }
     
     render() {
+        speak();
         const { email, password, type, error} = this.state;
 
         return (

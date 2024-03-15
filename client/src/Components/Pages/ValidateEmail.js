@@ -1,7 +1,17 @@
 import React from 'react';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Please Validate email"
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 class ValidateEmail extends React.Component {
     render() {
+        speak();
         return (
             <div>
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'>🡠</button>
