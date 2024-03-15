@@ -50,6 +50,22 @@ class UserInterface {
             console.error(err);
         }
     }
+
+    static async getUserById(id){
+      try {
+          console.log("Getting User: " + id)
+          const userObj = await User.findById(id);
+          console.log("userobj",userObj)
+          if (userObj) {
+              return userObj;
+          } else {
+              return null;
+          }
+      } catch (err) {
+          console.error(err);
+      }
+  }
+
 }
 
 module.exports = UserInterface;

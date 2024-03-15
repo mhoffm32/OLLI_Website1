@@ -1342,8 +1342,8 @@ input, button, select, option {
 }
 
 .eventBox {
-  width: 200%;
-  margin-left: -50%;
+  width: 100%;
+  margin-left: 0%;
   margin-top: 20px;
   padding: 10px;
   font-size: medium;
@@ -1352,4 +1352,10 @@ input, button, select, option {
   background-color: #6c7751;
   color: white; /* Text color */
   text-align: center; /* Centered text */
+}
+
+.sigCanvas {
+  background-color: rgb(238, 235, 235);
+  width: 50%;
+  height: 200px;
 }

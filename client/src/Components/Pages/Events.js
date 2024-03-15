@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SignatureCanvas from "react-signature-canvas";
 
 class Events extends Component {
 
@@ -6,8 +7,10 @@ class Events extends Component {
         super(props);
         this.state = {
           events: [],
-          expandedEventId: null
+          expandedEventId: null,
+          showWaiverFields: false
         };
+        this.sigCanvas = React.createRef();
         this.getEvents();
       }
 
@@ -22,8 +25,38 @@ class Events extends Component {
             .then(events => this.setState({ events }))
     }
 
+    clearSignature = () => {
+        if (this.sigCanvas.current) {
+            this.sigCanvas.current.clear(); // Clear the signature pad
+        }
+    }
+
+    signUp = () => {
+        if (this.sigCanvas.current) {
+            const signature = this.sigCanvas.current.toDataURL(); // Get the data URL of the signature
+
+            // Send the signature in a server request
+            fetch('/events/signUp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+                },
+                body: JSON.stringify({ signature, eventId: this.state.expandedEventId }) // Send the signature as part of the request body
+            })
+                .then(res => res.json())
+                .then(response => {
+                    // Handle the response
+                    console.log(response);
+                })
+                .catch(error => {
+                    // Handle the error
+                    console.error(error);
+                });
+        }
+    }
+
     render() {
-        
         return (
             <div className="events">
                 <h1>Come Join our Events</h1>
@@ -40,7 +73,23 @@ class Events extends Component {
                         {this.state.expandedEventId === event._id && (
                             <div>
                                 <p>{event.description}</p>
-                                <button>Sign Up</button>
+                                {this.state.showWaiverFields ? (
+                                    <div>
+                                        {event.waiver.map((waiverSection, index) => (
+                                            <div key={index} className='waiverSection'>
+                                                <h3>{waiverSection.header}</h3>
+                                                <p>{waiverSection.content}</p>
+                                            </div>
+                                        ))}
+                                        <div className='signatureContainer'>
+                                        <SignatureCanvas ref={this.sigCanvas} penColor="black" canvasProps={{ className: "sigCanvas" }}/>
+                                        </div>
+                                        <button onClick={this.clearSignature}>Clear Signature</button>
+                                        <button onClick={() => this.signUp()}>Sign Up</button>
+                                    </div>
+                                ) : (
+                                    <button onClick={() => this.setState({ showWaiverFields: true })}>Sign Up</button>
+                                )}
                             </div>
                         )}
                     </div>

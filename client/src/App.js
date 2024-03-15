@@ -23,6 +23,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       activeOption: 'Home',
+      signUpOption: '',
     };
     localStorage.removeItem('jwt');
   }
@@ -30,6 +31,12 @@ class App extends React.Component {
   changePage = (str) => {
     this.setState({
       activeOption: str
+    });
+  }
+
+  changeSignUpOption = (str) => {
+    this.setState({
+      signUpOption: str
     });
   }
 
@@ -46,7 +53,7 @@ class App extends React.Component {
         page = <About />;
         break;
       case 'Events':
-        page = <Events changePage={this.changePage}/>;
+        page = <Events changePage={this.changePage} changeSignUpOption={this.changeSignUpOption}/>;
         break;
       case 'Fundraising':
         page = <Fundraising />;

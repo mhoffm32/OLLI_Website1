@@ -18,7 +18,7 @@ const eventSchema = new mongoose.Schema({
     required: true
   },
   attendees: {
-    type: [String],
+    type: [{email: String, signature: String}],
     default: []
   },
   waiver: {
