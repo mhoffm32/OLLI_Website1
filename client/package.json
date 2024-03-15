@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "cors": "^2.8.5",
+    "date-fns": "^3.4.0",
     "dayjs": "^1.11.10",
     "fullcalendar": "^6.1.10",
     "gapi-script": "^1.2.0",
