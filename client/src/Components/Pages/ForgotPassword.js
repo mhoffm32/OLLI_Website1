@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
 
+  let text = "In this page, you can replace your password."
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
 class ForgotPassword extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +47,7 @@ class ForgotPassword extends Component {
   };
 
   render() {
+    speak();
     const { email } = this.state;
 
     return (

@@ -5,9 +5,13 @@ import ManageUser from "../Pages/manageUser";
 import AddImages from "../Pages/addImages";
 import DeleteReviews from "../Pages/DeleteReviews";
 
+
+
+
+
 const AdminTools = ({ changePage, user }) => {
   const [page, setPage] = useState("adminHome");
-
+  
  
   const getCurrentPage = () => {
     let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>, "manageSchedule" : <ManageSchedule/>, "AddImages" : <AddImages/>, "DeleteReviews" : <DeleteReviews/>}  

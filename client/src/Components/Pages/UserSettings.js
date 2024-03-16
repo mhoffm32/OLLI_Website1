@@ -1,6 +1,15 @@
 import { jwtDecode } from 'jwt-decode';
 import { useState, useEffect} from 'react';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Here you can edit your account settings"
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 const UserSettings = () => {
     const [userSettings, setSettings] = useState(null);
     const [firstName, setFirstName] = useState(null);
@@ -16,6 +25,7 @@ const UserSettings = () => {
 
     useEffect(()=>{
         getCurrentSettings();
+        speak();
         getUserDetails();
     },[]);
 

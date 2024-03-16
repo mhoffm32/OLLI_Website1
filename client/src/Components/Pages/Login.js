@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import GLogin from '../Pages/GLogin'
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
 
+  let text = "You can login into your registered O living learning account here."
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -86,9 +95,9 @@ class Login extends Component {
     }
 
     render() {
-        
         const { email, password } = this.state;
-      
+        
+
         return (
             <div>
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
@@ -123,6 +132,7 @@ class Login extends Component {
                 <button id="forgotPassword" onClick={() => this.props.changePage('ForgotPassword')}>Forgot Password?</button>
             </div>
         );
+        speak();
     }
 }
 

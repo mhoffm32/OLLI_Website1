@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import GLogin from './GLogin';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Here you can signup for an account with o living learning."
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 class Signup extends Component {
     constructor(props) {
         super(props);
@@ -69,6 +78,7 @@ class Signup extends Component {
     }
 
     render() {
+        speak();
         const { username, password, email} = this.state;
 
         return (
