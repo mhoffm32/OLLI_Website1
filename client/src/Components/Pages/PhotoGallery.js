@@ -40,7 +40,7 @@ function PhotoGallery() {
             <h1>Photo Gallery</h1>
             {images.map(image => (
                 <div key={image._id}>
-                    <img src={`data:image/jpeg;base64,${image.image}`} alt="Uploaded" />
+                    <img id='images' src={`data:image/jpeg;base64,${image.image}`} alt="Uploaded" />
                     <p>{image.caption}</p>
                     <p>{formatDateAndTime(image.uploadDate)}</p>
                 </div>
