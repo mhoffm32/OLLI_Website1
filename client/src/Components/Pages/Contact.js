@@ -2,14 +2,13 @@ import React, { Component, useState } from 'react';
 import axios from 'axios'
 function speak() {  
     // Create a SpeechSynthesisUtterance object
-  
-    let text = "Welcome to Contact menu. Here you can see how to get in touch with us."
-  
+    const text = window.getSelection().toString() || "No text highlighted";
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
     window.speechSynthesis.speak(utterance);
   }
+
 
 
 class Contact extends Component {
@@ -32,6 +31,16 @@ class Contact extends Component {
             console.log("Event: ", e.target)
             this.setState({ [e.target.name]: e.target.value });
         };
+
+        readHighlightedText = () =>{
+            const text = window.getSelection().toString();
+            if(text){
+                speak(text);
+            }
+            else{
+                speak("No text highlighted")
+            }
+        };
         
         //Email sending function
         sendMessage = async (e) => {
@@ -53,8 +62,15 @@ class Contact extends Component {
 
 
     render() {
-        speak();
         return (
+            <div>
+                 <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
+
             <div className="contact">
                 <div>
                     <h1 id= "contactTitle">Let's Get in Touch</h1>
@@ -134,6 +150,7 @@ class Contact extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

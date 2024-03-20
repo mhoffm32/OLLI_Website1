@@ -1760,3 +1760,22 @@ li {
 #images{
   border: #6c7751 5px solid;
 }
+
+#speech-btn{
+  background-color: #df7958;
+  padding: 10px;
+  margin: 20px;
+  font-size: medium;
+  border-width: 0px;
+  border-radius: 8px;
+  font-weight: normal;
+  color: white;
+}
+
+#speech-btn:hover{
+  background-color: white;
+  color: black;
+  
+} 
+
+

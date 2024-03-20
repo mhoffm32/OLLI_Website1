@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import GLogin from './GLogin';
 function speak() {  
-    // Create a SpeechSynthesisUtterance object
-  
-    let text = "Here you can signup for an account with o living learning."
-  
+
+    const text = window.getSelection().toString() || "No text highlighted."
     const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Speak the text
+
+  
     window.speechSynthesis.speak(utterance);
   }
 class Signup extends Component {
@@ -77,12 +75,27 @@ class Signup extends Component {
         }
     }
 
+    readHighlightedText = () =>{
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+            speak("No text highlighted.");
+        }
+    };
+
     render() {
-        speak();
         const { username, password, email} = this.state;
 
         return (
             <div>
+                 <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
                 <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
                 <div id="g-login-btn1"><GLogin changePage={this.props.changePage}/></div>

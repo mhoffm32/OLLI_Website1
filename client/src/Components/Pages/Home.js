@@ -6,13 +6,14 @@ import { format } from 'date-fns';
 function speak() {  
     // Create a SpeechSynthesisUtterance object
   
-    let text = "Welcome to the O living learning homepage"
-  
+    const text = window.getSelection().toString() || "No text is highlighted";
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
     window.speechSynthesis.speak(utterance);
   }
+
+
 class Home extends Component {
 
     constructor(props) {
@@ -64,7 +65,18 @@ class Home extends Component {
             console.error("error:", error);
         }
     };
-    
+
+    readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+            window.speechSynthesis.cancel();
+            speak("No text is highlighted");
+        }
+    };
+
     createReview = async (username, date, rating, content) => { 
         if (username === '') {
             console.error("Please log in before writing a review.");
@@ -97,10 +109,17 @@ class Home extends Component {
     }
 
     render() {
-        speak();
         console.log("Displaying Home page");
 
         return (
+            <div>
+            <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
+            
             <div className="homePage">
                 <div className="homePageDescription">
                     <h1>Ongoing Living & Learning Inc.</h1>
@@ -216,9 +235,11 @@ class Home extends Component {
                             <button type="submit">Submit</button>
                         </form>
                     </div>
+                    
                     <br></br>
                     <br></br>
                 </div>
+            </div>
             </div>
         );
     }

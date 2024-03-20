@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
 function speak() {  
-    // Create a SpeechSynthesisUtterance object
-  
-    let text = "Welcome to the Fundraising menu. Here view organizations we support"
-  
+
+    const text = window.getSelection().toString() || "No text highlighted."
     const utterance = new SpeechSynthesisUtterance(text);
     
-    // Speak the text
     window.speechSynthesis.speak(utterance);
   }
 class Fundraising extends Component {
+
+    readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+            window.speechSynthesis.cancel();
+            speak("No text is highlighted");
+        }
+    };
+
+
     render() {
-        speak();
         const style = {
             width: '300px',
             height: '150px'
         };
         return (
+            <div>
+                 <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
             <div className="fundraising">
                 <h1>Fundraisers We Support</h1>
                 <h3>Support O.L.L.I. by donating to our wonderful community programs!</h3>
@@ -44,6 +60,7 @@ class Fundraising extends Component {
                 </div>
                 <p>Rock Glen Resorts</p>
                 <br></br>
+            </div>
             </div>
         );
     }

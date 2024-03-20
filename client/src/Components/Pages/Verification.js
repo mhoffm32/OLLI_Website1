@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 function speak() {  
-    // Create a SpeechSynthesisUtterance object
   
-    let text = "Here you can send request to the adminstrator to verify your account."
-  
+    const text = window.getSelection().toString() || "No text highlighted."   
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
@@ -28,6 +26,17 @@ class Verification extends Component {
     handleVerificationTypeChange = (event) =>{
         this.setState({type: event.target.value, error: ''});
     }
+
+    readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+            window.speechSynthesis.cancel();
+            speak("No text is highlighted");
+        }
+    };
 
     handleSubmit = async (event) => {
         event.preventDefault();
@@ -79,10 +88,16 @@ class Verification extends Component {
     }
     
     render() {
-        speak();
         const { email, password, type, error} = this.state;
 
         return (
+            <div>
+                  <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
             <div className="verification">
                 <h1>Request Account Verification</h1>
                 <form onSubmit={this.handleSubmit}>
@@ -124,6 +139,7 @@ class Verification extends Component {
                     {error && <p className='error-message'>{error}</p>}
 
                 </form>
+            </div>
             </div>
         );
     }
