@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ChatThread from '../Pages/ChatThread';
+import ChatThread from '../ChatHome';
 import { jwtDecode } from "jwt-decode";
 
-
-function speak(){
-  const text = window.getSelection().toString() || "No text highlighted";
-  const utterance = new SpeechSynthesisUtterance(text);
-
-  window.speechSynthesis.speak(utterance);
-}
-
-const ChatHome = ({ changePage }) => {
+const AdminChatView = ({ changePage }) => {
   const [page, setPage] = useState("chatHome");
   const [user, setUser] = useState();
   const [chatInfo,setChatInfo] = useState({});
@@ -21,7 +13,7 @@ const ChatHome = ({ changePage }) => {
   const [new_member, setNewMember] = useState();
   const [addText, setAddText] = useState();
   const [message, setMessage] = useState();
-  
+
 
   useEffect(() => {
     setUser(jwtDecode(localStorage.getItem('jwt')))
@@ -76,8 +68,6 @@ const ChatHome = ({ changePage }) => {
       console.log('Error retrieving thread info for user: '+ error.message);
     }
   }
-
-
 
   const getParticipants = (_id) => {
 
@@ -191,7 +181,6 @@ const createThread = async () => {
 
   } else if(newChatMembers.length) {
     try {
-      
       const response = await fetch(`/api/chat/create-thread`, { 
           method: 'POST',
           headers: {
@@ -242,16 +231,6 @@ const viewThread = async(thread,index) => {
   setPage("chatThread");
 };
 
-const readHighlightedText = () =>{ 
-  const text = window.getSelection().toString();
-  if(text){
-    speak(text);
-  }
-  else{
-    speak("No text highlighted")
-  }
-};
-
 
 return (
   <div id="admin-page">
@@ -264,13 +243,6 @@ return (
           <h2>Chats Unavailable.</h2></> : 
           <><h1 id='chat-header'>New Chat</h1>
             <div>
-            <div className='speech-button'>
-                        <button id="speech-btn" onClick={readHighlightedText}>
-                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
-
-
-             </div>
-
               <datalist id="suggestions">
                 {usernames ? (
                   <>
@@ -335,7 +307,6 @@ return (
       </>
     ) : (
       <div>
-
       <button id='return-btn' onClick={() => setPage("chatHome")}>
         Return
       </button>
@@ -347,4 +318,4 @@ return (
 
 };
 
-export default ChatHome;
+export default AdminChatView;

@@ -53,7 +53,7 @@ function DeleteReviews() {
     };
 
     return (
-        <div>
+        <div className="deleteReviews">
             <h1>Delete Reviews</h1>
             <select onChange={selectReview}>
                 <option value="">Select a review to delete</option>
