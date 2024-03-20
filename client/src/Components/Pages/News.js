@@ -3,8 +3,7 @@ import { useState,useEffect } from 'react';
 function speak() {  
   // Create a SpeechSynthesisUtterance object
 
-  let text = "Welcome to the News menu. View News events here."
-
+  const text = window.getSelection().toString() || "No text highlighted."
   const utterance = new SpeechSynthesisUtterance(text);
   
   // Speak the text
@@ -66,6 +65,16 @@ const News = () => {
         }
         document.body.style.cursor = 'auto';
       }
+
+      const readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+          speak("No text is highlighted");
+        }
+      };
   
       const openPdf = async (letter_id, file_name) => {
         try {
@@ -101,6 +110,14 @@ const News = () => {
   
     
     return (
+      <div>
+         <div className='speech-button'>
+                        <button id="speech-btn" onClick={readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
+
         <div className="news">
             <h1>News</h1>
             <p className='letterheader'> Below are our recent newsletters. Click to view or download any!</p>
@@ -123,6 +140,7 @@ const News = () => {
           )) : <></>}
       </div> : <></>}
         </div>
+      </div>
     );
     
 }
