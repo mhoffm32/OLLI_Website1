@@ -1760,3 +1760,8 @@ li {
 #images{
   border: #6c7751 5px solid;
 }
+
+.newsTitle{
+  position: relative;
+  right: 600px; 
+}
