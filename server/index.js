@@ -424,6 +424,16 @@ router.route('/user/viewNewsletters')
         }
 });
 
+app.get('/user/getMarchNewsletter', async(req, res) => {
+	try{
+		const newsletter = await Newsletters.findById(new ObjectId('65e6709d9b782479d3ad6a4d'));
+	}catch (error) {
+		console.error("Error:", error);
+		return res.status(500).json({ error: "Internal Server Error" });
+	}
+})
+
+
 router.route('/user/newsletterData/:id')
     .get(async (req, res) => {
         try {
