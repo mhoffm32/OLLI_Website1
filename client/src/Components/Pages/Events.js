@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import SignatureCanvas from "react-signature-canvas";
+
+
 function speak() {  
     // Create a SpeechSynthesisUtterance object
   
@@ -10,98 +13,101 @@ function speak() {
     window.speechSynthesis.speak(utterance);
   }
 class Events extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          events: [],
+          expandedEventId: null,
+          showWaiverFields: false
+        };
+        this.sigCanvas = React.createRef();
+        this.getEvents();
+      }
+
+    getEvents = () => {
+        fetch('/events/getAllEvents', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(res => res.json())
+            .then(events => this.setState({ events }))
+    }
+
+    clearSignature = () => {
+        if (this.sigCanvas.current) {
+            this.sigCanvas.current.clear(); // Clear the signature pad
+        }
+    }
+
+    signUp = () => {
+        if (this.sigCanvas.current) {
+            const signature = this.sigCanvas.current.toDataURL(); // Get the data URL of the signature
+
+            // Send the signature in a server request
+            fetch('/events/signUp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+                },
+                body: JSON.stringify({ signature, eventId: this.state.expandedEventId }) // Send the signature as part of the request body
+            })
+                .then(res => res.json())
+                .then(response => {
+                    // Handle the response
+                    console.log(response);
+                })
+                .catch(error => {
+                    // Handle the error
+                    console.error(error);
+                });
+        }
+    }
+
     render() {
+
         speak();
         /* Visual looks*/
         return (
             <div className="events">
                 <h1>Come Join our Events</h1>
-                <div class = "eveMenu">
-                    <div class="eveWhiteLogo">
-                    <img src={`/images/cheer_logo_white.jpg`} alt='logo' id='eveWhite'/>
+                <button onClick={() => this.props.changePage('EventCreator')}>Create Event</button>
+                <button onClick={() => this.getEvents()}>Get Events</button>
+                {this.state.events.map((event, index) => (
+                    <div className='eventBox'>
+                        <h2>{event.title}</h2>
+                        <p>{event.location}</p>
+                        <p>{new Date(event.date).toLocaleString()}</p>
+                        <button onClick={() => this.setState({ expandedEventId: this.state.expandedEventId === event._id ? null : event._id })}>
+                            {this.state.expandedEventId === event._id ? 'Hide Details' : 'Show Details'}
+                        </button>
+                        {this.state.expandedEventId === event._id && (
+                            <div>
+                                <p>{event.description}</p>
+                                {this.state.showWaiverFields ? (
+                                    <div>
+                                        {event.waiver.map((waiverSection, index) => (
+                                            <div key={index} className='waiverSection'>
+                                                <h3>{waiverSection.header}</h3>
+                                                <p>{waiverSection.content}</p>
+                                            </div>
+                                        ))}
+                                        <div className='signatureContainer'>
+                                        <SignatureCanvas ref={this.sigCanvas} penColor="black" canvasProps={{ className: "sigCanvas" }}/>
+                                        </div>
+                                        <button onClick={this.clearSignature}>Clear Signature</button>
+                                        <button onClick={() => this.signUp()}>Sign Up</button>
+                                    </div>
+                                ) : (
+                                    <button onClick={() => this.setState({ showWaiverFields: true })}>Sign Up</button>
+                                )}
+                            </div>
+                        )}
                     </div>
-                    {/*Join Event menu*/}
-
-                    <div class = "selection">
-                    <h2>Signup Here:</h2>
-                        <h3>Please enter patient name:</h3>
-                        <input className="event-input" type="text" id="patientName"/>
-                        <h3>Please enter patient ID</h3>
-                        <input className="event-input" type="text"id="patientID"/>
-                        <h3>Date Selection:</h3>
-                        <div class="eventDate">
-
-                            <select className="event-input" name="year" id="eveYear">
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                            </select>
-
-                            <select className="event-input" name="month" id="eveMonth">
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                            <option value="07">07</option>
-                            <option value="08">08</option>
-                            <option value="09">09</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            </select>
-
-                            <select className="event-input" name="day" id="eveDay">
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                            <option value="07">07</option>
-                            <option value="08">08</option>
-                            <option value="09">09</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                            <option value="21">21</option>
-                            <option value="22">22</option>
-                            <option value="23">23</option>
-                            <option value="24">25</option>
-                            <option value="19">26</option>
-                            <option value="20">27</option>
-                            <option value="21">28</option>
-                            <option value="22">29</option>
-                            <option value="23">30</option>
-                            <option value="24">31</option>
-                            </select>
-                        </div>
-                        
-                        <h3>Event?</h3>
-                        <select  className="event-input" name="events"id="eveChoice">
-                            <option value="event1">event1</option>
-                            <option value="event2">event2</option>
-                            <option value="event3">event3</option>
-                            <option value="event4">event4</option>
-                        </select>
-                    </div>
-
-                    <div class="eveGreenLogo">
-                    <img src={`/images/cheer_logo.green.jpg`} alt='logo'id="eveGreen"/>
-                    </div>
-                </div>
-                <div class="submitButton">
-                    <button type="button" id="subEve">Submit Request</button>
-                </div>
+                ))}
             </div>
         );
     }

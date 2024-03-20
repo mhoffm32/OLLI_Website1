@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const ObjectId = require('mongodb').ObjectId;
 const User = require('../models/User'); // adjust the path as needed
+const ChatUser = require('../models/ChatUser');
 const UserVerificationEmails = require('../models/UserVerificationEmails'); // adjust the path as needed
 const InputChecker = require('../helperClasses/inputChecker'); // adjust the path as needed
 const UserInterface = require('../helperClasses/userInterface');
@@ -197,6 +198,15 @@ async function createUser(username, password, email, res){
 	});
 
 	const result = await newUser.save();
+
+	let newChatUser = new ChatUser({
+		user_id: result._id,
+		chats_enabled: true,
+		threads: []
+	});
+
+	await newChatUser.save();
+
 	if(result){
 		console.log("Email: " + newUser.email);
 		if(!result.verified)
