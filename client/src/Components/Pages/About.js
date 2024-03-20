@@ -2,8 +2,7 @@ import React from "react";
 function speak() {  
   // Create a SpeechSynthesisUtterance object
 
-  let text = "Welcome to the About us menu. Read about our history here."
-
+  const text = window.getSelection().toString() || "No text highlighted."
   const utterance = new SpeechSynthesisUtterance(text);
   
   // Speak the text
@@ -12,10 +11,31 @@ function speak() {
 
 
 class About extends React.Component {
+
+  readHighlightedText = () => {
+    const text = window.getSelection().toString();
+    if(text){
+        speak(text);
+    }
+    else{
+        window.speechSynthesis.cancel();
+        speak("No text is highlighted");
+    }
+};
+
+
   render() {
     speak();
     const address = "info@rockglen.com";
     return (
+      <div>
+        <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
+
       <div className="about">
         <h1>About Us</h1>
         <img src="/images/GroupPic.jpg" alt="Group Picture" className='groupPic' />
@@ -161,6 +181,7 @@ class About extends React.Component {
                 Expand/Collapse
             </button>
           </div>
+      </div>
       </div>
     );
   }
