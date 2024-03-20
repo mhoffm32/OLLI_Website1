@@ -90,6 +90,9 @@ class Home extends Component {
                     </div>
                     </div>
                 </div>
+                <div className="newsUpload">
+                        <div className="newsTitle">NewsLetter of the month: </div>
+                    </div>
             </div>
         );
     }
