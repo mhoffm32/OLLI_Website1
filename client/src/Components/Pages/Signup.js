@@ -66,6 +66,8 @@ class Signup extends Component {
             .then(data => {
                 if(data.message === "Email already exists"){
                     alert("Email already exists");
+                } else if (data.message === "Username already exists") {
+                    alert("Username already exists");
                 } else if (data.message == 'Signup failed') {
                     alert("Failed Signing Up")
                 } else {

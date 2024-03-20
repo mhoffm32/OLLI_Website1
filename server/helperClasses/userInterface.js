@@ -51,6 +51,22 @@ class UserInterface {
         }
     }
 
+    static async getUserByUsername(username){
+      try {
+          console.log("Getting User: " + username)
+          const usernameLower = username.toLowerCase().trim()
+          const userObj = await User.findOne({ username: usernameLower });
+          console.log("userobj",userObj)
+          if (userObj) {
+              return userObj;
+          } else {
+              return null;
+          }
+      } catch (err) {
+          console.error(err);
+      }
+    }
+
     static async getUserById(id){
       try {
           console.log("Getting User: " + id)

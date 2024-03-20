@@ -24,6 +24,7 @@ const userSettings = require('./routes/userSettings.js');
 const eventRegistration = require('./routes/eventRegistration.js');
 const eventRoutes = require('./routes/eventRoutes.js');
 const review = require('./routes/reviews.js');
+const manageUsers = require('./routes/manageUsers.js');
 
 /************ PASSPORT *******************/
 const passport = require('passport');
@@ -296,6 +297,7 @@ app.use(userSettings);
 app.use(eventRegistration);
 app.use(eventRoutes);
 app.use(review);
+app.use(manageUsers);
 
 const multer = require("multer");
 const { sanitizeInput } = require('./helperClasses/inputChecker.js');
