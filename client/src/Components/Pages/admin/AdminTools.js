@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import UploadLetter from "../Pages/UploadLetter";
-import ManageSchedule from "../Pages/ManageSchedule";
-import ManageUser from "../Pages/manageUser";
-import AddImages from "../Pages/addImages";
-import DeleteReviews from "../Pages/DeleteReviews";
-
-
-
-
+import UploadLetter from "./UploadLetter";
+import ManageSchedule from "./ManageSchedule";
+import ManageUser from "./manageUser";
+import AddImages from "./addImages";
+import DeleteReviews from "./DeleteReviews";
+import ManageChats from "./ManageChats";
 
 const AdminTools = ({ changePage, user }) => {
   const [page, setPage] = useState("adminHome");
   
  
   const getCurrentPage = () => {
-    let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>, "manageSchedule" : <ManageSchedule/>, "AddImages" : <AddImages/>, "DeleteReviews" : <DeleteReviews/>}  
+    let pages = {"uploadLetter" : <UploadLetter/>, "manageUser" : <ManageUser/>, "manageSchedule" : <ManageSchedule/>, "AddImages" : <AddImages/>, "DeleteReviews" : <DeleteReviews/>, "ManageChats" : <ManageChats/>}  
     return pages[page];
 }
 
@@ -42,6 +39,10 @@ const AdminTools = ({ changePage, user }) => {
         <button id='admin-menu-btn' onClick={()=>setPage("manageUser")}>
            Manage Users
         </button>
+        <button id='admin-menu-btn' onClick={()=>setPage("ManageChats")}>
+           Manage Chats
+        </button>
+
         </> : <>
         <button id='return-btn' onClick={()=> setPage("adminHome")}>
             Return
