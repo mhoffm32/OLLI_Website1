@@ -221,6 +221,9 @@ class Home extends Component {
                 </div>
                 <div className="newsUpload">
                         <div className="newsTitle">NewsLetter of the month: </div>
+                        <div className="letterView">
+                            
+                        </div>
                     </div>
             </div>
         );
