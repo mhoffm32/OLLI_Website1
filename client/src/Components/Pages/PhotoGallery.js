@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 
+function speak(){
+    const text = window.getSelection().toString() || "No text highlighted."
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+
+}
+
+
 function formatDateAndTime(date){
     const d = new Date(date);
     const year = d.getFullYear();
@@ -23,6 +31,16 @@ function formatDateAndTime(date){
     return `${month}/${day}/${year} ${hour}:${minute}${suffix}`;
 
 }
+
+const readHighlightedText = () => {
+    const text = window.getSelection().toString();
+    if(text){
+        speak(text);
+    }
+    else{
+        speak("No text is highlighted");
+    }
+};
 function PhotoGallery() {
     const [images, setImages] = useState([]);
 
@@ -37,6 +55,12 @@ function PhotoGallery() {
 
     return (
         <div>
+             <div className='speech-button'>
+                        <button id="speech-btn" onClick={readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
             <h1>Photo Gallery</h1>
             {images.map(image => (
                 <div key={image._id}>

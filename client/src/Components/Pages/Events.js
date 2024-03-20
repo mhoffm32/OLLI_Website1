@@ -5,8 +5,7 @@ import SignatureCanvas from "react-signature-canvas";
 function speak() {  
     // Create a SpeechSynthesisUtterance object
   
-    let text = "Welcome to the event page. Here you can book and view events."
-  
+    const text = window.getSelection().toString() || "No text highlighted."  
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
@@ -35,6 +34,17 @@ class Events extends Component {
             .then(res => res.json())
             .then(events => this.setState({ events }))
     }
+
+    readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+            window.speechSynthesis.cancel();
+            speak("No text is highlighted");
+        }
+    };
 
     clearSignature = () => {
         if (this.sigCanvas.current) {
@@ -72,6 +82,14 @@ class Events extends Component {
         speak();
         /* Visual looks*/
         return (
+            <div>
+                 <div>
+            <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
             <div className="events">
                 <h1>Come Join our Events</h1>
                 <button onClick={() => this.props.changePage('EventCreator')}>Create Event</button>
@@ -108,6 +126,8 @@ class Events extends Component {
                         )}
                     </div>
                 ))}
+            </div>
+            </div>
             </div>
         );
     }
