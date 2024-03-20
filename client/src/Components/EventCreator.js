@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
 
+  let text = "Here you can create events"
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
 class EventCreator extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +78,7 @@ class EventCreator extends Component {
   }
 
   render() {
+    speak();
     const { eventName, eventDate, eventLocation, eventDescription } = this.state;
 
     return (

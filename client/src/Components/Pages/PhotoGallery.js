@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Here you can view photos placed in the library by users."
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 
 function formatDateAndTime(date){
     const d = new Date(date);
@@ -33,6 +42,7 @@ function PhotoGallery() {
                 setImages(data.images);
             })
             .catch(error => console.error('Error fetching images:', error));
+            speak();
     }, []);
 
     return (
