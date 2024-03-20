@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ChatThread from '../Pages/ChatThread';
+import ChatThread from '../ChatHome';
 import { jwtDecode } from "jwt-decode";
 
-const ChatHome = ({ changePage }) => {
+const AdminChatView = ({ changePage }) => {
   const [page, setPage] = useState("chatHome");
   const [user, setUser] = useState();
   const [chatInfo,setChatInfo] = useState({});
@@ -13,7 +13,7 @@ const ChatHome = ({ changePage }) => {
   const [new_member, setNewMember] = useState();
   const [addText, setAddText] = useState();
   const [message, setMessage] = useState();
-  
+
 
   useEffect(() => {
     setUser(jwtDecode(localStorage.getItem('jwt')))
@@ -181,7 +181,6 @@ const createThread = async () => {
 
   } else if(newChatMembers.length) {
     try {
-      
       const response = await fetch(`/api/chat/create-thread`, { 
           method: 'POST',
           headers: {
@@ -319,4 +318,4 @@ return (
 
 };
 
-export default ChatHome;
+export default AdminChatView;

@@ -765,6 +765,90 @@ router.route('/chat/create-thread')
         }
 });
 
+
+router.route('/chat/delete')
+    .post(async (req, res) => {
+		try {
+			const {chat_id} =  req.body;
+			console.log("IDDDD",chat_id)
+			try {
+				// Find the message by its ID and delete it
+				await ChatText.findByIdAndDelete(chat_id);
+				res.json({ message: 'Message deleted successfully' });
+			} catch(error) {
+				console.log(error);
+				res.status(500).json({ error: 'Internal server error' });
+			}
+		}catch(error){
+			console.log(error)
+		}
+});
+
+
+router.route('/chat/disableUser')
+    .post(async (req, res) => {
+		try {
+			const {user_id} =  req.body;
+			try {
+				// Find the message by its ID and delete it
+
+				await ChatUser.findOneAndUpdate(
+					{ user_id: user_id },
+					{ $set: { chats_enabled: false } }
+				);
+
+				res.json({ message: 'User disabled successfully' });
+			} catch(error) {
+				console.log(error);
+				res.status(500).json({ error: 'Internal server error' });
+			}
+		}catch(error){
+			console.log(error)
+		}
+	});
+
+const Filter = require('bad-words');
+const filter = new Filter();
+
+router.route('/admin/chat/getFlagged')
+    .get(async (req, res) => {
+		try {
+			let texts = await ChatText.find().lean();
+            let flaggedMessages = texts.filter(t => filter.isProfane(t.text)).sort((a, b) => new Date(b.time) - new Date(a.time));
+            
+			for(let msg of flaggedMessages){
+
+				let thread = await ChatThread.find({ _id: msg.thread_id}).lean();
+				thread = thread[0];
+				let p = [];
+
+				for(let u_id of thread.participant_ids){
+					let user = await User.findById(u_id);
+					console.log("user",user)
+					if(u_id == msg.sender_id){
+						msg.sender = user.username;
+						console.log('user.username', user.username)
+						console.log("msg.sender",msg.sender)
+					}else{
+						p.push(user.username)
+					}
+				}
+				msg.participants = p;
+			}
+
+			console.log("flagged", flaggedMessages)
+
+			res.json({msgs: flaggedMessages});
+
+
+		}catch(error){
+			console.log(error)
+		}
+
+});
+
+
+
 /****************************** FINISH CHAT STUFF **************************/
 
 

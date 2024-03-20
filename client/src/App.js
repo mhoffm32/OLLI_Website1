@@ -12,8 +12,7 @@ import Signup from './Components/Pages/Signup';
 import Verification from './Components/Pages/Verification';
 import DropIns from './Components/Pages/DropIns';
 import ValidateEmail from "./Components/Pages/ValidateEmail"
-import AdminTools from './Components/Pages/AdminTools';
-import UploadLetter from './Components/Pages/UploadLetter';
+import AdminTools from './Components/Pages/admin/AdminTools';
 import UserSettings from './Components/Pages/UserSettings';
 import ForgotPassword from './Components/Pages/ForgotPassword';
 import EventCreator from './Components/EventCreator';
