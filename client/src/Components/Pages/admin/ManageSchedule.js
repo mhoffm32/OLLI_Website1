@@ -2,23 +2,13 @@ import React, { useEffect, useState } from "react";
 import FullCalendar  from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
-function speak() {  
-  // Create a SpeechSynthesisUtterance object
 
-  let text = "Here you can manage the schedule plans."
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  
-  // Speak the text
-  window.speechSynthesis.speak(utterance);
-}
 
 
 const ManageSchedule = ({ changePage, user }) => {
   const [bookedDates, setBookedDates] = useState([]);
 
   useEffect(() => {
-    speak();
     fetchDates();
   }, []);
 

@@ -8,6 +8,14 @@ function speak() {
   }
 class Fundraising extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            isSidebarOpen: false
+        };
+        this.toggleSidebar = this.toggleSidebar.bind(this); 
+    }
+
     readHighlightedText = () => {
         const text = window.getSelection().toString();
         if(text){
@@ -19,18 +27,41 @@ class Fundraising extends Component {
         }
     };
 
+    toggleSidebar() {
+        this.setState({ isSidebarOpen: !this.state.isSidebarOpen });
+    }
+
+    
+    cancelSpeech = () => {  
+        window.speechSynthesis.cancel();
+    };
+
 
     render() {
+        const { isSidebarOpen } = this.state;
+        const dynamicStyle = {
+            left: isSidebarOpen ? '60px' : '0px',
+            transition: '0.5s',/* Animated transition for sidebar */
+
+        }
+
         const style = {
             width: '300px',
             height: '150px'
         };
         return (
             <div>
+                <button className="sidebar-toggle" style={dynamicStyle} onClick={this.toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                  <div className='speech-button'>
                         <button id="speech-btn" onClick={this.readHighlightedText}>
-                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
 
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={this.cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
 
              </div>
             <div className="fundraising">

@@ -18,9 +18,11 @@ class Events extends Component {
         this.state = {
           events: [],
           expandedEventId: null,
-          showWaiverFields: false
+          showWaiverFields: false,
+          isSidebarOpen: false
         };
         this.sigCanvas = React.createRef();
+        this.toggleSidebar = this.toggleSidebar.bind(this);
         this.getEvents();
       }
 
@@ -35,6 +37,10 @@ class Events extends Component {
             .then(events => this.setState({ events }))
     }
 
+    toggleSidebar() {
+        this.setState({ isSidebarOpen: !this.state.isSidebarOpen });
+    }
+
     readHighlightedText = () => {
         const text = window.getSelection().toString();
         if(text){
@@ -44,6 +50,10 @@ class Events extends Component {
             window.speechSynthesis.cancel();
             speak("No text is highlighted");
         }
+    };
+
+    cancelSpeech = () => {
+        window.speechSynthesis.cancel();
     };
 
     clearSignature = () => {
@@ -78,18 +88,27 @@ class Events extends Component {
     }
 
     render() {
+        const { isSidebarOpen } = this.state;
+        const dynamicStyle = {
+            left: isSidebarOpen ? '60px' : '0px',
+            transition: '0.5s',
+        };
 
-        speak();
         /* Visual looks*/
         return (
+
             <div>
-                 <div>
+                <button className="sidebar-toggle" style={dynamicStyle} onClick={this.toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+            <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
             <div className='speech-button'>
                         <button id="speech-btn" onClick={this.readHighlightedText}>
-                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
-
-
-             </div>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
+            </div>
+            <div className="cancel-speech">
+                <button id="cancel-btn" onClick={this.cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
+            </div>
             <div className="events">
                 <h1>Come Join our Events</h1>
                 <button onClick={() => this.props.changePage('EventCreator')}>Create Event</button>
@@ -126,7 +145,6 @@ class Events extends Component {
                         )}
                     </div>
                 ))}
-            </div>
             </div>
             </div>
         );

@@ -22,8 +22,10 @@ class Contact extends Component {
                 email: '',
                 message: '',
                 subject: '',
-                phoneNumber: ''
+                phoneNumber: '',
+                isSidebarOpen: false
             };
+            this.toggleSidebar = this.toggleSidebar.bind(this); 
         }
 
         handleChange = (e) => {
@@ -41,6 +43,14 @@ class Contact extends Component {
                 speak("No text highlighted")
             }
         };
+
+        toggleSidebar(){
+            this.setState({isSidebarOpen: !this.state.isSidebarOpen});
+        }
+
+        cancelSpeech = () =>{
+            window.speechSynthesis.cancel();
+        }
         
         //Email sending function
         sendMessage = async (e) => {
@@ -62,13 +72,27 @@ class Contact extends Component {
 
 
     render() {
+        const { isSidebarOpen } = this.state;
+        const dynamicStyle = {
+            left: isSidebarOpen ? '60px' : '0px',
+            transition: '0.5s',/* Animated transition for sidebar */
+        }
         return (
             <div>
+                <button className="sidebar-toggle" style={dynamicStyle} onClick={this.toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+
+                
                  <div className='speech-button'>
                         <button id="speech-btn" onClick={this.readHighlightedText}>
-                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
 
 
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={this.cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
              </div>
 
             <div className="contact">

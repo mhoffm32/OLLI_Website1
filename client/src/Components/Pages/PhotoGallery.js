@@ -41,8 +41,18 @@ const readHighlightedText = () => {
         speak("No text is highlighted");
     }
 };
+
+const cancelSpeech = () => {  
+    window.speechSynthesis.cancel();
+};
+
+
+
+
+
 function PhotoGallery() {
     const [images, setImages] = useState([]);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         fetch('/api/displayImages')
@@ -53,13 +63,30 @@ function PhotoGallery() {
             .catch(error => console.error('Error fetching images:', error));
     }, []);
 
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const dynamicStyle = {
+        left: isSidebarOpen ? '60px' : '0px',
+        transition: '0.5s',
+    };
+
     return (
         <div>
+            <button className="sidebar-toggle" style={dynamicStyle} onClick={toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+            <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+
              <div className='speech-button'>
                         <button id="speech-btn" onClick={readHighlightedText}>
-                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
 
 
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
              </div>
             <h1>Photo Gallery</h1>
             {images.map(image => (
