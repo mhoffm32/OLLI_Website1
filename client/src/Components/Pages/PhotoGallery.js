@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-function speak() {  
+function introSpeak() {  
     // Create a SpeechSynthesisUtterance object
   
     let text = "Here you can view photos placed in the library by users."
@@ -70,7 +70,7 @@ function PhotoGallery() {
                 setImages(data.images);
             })
             .catch(error => console.error('Error fetching images:', error));
-            speak();
+            introSpeak();
     }, []);
 
     const toggleSidebar = () => {
