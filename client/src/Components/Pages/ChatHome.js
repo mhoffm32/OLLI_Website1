@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ChatThread from '../Pages/ChatThread';
 import { jwtDecode } from "jwt-decode";
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
 
 
 function speak(){
@@ -10,6 +12,13 @@ function speak(){
   window.speechSynthesis.speak(utterance);
 }
 
+  let text = "Here you can view and start chats"
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
 const ChatHome = ({ changePage }) => {
   const [page, setPage] = useState("chatHome");
   const [user, setUser] = useState();
@@ -253,6 +262,7 @@ const readHighlightedText = () =>{
 };
 
 
+speak();
 return (
   <div id="admin-page">
     {page === "chatHome" ? (

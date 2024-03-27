@@ -222,6 +222,7 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
+                
                 <div className="review-section">
                     <div className="review-desc">
                         <h1>Hear from our Community</h1>
@@ -263,6 +264,12 @@ class Home extends Component {
                     
                     <br></br>
                     <br></br>
+                </div>
+                <div className="newsUpload">
+                    <div className="newsTitle">NewsLetter of the month: </div>
+                        <div className="letterView">
+                            <iframe id="homeLetter" src="/images/February_OLLI_Newsletter (8).pdf" width="900px" height="500px" />
+                        </div>
                 </div>
             </div>
             </div>

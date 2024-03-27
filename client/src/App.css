@@ -1852,4 +1852,8 @@ li {
   background-color: #ddd;
   color: black;
 }
+.newsTitle{
+  position: relative;
+  right: 500px; 
+}
 
