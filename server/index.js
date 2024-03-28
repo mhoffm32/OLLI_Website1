@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3004;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -662,6 +662,15 @@ router.route("/chat/getUsernames/:user_id").get(async (req, res) => {
       { id: 1, username: 1 }
     ).lean();
 
+    for (let user of users) {
+      if (user) {
+        let chat = await ChatUser.find({ user_id: user._id }).lean();
+        if (chat[0]) {
+          user.chats_enabled = chat[0].chats_enabled;
+        }
+      }
+    }
+
     res.json(users);
   } catch (error) {
     console.error("Error:", error);
@@ -791,6 +800,27 @@ router.route("/chat/disableUser").post(async (req, res) => {
       );
 
       res.json({ message: "User disabled successfully" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.route("/chat/enableUser").post(async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    try {
+      // Find the message by its ID and delete it
+
+      await ChatUser.findOneAndUpdate(
+        { user_id: user_id },
+        { $set: { chats_enabled: true } }
+      );
+
+      res.json({ message: "User enabled successfully" });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
