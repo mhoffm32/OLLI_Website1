@@ -109,85 +109,78 @@ const AdminChatView = ({ user_id }) => {
         <>
           {chatInfo ? (
             <>
-              {chatInfo.chats_enabled == false ? (
-                <>
-                  <br></br>
-                  <h2>Chats Unavailable.</h2>
-                </>
-              ) : (
-                <>
-                  <div id="active-chat-div">
-                    {user ? (
-                      <>
-                        <h1 id="chat-header">{user.username}'s Active Chats</h1>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+              <>
+                <div id="active-chat-div">
+                  {user ? (
+                    <>
+                      <h1 id="chat-header">{user.username}'s Active Chats</h1>
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
-                    <div id="active-chat-list" style={{ marginBottom: "10px" }}>
-                      <ol style={{ listStyleType: "none", padding: 0 }}>
-                        {chatInfo.threads &&
-                          chatInfo.threads.map((thread, index) => (
-                            <li
-                              key={index}
+                  <div id="active-chat-list" style={{ marginBottom: "10px" }}>
+                    <ol style={{ listStyleType: "none", padding: 0 }}>
+                      {chatInfo.threads &&
+                        chatInfo.threads.map((thread, index) => (
+                          <li
+                            key={index}
+                            style={{
+                              borderTop: "1px solid #6e6b6a",
+                              padding: "10px 0",
+                            }}
+                          >
+                            <div
+                              id="chat-item-div"
                               style={{
-                                borderTop: "1px solid #6e6b6a",
-                                padding: "10px 0",
+                                margin: "0",
+                                marginLeft: "25px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
                               }}
                             >
                               <div
-                                id="chat-item-div"
                                 style={{
-                                  margin: "0",
-                                  marginLeft: "25px",
                                   display: "flex",
                                   alignItems: "center",
-                                  justifyContent: "space-between",
                                 }}
                               >
                                 <div
                                   style={{
-                                    display: "flex",
-                                    alignItems: "center",
+                                    width: "30px",
+                                    marginRight: "25px",
                                   }}
                                 >
-                                  <div
-                                    style={{
-                                      width: "30px",
-                                      marginRight: "25px",
-                                    }}
-                                  >
-                                    {thread.unread !== 0 && (
-                                      <div id="new-msg-bubble">
-                                        <p id="unread-count">{thread.unread}</p>
-                                      </div>
-                                    )}
-                                  </div>
-                                  <p
-                                    id="chat-name"
-                                    style={{ margin: 0, fontWeight: "bolder" }}
-                                  >
-                                    {getParticipants(thread._id)}
-                                  </p>
+                                  {thread.unread !== 0 && (
+                                    <div id="new-msg-bubble">
+                                      <p id="unread-count">{thread.unread}</p>
+                                    </div>
+                                  )}
                                 </div>
-                                <div>
-                                  <button
-                                    id="view-chat-btn"
-                                    style={{ marginRight: "50px" }}
-                                    onClick={() => viewThread(thread, index)}
-                                  >
-                                    Open
-                                  </button>
-                                </div>
+                                <p
+                                  id="chat-name"
+                                  style={{ margin: 0, fontWeight: "bolder" }}
+                                >
+                                  {getParticipants(thread._id)}
+                                </p>
                               </div>
-                            </li>
-                          ))}
-                      </ol>
-                    </div>
+                              <div>
+                                <button
+                                  id="view-chat-btn"
+                                  style={{ marginRight: "50px" }}
+                                  onClick={() => viewThread(thread, index)}
+                                >
+                                  Open
+                                </button>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                    </ol>
                   </div>
-                </>
-              )}
+                </div>
+              </>
             </>
           ) : (
             <>

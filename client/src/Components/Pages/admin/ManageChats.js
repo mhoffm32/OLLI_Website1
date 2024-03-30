@@ -3,8 +3,8 @@ import FlaggedChats from "./FlaggedChats";
 import AdminChatView from "./AdminChatView";
 import { jwtDecode } from "jwt-decode";
 
-const ManageChats = () => {
-  const [page, setPage] = useState("home");
+const ManageChats = ({ setPage }) => {
+  const [chatPage, setChatPage] = useState("home");
   const [usernames, setUsernames] = useState([]);
   const [search, setSearch] = useState("");
   const [userView, setUserView] = useState(null);
@@ -12,28 +12,31 @@ const ManageChats = () => {
 
   useEffect(() => {
     speak();
-    setPage("home");
+    setChatPage("home");
     getUsers();
   }, []);
 
   useEffect(() => {
     filterUsers();
-  }, [search, usernames]);
+  }, [search, usernames, chatPage]);
 
   useEffect(() => {}, [usernames, filteredUsernames]);
 
   const getCurrentPage = () => {
-    console.log("usrView", userView);
     let pages = {
       "flagged-chats": <FlaggedChats />,
       chatView: <AdminChatView user_id={userView} />,
     };
-    return pages[page];
+    if (chatPage == "home") {
+      setPage("ManageChats");
+    } else {
+      return pages[chatPage];
+    }
   };
 
   const setViewing = async (user) => {
     setUserView(user._id);
-    setPage("chatView");
+    setChatPage("chatView");
   };
 
   const filterUsers = () => {
@@ -141,17 +144,31 @@ const ManageChats = () => {
 
   return (
     <div className="manage-chats">
-      {page == "home" ? (
+      {chatPage == "home" ? (
+        <button id="return-btn" onClick={() => setPage("adminHome")}>
+          Return
+        </button>
+      ) : (
+        <button id="return-btn" onClick={() => setChatPage("home")}>
+          Return
+        </button>
+      )}
+
+      {chatPage == "home" ? (
         <>
-          <button
-            id="flagged-chats"
-            onClick={() => setPage("flagged-chats")}
-            style={{
-              border: 0,
-            }}
-          >
-            See Flagged Chats
-          </button>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <button
+              id="flagged-chats"
+              onClick={() => setChatPage("flagged-chats")}
+              style={{
+                border: 0,
+                fontWeight: "bolder",
+                backgroundColor: "gray",
+              }}
+            >
+              See Flagged Chats
+            </button>
+          </div>
           <h1>View Activity By User</h1>
           Username:{" "}
           <input
@@ -159,14 +176,16 @@ const ManageChats = () => {
             onChange={(e) => setSearch(e.target.value)}
           ></input>
           <ul id="chat-usr-list">
-            {filteredUsernames ? (
+            {filteredUsernames.length !== 0 ? (
               <>
-                {" "}
+                {""}
                 {filteredUsernames.map((user, index) => (
                   <li
-                    style={{
-                      borderTop: "1px solid #6e6b6a",
-                    }}
+                    className={
+                      index == 0 && filteredUsernames.length == 1
+                        ? "first-i"
+                        : "later-i"
+                    }
                     id="chat-usr-item"
                     key={index}
                   >
@@ -177,6 +196,7 @@ const ManageChats = () => {
                         onClick={() => setViewing(user)}
                         style={{
                           border: 0,
+                          fontWeight: "bolder",
                         }}
                       >
                         View Activity
@@ -186,6 +206,7 @@ const ManageChats = () => {
                           style={{
                             backgroundColor: "#d96e66",
                             border: 0,
+                            fontWeight: "bolder",
                           }}
                           id="left-chat-opt"
                           onClick={() => disableUser(user._id)}
@@ -197,6 +218,7 @@ const ManageChats = () => {
                           style={{
                             backgroundColor: "#6b9166",
                             border: 0,
+                            fontWeight: "bolder",
                           }}
                           onClick={() => enableUser(user._id)}
                         >
@@ -208,7 +230,10 @@ const ManageChats = () => {
                 ))}
               </>
             ) : (
-              <></>
+              <>
+                <br></br>
+                <p>{"\nLoading Users..."}</p>
+              </>
             )}
           </ul>
         </>

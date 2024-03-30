@@ -583,21 +583,6 @@ router.route("/chat/getChatInfo/:id").get(async (req, res) => {
       thread.participants = p;
       delete thread.participant_ids;
 
-      /*
-				const texts = await ChatText.find({
-					thread_id: thread_id,
-					viewers: { $nin: [user_id] }
-				}).lean()
-
-				const recentText = await ChatText.aggregate([
-					{ $match: { thread_id: thread_id } },
-					{ $sort: { date: -1 } }, 
-					{ $limit: 1 } 
-				]).date; */
-
-      //thread.date = recentText;
-      //thread.unread = texts.length;
-
       let this_unread = thread.unread[user_id];
       thread.unread = this_unread;
       threads.push(thread);
@@ -626,14 +611,11 @@ router.route("/chat/getThread/:thread_id/:user_id").get(async (req, res) => {
 
     //setting as read by user
 
-    console.log("usnejdn", user_id);
-
     let t = await ChatThread.find({ _id: thread_id }).lean();
     t = t[0];
-    console.log("t", t);
+
     let unread = t.unread;
     unread[user_id] = 0;
-    console.log("unread", unread);
 
     await ChatThread.findOneAndUpdate(
       { _id: thread_id },
@@ -655,7 +637,6 @@ router.route("/chat/getThread/:thread_id/:user_id").get(async (req, res) => {
 router.route("/chat/getUsernames/:user_id").get(async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    console.log("user id", user_id);
 
     let users = await User.find(
       { _id: { $ne: user_id } },
@@ -774,7 +755,7 @@ router.route("/chat/create-thread").post(async (req, res) => {
 router.route("/chat/delete").post(async (req, res) => {
   try {
     const { chat_id } = req.body;
-    console.log("IDDDD", chat_id);
+
     try {
       // Find the message by its ID and delete it
       await ChatText.findByIdAndDelete(chat_id);
@@ -847,19 +828,20 @@ router.route("/admin/chat/getFlagged").get(async (req, res) => {
 
       for (let u_id of thread.participant_ids) {
         let user = await User.findById(u_id);
-        console.log("user", user);
+
         if (u_id == msg.sender_id) {
           msg.sender = user.username;
-          console.log("user.username", user.username);
-          console.log("msg.sender", msg.sender);
+          let chatUser = await ChatUser.find({ user_id: u_id }).lean();
+          chatUser = chatUser[0];
+          if (chatUser) {
+            msg.sender_enabled = chatUser.chats_enabled;
+          }
         } else {
           p.push(user.username);
         }
       }
       msg.participants = p;
     }
-
-    console.log("flagged", flaggedMessages);
 
     res.json({ msgs: flaggedMessages });
   } catch (error) {

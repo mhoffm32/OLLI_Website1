@@ -26,8 +26,6 @@ const FlaggedChats = () => {
 
   const deleteChat = async (chat_id) => {
     try {
-      console.log("msicmwei", chat_id);
-
       const response = await fetch(`/api/chat/delete`, {
         method: "POST",
         headers: {
@@ -41,7 +39,11 @@ const FlaggedChats = () => {
       const res = await response.json();
 
       if (response.ok) {
-        console.log(res);
+        setMessages((prevMessages) => {
+          return prevMessages.filter((message) => {
+            return message._id !== chat_id;
+          });
+        });
       } else {
         console.log("error occured: ", response);
       }
@@ -65,6 +67,14 @@ const FlaggedChats = () => {
       const res = await response.json();
 
       if (response.ok) {
+        setMessages((prevMessages) => {
+          return prevMessages.map((message) => {
+            if (message.sender_id === user_id) {
+              return { ...message, sender_enabled: false };
+            }
+            return message;
+          });
+        });
         console.log(res);
       } else {
         console.log("error occured: ", response);
@@ -74,28 +84,102 @@ const FlaggedChats = () => {
     }
   };
 
+  const enableUser = async (user_id) => {
+    try {
+      const response = await fetch(`/api/chat/enableUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+        }),
+      });
+
+      const res = await response.json();
+
+      if (response.ok) {
+        setMessages((prevMessages) => {
+          return prevMessages.map((message) => {
+            if (message.sender_id === user_id) {
+              return { ...message, sender_enabled: true };
+            }
+            return message;
+          });
+        });
+      } else {
+        console.log("error occurred: ", response);
+      }
+    } catch (error) {
+      console.log("Error enabling user: " + error.message);
+    }
+  };
+
   return (
     <div className="manage-chats">
+      <h1>Flagged Chats</h1>
       <ul>
         {messages ? (
           <>
             {" "}
             {messages.map((msg, index) => (
-              <li key={index}>
+              <li
+                className={index == 0 ? "first-i" : "later-i"}
+                id="chat-usr-item"
+                key={index}
+              >
                 <p>{`Sender: ${msg.sender}`}</p>
                 <p>{`Reciever(s): ${msg.participants.join(", ")}`}</p>
                 <p>{`Message: "${msg.text}" `}</p>
-                <button onClick={() => deleteChat(msg._id)}>
-                  Delete Message
-                </button>
-                <button onClick={() => disableUser(msg.sender_id)}>
-                  Disable Sender Priviliges
-                </button>
+                <div id="left-buttons">
+                  <div id="njwnxq">
+                    <button
+                      onClick={() => deleteChat(msg._id)}
+                      style={{
+                        marginRight: 0,
+                        backgroundColor: "gray",
+                        border: 0,
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      Delete Message
+                    </button>
+                  </div>
+                  {msg.sender_enabled ? (
+                    <button
+                      style={{
+                        backgroundColor: "#d96e66",
+                        border: 0,
+                        fontWeight: "bolder",
+                      }}
+                      id="left-chat-opt"
+                      onClick={() => disableUser(msg.sender_id)}
+                    >
+                      Disable Sender Priviliges
+                    </button>
+                  ) : (
+                    <button
+                      style={{
+                        backgroundColor: "#6b9166",
+                        border: 0,
+                        fontWeight: "bolder",
+                      }}
+                      id="left-chat-opt"
+                      onClick={() => enableUser(msg.sender_id)}
+                    >
+                      Enable Sender Priviliges
+                    </button>
+                  )}
+                </div>
               </li>
             ))}
           </>
         ) : (
-          <></>
+          <>
+            <br></br>
+            <br></br>
+            <p>Loading Chats...</p>
+          </>
         )}
       </ul>
     </div>
