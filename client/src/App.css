@@ -1857,3 +1857,40 @@ li {
   right: 500px; 
 }
 
+#chat-usr-list {
+  list-style: none;
+  padding: 0;
+}
+
+#chat-usr-item {
+  /* Add some right margin to create space */
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#left-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+#username-i{
+  margin-left: 40px;
+}
+
+
+.later-i{
+  border-top: 1px solid #6e6b6a;
+}
+
+.first-i{
+  border-top: none;
+}
+
+#njwnxq{
+  
+
+}
+
