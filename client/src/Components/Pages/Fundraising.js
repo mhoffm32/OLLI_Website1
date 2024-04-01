@@ -81,7 +81,7 @@ class Fundraising extends Component {
                 <hr></hr>
                 <br/>
                 <div className="container">
-                    <a className="child bounce" target="_blank" href='https://algarva168.org/'><img height="150px" src='/images/algarva.jpeg'></img></a>
+                    <a className="child bounce" target="_blank" href='https://www.facebook.com/algarva168/'><img height="150px" src='/images/algarva.jpeg'></img></a>
                 </div>
                 <p>Order of Alhambra, Algarva 168</p>
                 <hr></hr>

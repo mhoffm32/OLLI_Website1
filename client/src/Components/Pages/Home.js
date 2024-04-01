@@ -222,11 +222,17 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
-                
+                <br></br>
+                <div className="newsUpload">
+                    <h1>Read our Newsletter of the Month: </h1>
+                    <div className="letterView">
+                        <iframe id="homeLetter" src="/images/February_OLLI_Newsletter (8).pdf" width="900px" height="500px" />
+                    </div>
+                </div>
                 <div className="review-section">
                     <div className="review-desc">
                         <h1>Hear from our Community</h1>
-                        <a>Here are some reviews from our members and their families</a>
+                        <a>Here are some reviews from our members and their loved ones!</a>
                     </div>
                     <div className="reviews">
                         {this.state.reviews && this.state.reviews.map((review, index) => {
@@ -236,15 +242,15 @@ class Home extends Component {
                                         <div className="review-username">User: {review.username}</div>
                                         <div className="review-date">Date: {review.date}</div>
                                     </div>
-                                    <div className="review-rating">Rating: {review.rating}</div>
-                                    <div className="review-content">{review.content}</div>
+                                    <div className="review-rating">Rating: {review.rating} Star</div>
+                                    <div className="review-content">Review: {review.content}</div>
                                 </div>
                             );
                         })}
                     </div>
                     <div className="review-form">
                         <h1>Write a Review</h1>
-                        <form onSubmit={evt => {
+                        <form className="review-form1" onSubmit={evt => {
                             evt.preventDefault();
                             const username = this.state.userDetails.username;
                             const date = format(new Date(), 'MMMM dd, yyyy');
@@ -253,23 +259,14 @@ class Home extends Component {
                             this.createReview(username, date, rating, content);
                         }}>
                             <label>Rating: </label>
-                            <input type="number" name="rating" min="1" max="5" required/>
+                            <input type="number" name="rating" min="1" max="5" required className="review-stars"/>
                             <br></br>
                             <label>Review: </label>
-                            <textarea name="content" required></textarea>
+                            <textarea name="content" required className="review-text"></textarea>
                             <br></br>
-                            <button type="submit">Submit</button>
+                            <button type="submit" className="review-submit">Submit</button>
                         </form>
                     </div>
-                    
-                    <br></br>
-                    <br></br>
-                </div>
-                <div className="newsUpload">
-                    <div className="newsTitle">NewsLetter of the month: </div>
-                        <div className="letterView">
-                            <iframe id="homeLetter" src="/images/February_OLLI_Newsletter (8).pdf" width="900px" height="500px" />
-                        </div>
                 </div>
             </div>
             </div>
