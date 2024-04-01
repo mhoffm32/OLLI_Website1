@@ -36,9 +36,10 @@ router.route('/signup')
 	.post(async (req, res) => {
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
+		const usernameLower = username.toLowerCase().trim();
 		const emailLower = email.toLowerCase().trim();
 		if(await InputChecker.validateEmail(emailLower) && InputChecker.sanitizeInput(username) && InputChecker.sanitizeInput(password)){
-			if (!await UserInterface.getUserByEmail(emailLower)){
+			if (!await UserInterface.getUserByEmail(emailLower) && !await UserInterface.getUserByUsername(usernameLower)){
 
 				let id = await createUser(username, password, emailLower, res)
 
@@ -51,8 +52,10 @@ router.route('/signup')
 
 				res.status(200).json({ message: 'Signup successful' });
 
-			} else {
+			} else if (await UserInterface.getUserByEmail(emailLower)) {
 				res.status(409).json({ message: 'Email already exists' });
+			} else if (await UserInterface.getUserByUsername(usernameLower)) {
+				res.status(409).json({ message: 'Username already exists' });
 			}
 		} else {
 			res.status(400).json({ message: 'Signup failed' });

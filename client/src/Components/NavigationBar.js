@@ -95,10 +95,13 @@ class NavigationBar extends React.Component {
                     <img src={activeOption === 'Drop Ins' ? "/images/icons/dropin-green.png" : '/images/icons/dropin.png'} className="nav-icon" alt='Drop Ins'/>
                     Drop Ins
                 </a>
-                <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
-                    <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
-                    Verification
-                </a>
+
+                {jwtDecode(token).type === "generalUser" ? <> 
+                    <a className={activeOption === 'Verification' ? 'active' : ''} onClick={() => this.props.changePage('Verification')}>
+                        <img src={activeOption === 'Verification' ? "/images/icons/verify-green.png" : '/images/icons/verify.png'} className="nav-icon" alt='Verification'/>
+                        Verification
+                    </a>
+                </> : <></>}
                 <a className={activeOption === 'ChatHome' ? 'active' : ''} onClick={() => this.props.changePage('ChatHome')}>
                     <img src={activeOption === 'ChatHome' ? "/images/icons/text-message-icon-green.png" : '/images/icons/text-message-icon-white.png'} className="nav-icon" alt='Verification'/>
                     Chats
@@ -122,6 +125,11 @@ class NavigationBar extends React.Component {
                             Time System
                         </a>
                     )}
+
+                    {jwtDecode(token).type === "employee" ? <> <a className={activeOption === 'Clock' ? 'active' : ''} onClick={() => this.props.changePage('Clock')}>
+                        <img src={activeOption === "Clock" ? "/images/icons/clock-green.png" : "/images/icons/clock.png"} className="nav-icon" alt="Clock"/>
+                        Clock In/Out 
+                    </a></> : <></>}
                         <b className="username">
                             {jwtDecode(token).username} 
                             <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>

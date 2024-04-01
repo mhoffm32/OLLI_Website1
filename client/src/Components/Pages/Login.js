@@ -3,8 +3,7 @@ import GLogin from '../Pages/GLogin'
 function speak() {  
   // Create a SpeechSynthesisUtterance object
 
-  let text = "You can login into your registered O living learning account here."
-
+  const text = window.getSelection().toString() || "No text highlighted."
   const utterance = new SpeechSynthesisUtterance(text);
   
   // Speak the text
@@ -24,6 +23,16 @@ class Login extends Component {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
+
+    readHighlightedText = () => {
+      const text = window.getSelection().toString();
+      if(text){
+          speak(text);
+      }
+      else{
+        speak("No text is highlighted");
+      }
+    };
 
     handleSubmit = (event) => {
         this.state.loginText = ""
@@ -100,6 +109,12 @@ class Login extends Component {
 
         return (
             <div>
+               <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
+
+
+             </div>
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
                 <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
                 <h1>Login Page</h1>

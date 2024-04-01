@@ -3,8 +3,7 @@ import { useState, useEffect} from 'react';
 function speak() {  
     // Create a SpeechSynthesisUtterance object
   
-    let text = "Here you can edit your account settings"
-  
+    const text = window.getSelection().toString() || "No text highlighted."
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
@@ -14,6 +13,7 @@ const UserSettings = () => {
     const [userSettings, setSettings] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [userDetails, setUserDetails] = useState({
         firstname: '',
         lastname: '',
@@ -25,9 +25,21 @@ const UserSettings = () => {
 
     useEffect(()=>{
         getCurrentSettings();
-        speak();
         getUserDetails();
     },[]);
+
+    const readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if (text) {
+          speak(text);
+        } else {
+          speak("No text is highlighted");
+        }
+      };
+      
+      const cancelSpeech = () => {
+        window.speechSynthesis.cancel();
+      };
 
     const getUserDetails = async () => {
         try {
@@ -168,8 +180,42 @@ const UserSettings = () => {
         }
         getUserDetails();
     };    
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const dynamicStyle = {
+        left: isSidebarOpen ? "60px" : "0px",
+        transition: "0.5s",
+    };
     
     return (
+        <div>
+            <button
+                className="sidebar-toggle"
+                style={dynamicStyle}
+                onClick={toggleSidebar}
+            >
+                {isSidebarOpen ? (
+                    <img src="/images/icons/close.png"></img>
+                ) : (
+                    <img src="/images/icons/sidebaropen.png"></img>
+                )}
+            </button>
+            <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+                <div className='speech-button'>
+                    <button id="speech-btn" onClick={readHighlightedText}>
+                        <img id="speaker" src='/images/icons/speech.png'></img>
+                    </button>
+                </div>
+                <div className="cancel-speech">
+                    <button id="cancel-btn" onClick={cancelSpeech}>
+                        <img id="pause" src='/images/icons/pause.png'></img>
+                    </button>
+                </div>
+            </div>
+
         <div id="account-settings">
             <h1>Account Settings</h1> 
 
@@ -216,6 +262,7 @@ const UserSettings = () => {
                 </div>
                 <br></br>
             </> : <></>}
+        </div>
         </div>
     );
 }

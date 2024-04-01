@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function speak() {  
+function speak() {
   // Create a SpeechSynthesisUtterance object
 
   let text = "Here you can upload newsletters."

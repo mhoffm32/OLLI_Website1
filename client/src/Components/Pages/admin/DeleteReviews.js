@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Here you can delete Reviews"
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  } 
+
 function DeleteReviews() {
     const [reviews, setReviews] = useState([]);
     const [selectedReview, setSelectedReview] = useState(null);
@@ -12,6 +23,7 @@ function DeleteReviews() {
                 setReviews(data);
             })
             .catch(error => console.error('Error fetching reviews:', error));
+            speak();
     }, []);
     
    const selectReview = (event) => {
@@ -53,7 +65,7 @@ function DeleteReviews() {
     };
 
     return (
-        <div>
+        <div className="deleteReviews">
             <h1>Delete Reviews</h1>
             <select onChange={selectReview}>
                 <option value="">Select a review to delete</option>

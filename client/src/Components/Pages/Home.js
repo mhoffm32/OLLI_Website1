@@ -6,24 +6,27 @@ import { format } from 'date-fns';
 function speak() {  
     // Create a SpeechSynthesisUtterance object
   
-    let text = "Welcome to the O living learning homepage"
-  
+    const text = window.getSelection().toString() || "No text is highlighted";
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
     window.speechSynthesis.speak(utterance);
   }
+
+
 class Home extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             reviews: null,
+            isSidebarOpen: false,
             userDetails: {
                 username: '',
                 pfp: ''
             }
         }
+        this.toggleSidebar = this.toggleSidebar.bind(this);
     }
 
     getUserDetails = async () => {
@@ -50,6 +53,10 @@ class Home extends Component {
         }
     };
 
+    toggleSidebar() {
+        this.setState({ isSidebarOpen: !this.state.isSidebarOpen });
+    }
+
     getReviews = async () => {
         console.log("attempting to get reviews..");
         try {
@@ -64,7 +71,22 @@ class Home extends Component {
             console.error("error:", error);
         }
     };
-    
+
+    readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+            window.speechSynthesis.cancel();
+            speak("No text is highlighted");
+        }
+    };
+
+    cancelSpeech = () => {  
+        window.speechSynthesis.cancel();
+    };
+
     createReview = async (username, date, rating, content) => { 
         if (username === '') {
             console.error("Please log in before writing a review.");
@@ -97,10 +119,32 @@ class Home extends Component {
     }
 
     render() {
-        speak();
+        const { isSidebarOpen } = this.state;
+        const dynamicStyle = {
+            left: isSidebarOpen ? '60px' : '0px',
+            transition: '0.5s',/* Animated transition for sidebar */
+
+        }
         console.log("Displaying Home page");
 
         return (
+            
+            <div>
+                <button className="sidebar-toggle" style={dynamicStyle} onClick={this.toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+
+            <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
+
+
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={this.cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
+                </div>
+            
             <div className="homePage">
                 <div className="homePageDescription">
                     <h1>Ongoing Living & Learning Inc.</h1>
@@ -178,10 +222,17 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <br></br>
+                <div className="newsUpload">
+                    <h1>Read our Newsletter of the Month: </h1>
+                    <div className="letterView">
+                        <iframe id="homeLetter" src="/images/February_OLLI_Newsletter (8).pdf" width="900px" height="500px" />
+                    </div>
+                </div>
                 <div className="review-section">
                     <div className="review-desc">
                         <h1>Hear from our Community</h1>
-                        <a>Here are some reviews from our members and their families</a>
+                        <a>Here are some reviews from our members and their loved ones!</a>
                     </div>
                     <div className="reviews">
                         {this.state.reviews && this.state.reviews.map((review, index) => {
@@ -191,15 +242,15 @@ class Home extends Component {
                                         <div className="review-username">User: {review.username}</div>
                                         <div className="review-date">Date: {review.date}</div>
                                     </div>
-                                    <div className="review-rating">Rating: {review.rating}</div>
-                                    <div className="review-content">{review.content}</div>
+                                    <div className="review-rating">Rating: {review.rating} Star</div>
+                                    <div className="review-content">Review: {review.content}</div>
                                 </div>
                             );
                         })}
                     </div>
                     <div className="review-form">
                         <h1>Write a Review</h1>
-                        <form onSubmit={evt => {
+                        <form className="review-form1" onSubmit={evt => {
                             evt.preventDefault();
                             const username = this.state.userDetails.username;
                             const date = format(new Date(), 'MMMM dd, yyyy');
@@ -208,18 +259,18 @@ class Home extends Component {
                             this.createReview(username, date, rating, content);
                         }}>
                             <label>Rating: </label>
-                            <input type="number" name="rating" min="1" max="5" required/>
+                            <input type="number" name="rating" min="1" max="5" required className="review-stars"/>
                             <br></br>
                             <label>Review: </label>
-                            <textarea name="content" required></textarea>
+                            <textarea name="content" required className="review-text"></textarea>
                             <br></br>
-                            <button type="submit">Submit</button>
+                            <button type="submit" className="review-submit">Submit</button>
                         </form>
                     </div>
-                    <br></br>
-                    <br></br>
                 </div>
             </div>
+            </div>
+            
         );
     }
 }

@@ -6,8 +6,7 @@ import dayjs from 'dayjs';
 function speak() {  
     // Create a SpeechSynthesisUtterance object
   
-    let text = "Welcome to the Drop in menu. Book drop in appointments here"
-  
+    const text = window.getSelection().toString() || "No text highlighted";
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
@@ -19,8 +18,10 @@ class DropIns extends Component {
         this.state = {
             dropOffTime: new Date(),
             pickUpTime: new Date(),
+            isSidebarOpen: false,
             submissionMessage: '' // Add a state property for the submission message
         };
+        this.toggleSidebar = this.toggleSidebar.bind(this);
     }
 
     handleDropOffTimeChange = (date) => {
@@ -30,6 +31,25 @@ class DropIns extends Component {
     handlePickUpTimeChange = (date) => {
         this.setState({ pickUpTime: date });
     };
+
+    readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+            window.speechSynthesis.cancel();
+            speak("No text is highlighted");
+        }
+    };
+
+    cancelSpeech = () => {  
+        window.speechSynthesis.cancel();
+    };
+
+    toggleSidebar(){
+        this.setState({isSidebarOpen: !this.state.isSidebarOpen});
+    }   
 
     handleSubmit = (event) => { 
         event.preventDefault();
@@ -75,7 +95,14 @@ class DropIns extends Component {
     };      
 
     render() {
-        speak();
+
+        const { isSidebarOpen } = this.state;
+        const dynamicStyle = {
+            left: isSidebarOpen ? '60px' : '0px',
+            transition: '0.5s',/* Animated transition for sidebar */
+
+        }
+
         const { dropOffTime, pickUpTime, submissionMessage } = this.state;
         const now = dayjs(); // Get the current date and time
 
@@ -84,6 +111,25 @@ class DropIns extends Component {
         };
 
         return (
+            <div>
+
+<button className="sidebar-toggle" style={dynamicStyle} onClick={this.toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+            <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+
+            <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
+
+
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={this.cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
+                
+            </div>
+
+
             <div className="drop-in">
                 <h1>Drop In Page</h1>
                 <p>Please enter a drop-off and pick-up time if you would like to register for a drop-in day.</p>
@@ -112,6 +158,7 @@ class DropIns extends Component {
                     <button type="submit" className="button">Submit</button>  
                 </form>
                 {submissionMessage && <p>{submissionMessage}</p>}
+            </div>
             </div>
         );
     }

@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    const text = window.getSelection().toString() || "No text highlighted."   
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 function AddImages() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [text, setText] = useState("");
@@ -45,7 +53,6 @@ function AddImages() {
     }
     
     };
-
     return (
         <div>
             <h1>Upload Images</h1>

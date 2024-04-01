@@ -3,20 +3,27 @@ import { useState,useEffect } from 'react';
 function speak() {  
   // Create a SpeechSynthesisUtterance object
 
-  let text = "Welcome to the News menu. View News events here."
-
+  const text = window.getSelection().toString() || "No text highlighted."
   const utterance = new SpeechSynthesisUtterance(text);
+
   
   // Speak the text
   window.speechSynthesis.speak(utterance);
 }
 const News = () => {
     const [newsletters, setNewsletters] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    
 
     useEffect(()=>{
-      speak();
       getNewsletters()
     },[])
+
+    const dynamicStyle = {
+      left: isSidebarOpen ? '60px' : '0px',
+      transition: '0.5s', // Animated transition for the sidebar toggle button
+  };
   
     const getNewsletters = async () => {
         try {
@@ -39,6 +46,11 @@ const News = () => {
           console.error("error",error)
         }
       }
+
+      const toggleSidebar = () => { // Step 2: Toggle function
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
       const downloadPdf = async(letter_id,file_name) => {
         try{
           document.body.style.cursor = 'wait';
@@ -66,6 +78,20 @@ const News = () => {
         }
         document.body.style.cursor = 'auto';
       }
+
+      const readHighlightedText = () => {
+        const text = window.getSelection().toString();
+        if(text){
+            speak(text);
+        }
+        else{
+          speak("No text is highlighted");
+        }
+      };
+
+      const cancelSpeech = () => {  
+        window.speechSynthesis.cancel();
+    };
   
       const openPdf = async (letter_id, file_name) => {
         try {
@@ -101,6 +127,21 @@ const News = () => {
   
     
     return (
+      <div>
+          <button className="sidebar-toggle" style={dynamicStyle} onClick={toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+          <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+
+         <div className='speech-button'>
+                        <button id="speech-btn" onClick={readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
+
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
+             </div>
+
         <div className="news">
             <h1>News</h1>
             <p className='letterheader'> Below are our recent newsletters. Click to view or download any!</p>
@@ -123,8 +164,10 @@ const News = () => {
           )) : <></>}
       </div> : <></>}
         </div>
+      </div>
     );
     
 }
+
 
 export default News;

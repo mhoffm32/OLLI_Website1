@@ -28,6 +28,12 @@ button:hover {
   cursor: pointer;
 }
 
+.fundraising, .contact, .events, .homePage, .verification, .news, .about, .admin-stuff {
+  /*margin-top: 50px;*/
+  margin-bottom: 50px;
+  text-align: center;
+}
+
 /* NAVIGATION */
 
 .topnav {
@@ -88,7 +94,7 @@ button:hover {
   border-width: 2px;
   border-color: #555554;
   font-size: 17px;
-  border-radius: 30px;
+  border-radius: 10px;
 }
 
 .topnav button:hover {
@@ -132,7 +138,6 @@ button:hover {
   border-radius: 50%;
 }
 
-
 .topnav #pfp {
   margin: 5px;
   vertical-align:middle;
@@ -140,6 +145,42 @@ button:hover {
   width: 30px;
   border-radius: 50%;
 }
+
+#signInButton {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: flex-end; /* Align items to the right */
+}
+
+#signout-button {
+  cursor: pointer;
+  color: black;
+  background-color: white;
+  display: flex;
+  align-items: center; 
+  padding: 10px;
+  width: 125px
+}
+
+#g-login-btn1{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+}
+
+.logo {
+  margin-top: 20px;
+  width: 4px;
+  height: 4px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+#signout-button span {
+  vertical-align: middle; 
+}
+
 
 /* HOME PAGE */
 
@@ -198,129 +239,9 @@ button:hover {
   display: inline;
 }
 
-#signInButton {
-  display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: flex-end; /* Align items to the right */
-}
-
-#signout-button {
-  cursor: pointer;
-  color: black;
-  background-color: white;
-  display: flex;
-  align-items: center; 
-  padding: 10px;
-  width: 125px
-}
-
-#g-login-btn1{
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  padding: 10px;
-}
-
-.logo {
-  margin-top: 20px;
-  width: 4px;
-  height: 4px;
-  margin-right: 5px;
-  vertical-align: middle;
-}
-
-#signout-button span {
-  vertical-align: middle; 
-}
-
-
-/* LOGIN PAGE */ 
-
-.backBtn{
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  font-size: 1.5em;
-}
-.logo {
-  width: 15%;  /* Adjust as needed */
-  height: auto;  /* Maintain aspect ratio */
-}
-
-.usernameBar {
-  width: 20%;
-  padding: 10px;
-  font-size: medium;
-  border: none;
-  border-radius: 20px; /* Rounded sides */
-  background-color: #6c7751;
-  color: white; /* Text color */
-  text-align: center; /* Centered text */
-}
-
-.usernameBar:focus {
-  outline: none;
-}
-
-.usernameBar::placeholder {
-  color: lightgrey;
-}
-
-.passwordBar {
-  width: 20%;
-  padding: 10px;
-  font-size: medium;
-  border: none;
-  border-radius: 20px; /* Rounded sides */
-  background-color: #6c7751;
-  color: white; /* Text color */
-  text-align: center; /* Centered text */
-}
-
-.passwordBar:focus {
-  outline: none;
-}
-
-.passwordBar::placeholder {
-  color: lightgrey;
-}
-
-.loginBtn {
-  margin-top: 20px;
-  width: 20%;
-  padding: 10px;
-  font-size: medium;
-  border: none;
-  border-radius: 20px; /* Rounded sides */
-  text-align: center; /* Centered text */
-  background-color: #df7958;
-  color: black;
-}
-
-.loginBtn:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-#forgotPassword {
-  background-color: #6c7751; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
+.cheer-desc {
   display: inline-block;
-  font-size: 16px;
-  margin: 40px 2px;
-  cursor: pointer;
-  border-radius: 20px;
 }
-
-/* HOME PAGE */ 
 
 .homePageDescription{
   text-align: left;
@@ -444,7 +365,7 @@ button:hover {
   padding: 10px;
   font-size: medium;
   border: none;
-  border-radius: 20px; /* Rounded sides */
+  border-radius: 10px; /* Rounded sides */
   visibility: hidden;
 }
 
@@ -478,96 +399,129 @@ button:hover {
   text-align: left;
 }
 
-/* EVENTS PAGE */
+.review-text, .review-stars {
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+  font-style: italic;
+  vertical-align: middle;
+}
 
-#subEve{
-  margin-top: 20px;
+.review-stars {
+  margin-bottom: 5px;
+}
+
+.review-submit {
+  background-color: #6c7751;
+  color:#fafafa;
+  width: 100px;
+  height: 40px;
+  border: 0px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.review-submit:hover {
   background-color: #df7958;
   color: black;
-  padding: 10px;
-  font-size: medium;
+  text-align: center;
+}
+
+
+/* LOGIN PAGE */ 
+
+.backBtn{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: none;
   border: none;
-  border-radius: 20px; /* Rounded sides */
-  margin-left: 20px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1.5em;
+}
+.logo {
+  width: 15%;  /* Adjust as needed */
+  height: auto;  /* Maintain aspect ratio */
 }
 
-#eveChoice{
-  width: 200px;
-  height: 50px;
-}
-
-#patientName{
-  width:300px;
-  height: 50px;
-}
-
-#patientID{
-  width:300px;
-  height: 50px;
-}
-
-#hostPatientName{
-  width:300px;
-  height: 50px;
-}
-
-#hostPatientID{
-  width:300px;
-  height: 50px;
-}
-
-.eveMenu{
-  display: flex;
-}
-
-.createMenu{
-  display: flex;
-}
-
-.selection{
-  display: inline;
-}
-
-#eveWhite{
-  width: 200px;
-  height: 300px;
-}
-
-#eveGreen{
-  width: 200px;
-  height: 300px;
-}
-
-.eventDate{
-  display: flex;
-}
-
-#eveYear{
-  width: 150px;
-  height: 50px;
-}
-
-#eveMonth{
-  width: 150px;
-  height: 50px;
-}
-
-#eveDay{
-  width: 150px;
-  height: 50px;
-}
-
-.event-input {
+.usernameBar {
   width: 20%;
   padding: 10px;
   font-size: medium;
   border: none;
-  border-radius: 20px; /* Rounded sides */
-  background-color: #fef9e8;
-  color: #6c7751; /* Text color */
+  border-radius: 10px; /* Rounded sides */
+  background-color: #6c7751;
+  color: white; /* Text color */
   text-align: center; /* Centered text */
+  margin-top: 5px;
+  font-style: italic;
 }
 
+.usernameBar:focus {
+  outline: none;
+}
+
+.usernameBar::placeholder {
+  color: lightgrey;
+}
+
+.passwordBar {
+  width: 20%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #6c7751;
+  color: white; /* Text color */
+  text-align: center; /* Centered text */
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.passwordBar:focus {
+  outline: none;
+}
+
+.passwordBar::placeholder {
+  color: lightgrey;
+}
+
+.loginBtn {
+  margin-top: 20px;
+  width: 20%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  text-align: center; /* Centered text */
+  background-color: #df7958;
+  color: black;
+}
+
+.loginBtn:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#forgotPassword {
+  background-color: #6c7751; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 40px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+/* EVENTS PAGE */
 
 .line {
   height: 100px;
@@ -633,6 +587,15 @@ button:hover {
 .contact .contactMenu {
   display: flex;
   flex-wrap: wrap; /* Allow items to wrap to the next line */
+}
+
+.contact input {
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+  font-style: italic;
 }
 
 /* Media query for small screens */
@@ -704,9 +667,17 @@ button:hover {
 .contact #sendButton{
   background-color: #6c7751;
   color:#fafafa;
-  text-align: left;
   width: 100px;
   height: 50px;
+  border: 0px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.contact #sendButton:hover{
+  background-color: #df7958;
+  color: black;
+  text-align: center;
 }
 
 .contact .mapsLine{
@@ -957,7 +928,7 @@ img#download-img{
   padding: 10px;
   font-size: medium;
   border: none;
-  border-radius: 20px; /* Rounded sides */
+  border-radius: 10px; /* Rounded sides */
   background-color: #fef9e8;
   color: #6c7751; /* Text color */
   text-align: center; /* Centered text */
@@ -978,13 +949,6 @@ img#download-img{
   height: 50px;
 }
 
-
-.fundraising, .contact, .events, .homePage, .verification, .news, .about, .admin-stuff {
-  /*margin-top: 50px;*/
-  margin-bottom: 50px;
-  text-align: center;
-  
-}
 .admin-stuff{
   margin-bottom: 300px;
 }
@@ -1023,7 +987,7 @@ input, button, select, option {
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 
 .verification button {
@@ -1045,32 +1009,6 @@ input, button, select, option {
   cursor: not-allowed;
 }
 
-#admin-menu-btn{
-  background-color: #df7958;
-  color: black;
-  padding: 10px;
-  font-size: medium;
-  border: none;
-  border-radius: 20px;
-  vertical-align: auto;
-  margin: 5px;
-}
-
-#add-images-btn{
-  background-color: #df7958;
-  color: black;
-  padding: 10px;
-  font-size: medium;
-  border: none;
-  border-radius: 10px;
-  vertical-align: auto;
-  margin: 5px;
-}
-
-#add-images-btn:hover{
-  background-color: #ddd;
-}
-
 #return-btn{
   background-color: #df7958;
   color: black;
@@ -1082,10 +1020,6 @@ input, button, select, option {
   margin: 5px;
 }
 #return-btn:hover{
-  background-color: #ddd;
-}
-
-#admin-menu-btn:hover{
   background-color: #ddd;
 }
 
@@ -1160,6 +1094,33 @@ p.letterheader{
   width: 100px;
   height: 100px;
   padding-top: 10px;
+}
+
+#account-settings button {
+  background-color: #df7958;
+  color: black;
+  padding: 10px;
+  margin: 5px;
+  font-size: medium;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+#account-settings button:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#account-settings input {
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+  font-style: italic;
+  height: 35px;
+  margin: 5px;
 }
 
 /* RANDOM STUFF */
@@ -1238,9 +1199,6 @@ p.letterheader{
   text-align: center;
 }
 
-input, button, select, option {
-  font-family: 'Nunito', sans-serif;
-}
 
 #ul-txt{
   text-align: center;
@@ -1330,15 +1288,6 @@ input, button, select, option {
   color: black;
 }
 
-#admin-menu-btn{
-  background-color: #df7958;
-  padding: 10px;
-  margin: 20px;
-  border-width: 1px;
-  border-radius: 8px;
-  border-width: 1px;
-}
-
 #admin-menu-btn:hover{
   background-color: #ddd;
   color: black;
@@ -1359,42 +1308,31 @@ input, button, select, option {
 }
 
 
-
-
-
-
 /* Status buttons */
-
-.approvalControls{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#approvalButton{
-  background-color: #6c7751;
-  color: black;
-  width: 200px;
-  height: 100px;
-}
-
-#denyButton{
-  background-color: #df7958;
-  color: black;
-  width: 200px;
-  height: 100px;
-}
 
 .userMenu {
   margin-bottom: 10px; /* Adds space between each user menu */
   font-size: 16px; /* Increases font size for better visibility */
 }
 
-#pendingUsers {
-  width: 400px;
-  height: 100px;
+/* EVENTS PAGE */
+
+.events button {
+  background-color: #df7958;
+  color: black;
+  width: 100px;
+  height: 40px;
+  border: 0px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 5px;
 }
 
+.events button:hover {
+  background-color: #ddd;
+  color: black;
+  text-align: center;
+}
 
 .eventCreatorBar {
   width: 100%;
@@ -1442,6 +1380,8 @@ li {
   list-style-type: none;
 }
 
+/* CHAT PAGE */
+
 #chat-list-item, #chat-name, #view-chat-btn{
   display: inline;
 }
@@ -1456,11 +1396,11 @@ li {
   padding: 5px;
   width: 80px;
   border-width: 0;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 #added-member > button{
-  border-radius: 50%;
+  border-radius: 10px;
   border: 1px solid black;
   background-color:#ccc;
   height: 21px;
@@ -1481,7 +1421,6 @@ li {
   color: white;
   padding-right: 5px;
   margin: 0px;
-
 }
 
 #added-member {
@@ -1702,13 +1641,54 @@ li {
 
 }
 
+/* MANAGE USER ADMIN TOOLS PAGE */
 
+.userApproval button {
+  background-color: #df7958;
+  padding: 5px;
+  margin: 20px;
+  border-width: 0.2px;
+  border-radius: 10px;
+  font-weight: bolder;
+}
 
+.userApproval button:hover {
+  background-color: #ddd;
+  color: black;
+}
 
+.userApproval select {
+  width: 20%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+  width: 400px;
+  height: 100px;
+}
 
+.userApproval .approvalControls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.userApproval #approvalButton{
+  background-color: #6c7751;
+  color: black;
+  width: 200px;
+  height: 100px;
+}
 
-
+.userApproval #denyButton{
+  background-color: #df7958;
+  color: black;
+  width: 200px;
+  height: 100px;
+}
 
 
 #submitButton{
@@ -1716,7 +1696,7 @@ li {
   padding: 5px;
   margin: 20px;
   border-width: 0.2px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: bolder;
 }
 
@@ -1725,38 +1705,180 @@ li {
   color: black;
 }
 
+/* ADMIN REVIEW TOOLS PAGE */
 
 
+.deleteReviews select {
+  width: 20%;
+  padding: 10px;
+  font-size: medium;
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+  width: 400px;
+  height: 100px;
+}
 
-#delete-review-btn{
+.deleteReviews button {
   background-color: #df7958;
   padding: 5px;
   margin: 20px;
   border-width: 0.2px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: bolder;
+  width: 200px;
+  height: 100px;
 }
 
-#delete-review-btn:hover{
+.deleteReviews button:hover {
   background-color: #ddd;
   color: black;
-}
-
-#delete-rvw-btn{
-  background-color: #df7958;
-  padding: 10px;
-  margin: 20px;
-  font-size: medium;
-  border-width: 0px;
-  border-radius: 8px;
-  font-weight: normal;
-}
-
-#delete-rvw-btn:hover{
-  background-color: #ddd;
 }
 
 
 #images{
   border: #6c7751 5px solid;
+}
+
+#speech-btn{
+  background-color: #df7958;
+  padding: 10px;
+  font-size: medium;
+  border-radius: 8px;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#speech-btn:hover{
+  background-color: white;
+  color: black;
+  
+} 
+
+#cancel-btn{
+  background-color: #df7958;
+  padding: 10px;
+  font-size: medium;
+  border-radius: 8px;
+  font-weight: normal;
+  color: white;
+  margin-bottom: 10px;
+}
+
+#cancel-btn:hover{
+  background-color: white;
+  color: black;
+  
+} 
+
+.sidebar {
+  width: 0; /* Sidebar width is 0 by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  left: 0;
+  background-color: #6c7751; /* Sidebar background color */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* Animated transition for sidebar */
+  border-radius: 8px;
+}
+
+.sidebar.open {
+  width: 60px;
+}
+
+/* Style the sidebar links (you can add your own styling) */
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #6c7751;
+
+}
+
+/* When you mouse over the sidebar links */
+
+/* Button used to open the sidebar */
+.sidebar-toggle {
+  position: fixed;
+  left: 0;
+  top: center;
+  z-index: 2;
+  background-color: #df7958;
+  padding: 5px; /* Adjust padding to ensure text fits snugly */
+  margin: 0;
+  font-size: small;
+  border-width: 0px;
+  border-radius: 8px;
+  font-weight: normal;
+  color: white;
+  cursor: pointer;
+  white-space: normal; /* Allow text to wrap */
+  text-align: center; /* Center-align the text for aesthetics */
+  width: 60px; /* Narrow width to encourage text stacking */
+  min-height: 30px; /* Adjust minimum height to accommodate stacked text */
+}
+
+
+
+
+.sidebar-toggle:hover {
+  background-color: white;
+  color: black;
+} 
+
+
+
+/* ADMIN TOOLS */ 
+
+#admin-page button {
+  background-color: #df7958;
+  padding: 10px;
+  margin: 20px;
+  border-width: 1px;
+  border-radius: 10px;
+  border-width: 1px;
+}
+
+#admin-page button:hover {
+  background-color: #ddd;
+  color: black;
+}
+.newsTitle{
+  position: relative;
+  right: 500px; 
+}
+
+#chat-usr-list {
+  list-style: none;
+  padding: 0;
+}
+
+#chat-usr-item {
+  /* Add some right margin to create space */
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#left-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+#username-i{
+  margin-left: 40px;
+}
+
+
+.later-i{
+  border-top: 1px solid #6e6b6a;
+}
+
+.first-i{
+  border-top: none;
 }
