@@ -1,5 +1,4 @@
 
-import React, { useState, useEffect } from "react";
 
 import React, { useState, useEffect } from 'react';
 function introSpeak() {  
@@ -12,11 +11,6 @@ function introSpeak() {
     // Speak the text
     window.speechSynthesis.speak(utterance);
   }
-
-function speak(){
-    const text = window.getSelection().toString() || "No text highlighted."
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
 
 function speak() {
   const text = window.getSelection().toString() || "No text highlighted.";
@@ -130,5 +124,5 @@ function PhotoGallery() {
     </div>
   );
 }
-}
+
 export default PhotoGallery;
