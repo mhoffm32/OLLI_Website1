@@ -1,16 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-function introSpeak() {  
-    // Create a SpeechSynthesisUtterance object
-  
-    let text = "Here you can view photos placed in the library by users."
-  
-    const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Speak the text
-    window.speechSynthesis.speak(utterance);
-  }
+
 
 function speak() {
   const text = window.getSelection().toString() || "No text highlighted.";
@@ -62,7 +53,6 @@ function PhotoGallery() {
         setImages(data.images);
       })
       .catch((error) => console.error("Error fetching images:", error));
-    speak();
   }, []);
 
     useEffect(() => {
@@ -72,7 +62,6 @@ function PhotoGallery() {
                 setImages(data.images);
             })
             .catch(error => console.error('Error fetching images:', error));
-            introSpeak();
     }, []);
 
   const toggleSidebar = () => {
