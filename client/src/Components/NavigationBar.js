@@ -115,12 +115,21 @@ class NavigationBar extends React.Component {
                         <img src={activeOption === 'AdminTools' ? "/images/icons/tools-green.png" : '/images/icons/tools.png'} className="nav-icon" alt='Verification'/>
                         Admin Tools
                     </a></> : <></>}
+                    {jwtDecode(token).type === "employee" && (
+                        <a onClick={() => {this.props.changePage("TimeSystem")}}>
+                            Time System
+                        </a>
+                    )}
+                    {jwtDecode(token).type === "admin" && (
+                        <a onClick={() => {this.props.changePage("TimeSystem")}}>
+                            Time System
+                        </a>
+                    )}
 
                     {jwtDecode(token).type === "employee" ? <> <a className={activeOption === 'Clock' ? 'active' : ''} onClick={() => this.props.changePage('Clock')}>
                         <img src={activeOption === "Clock" ? "/images/icons/clock-green.png" : "/images/icons/clock.png"} className="nav-icon" alt="Clock"/>
                         Clock In/Out 
                     </a></> : <></>}
-
                         <b className="username">
                             {jwtDecode(token).username} 
                             <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>

@@ -25,6 +25,7 @@ const eventRegistration = require("./routes/eventRegistration.js");
 const eventRoutes = require("./routes/eventRoutes.js");
 const review = require("./routes/reviews.js");
 const manageUsers = require("./routes/manageUsers.js");
+const timeSystemRoutes = require('./routes/timeSystemRoutes.js');
 
 /************ PASSPORT *******************/
 const passport = require("passport");
@@ -312,6 +313,7 @@ app.use(userSettings);
 app.use(eventRegistration);
 app.use(eventRoutes);
 app.use(review);
+app.use(timeSystemRoutes);
 app.use(manageUsers);
 
 const multer = require("multer");

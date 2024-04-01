@@ -112,7 +112,7 @@ router.route('/events/signUp')
         await event.save();
 
         // Remove the "data:image/png;base64," part from the data URL
-        /*const base64Data = signature.replace(/^data:image\/png;base64,/, '');
+        const base64Data = signature.replace(/^data:image\/png;base64,/, '');
 
         // Generate a unique file name
         const fileName = `${Date.now()}.png`;
@@ -122,9 +122,9 @@ router.route('/events/signUp')
               console.error(err);
               res.status(500).send('Error saving image');
           } else {
-              //res.send('Image saved successfully');
+              console.log('Image saved successfully');
           }
-        });*/
+        });
 
         res.status(200).json({ message: 'Signed up for event' });
       } else {
