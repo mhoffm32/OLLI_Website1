@@ -117,6 +117,11 @@ class NavigationBar extends React.Component {
                             Time System
                         </a>
                     )}
+                    {jwtDecode(token).type === "admin" && (
+                        <a onClick={() => {this.props.changePage("TimeSystem")}}>
+                            Time System
+                        </a>
+                    )}
                         <b className="username">
                             {jwtDecode(token).username} 
                             <a id="settings-icon" onClick={() => {this.props.changePage("UserSettings")}}>

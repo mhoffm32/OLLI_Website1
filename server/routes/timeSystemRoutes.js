@@ -91,7 +91,8 @@ router.route('/timeblocks/unapproved')
   .get(isAdmin, async (req, res) => {
     console.log("Getting unapproved time blocks")
     try {
-      const timeBlocks = await TimeSystem.find({ isApproved: false });
+      const timeBlocks = await TimeSystem.find({ approved: false });
+      console.log(timeBlocks);
       res.json(timeBlocks);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -105,6 +106,24 @@ router.route('/timeblocks/user/:userId')
     try {
       const timeBlocks = await TimeSystem.find({ userId: req.params.userId });
       res.json(timeBlocks);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
+  router.route('/timeblocks/approve/:timeBlockId')
+  .post(isAdmin, async (req, res) => {
+    console.log("Approving time block")
+    try {
+      const timeBlock = await TimeSystem.findById(req.params.timeBlockId);
+      if (!timeBlock) {
+        return res.status(404).json({ message: 'Time block not found' });
+      }
+
+      timeBlock.approved = true;
+      await timeBlock.save();
+
+      res.json(timeBlock);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
