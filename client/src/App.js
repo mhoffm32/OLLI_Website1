@@ -19,6 +19,7 @@ import ForgotPassword from './Components/Pages/ForgotPassword';
 import EventCreator from './Components/EventCreator';
 import ChatHome from './Components/Pages/ChatHome';
 import PhotoGallery from './Components/Pages/PhotoGallery';
+import TimeSystem from './Components/Pages/TimeSystem';
 
 class App extends React.Component {
   constructor(props) {
@@ -98,6 +99,9 @@ class App extends React.Component {
         break;
       case 'EventCreator':
         page = <EventCreator changePage={this.changePage}/>;
+        break;
+      case 'TimeSystem':
+        page = <TimeSystem changePage={this.changePage}/>;
         break;
       default:
         page = <Home changePage={this.changePage}/>;
