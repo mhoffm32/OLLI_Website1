@@ -1736,6 +1736,93 @@ li {
   border: #6c7751 5px solid;
 }
 
+#speech-btn{
+  background-color: #df7958;
+  padding: 10px;
+  font-size: medium;
+  border-radius: 8px;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#speech-btn:hover{
+  background-color: white;
+  color: black;
+  
+} 
+
+#cancel-btn{
+  background-color: #df7958;
+  padding: 10px;
+  font-size: medium;
+  border-radius: 8px;
+  font-weight: normal;
+  color: white;
+  margin-bottom: 10px;
+}
+
+#cancel-btn:hover{
+  background-color: white;
+  color: black;
+  
+} 
+
+.sidebar {
+  width: 0; /* Sidebar width is 0 by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  left: 0;
+  background-color: #6c7751; /* Sidebar background color */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* Animated transition for sidebar */
+}
+
+.sidebar.open {
+  width: 60px;
+}
+
+/* Style the sidebar links (you can add your own styling) */
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #6c7751;
+
+}
+
+/* When you mouse over the sidebar links */
+
+/* Button used to open the sidebar */
+.sidebar-toggle {
+  position: fixed;
+  left: 0;
+  top: center;
+  z-index: 2;
+  background-color: #df7958;
+  padding: 5px; /* Adjust padding to ensure text fits snugly */
+  margin: 0;
+  font-size: small;
+  border-width: 0px;
+  border-radius: 8px;
+  font-weight: normal;
+  color: white;
+  cursor: pointer;
+  white-space: normal; /* Allow text to wrap */
+  text-align: center; /* Center-align the text for aesthetics */
+  width: 60px; /* Narrow width to encourage text stacking */
+  min-height: 30px; /* Adjust minimum height to accommodate stacked text */
+}
+
+
+
+
+.sidebar-toggle:hover {
+  background-color: white;
+  color: black;
+} 
+
+
 
 /* ADMIN TOOLS */ 
 
@@ -1752,3 +1839,45 @@ li {
   background-color: #ddd;
   color: black;
 }
+.newsTitle{
+  position: relative;
+  right: 500px; 
+}
+
+#chat-usr-list {
+  list-style: none;
+  padding: 0;
+}
+
+#chat-usr-item {
+  /* Add some right margin to create space */
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#left-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+#username-i{
+  margin-left: 40px;
+}
+
+
+.later-i{
+  border-top: 1px solid #6e6b6a;
+}
+
+.first-i{
+  border-top: none;
+}
+
+#njwnxq{
+  
+
+}
+

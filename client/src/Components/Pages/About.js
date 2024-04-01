@@ -2,8 +2,7 @@ import React from "react";
 function speak() {  
   // Create a SpeechSynthesisUtterance object
 
-  let text = "Welcome to the About us menu. Read about our history here."
-
+  const text = window.getSelection().toString() || "No text highlighted."
   const utterance = new SpeechSynthesisUtterance(text);
   
   // Speak the text
@@ -12,10 +11,62 @@ function speak() {
 
 
 class About extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: '',
+      isSidebarOpen: false,
+    };
+    this.toggleSidebar = this.toggleSidebar.bind(this);
+  }
+
+  readHighlightedText = () => {
+    const text = window.getSelection().toString();
+    if(text){
+        speak(text);
+    }
+    else{
+        window.speechSynthesis.cancel();
+        speak("No text is highlighted");
+    }
+};
+
+toggleSidebar(){
+  this.setState({isSidebarOpen: !this.state.isSidebarOpen});
+}
+
+cancelSpeech = () => {
+  window.speechSynthesis.cancel();
+}
+
+
   render() {
-    speak();
+    const { isSidebarOpen } = this.state;
+    const dynamicStyle = {
+      left: isSidebarOpen ? '60px' : '0px',
+      transition: '0.5s',/* Animated transition for sidebar */
+
+  }
+    
     const address = "info@rockglen.com";
     return (
+      <div>
+        
+        <button className="sidebar-toggle" style={dynamicStyle} onClick={this.toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+          <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+
+          
+        <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
+
+
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={this.cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
+             </div>
       <div className="about">
         <h1>About Us</h1>
         <img src="/images/GroupPic.jpg" alt="Group Picture" className='groupPic' />
@@ -161,6 +212,7 @@ class About extends React.Component {
                 Expand/Collapse
             </button>
           </div>
+      </div>
       </div>
     );
   }
