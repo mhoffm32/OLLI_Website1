@@ -1,7 +1,19 @@
 import React from "react";
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
+
+  let text = "Welcome to the About us menu. Read about our history here."
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
+
 
 class About extends React.Component {
   render() {
+    speak();
     const address = "info@rockglen.com";
     return (
       <div className="about">

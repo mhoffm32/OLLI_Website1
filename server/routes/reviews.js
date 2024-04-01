@@ -25,6 +25,19 @@ router.route('/createReview')
         }
     });
 
+router.route('/deleteReview')
+    .post(async (req, res) => {
+        console.log("Deleting review");
+        try {
+            const {username, date, rating, content} = req.body;
+            await Reviews.deleteOne({username: username, date: date, rating: rating, content: content});
+            res.json({ message: 'Review deleted' });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+);
+
 module.exports = router;
 
 /******************************** HELPER FUNCTIONS **************************************/

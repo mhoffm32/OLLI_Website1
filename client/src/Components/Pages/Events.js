@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import SignatureCanvas from "react-signature-canvas";
 import { jwtDecode } from 'jwt-decode';
 
+
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Welcome to the event page. Here you can book and view events."
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 class Events extends Component {
 
     constructor(props) {
@@ -64,6 +75,9 @@ class Events extends Component {
     }
 
     render() {
+
+        speak();
+        /* Visual looks*/
         return (
             <div className="events">
                 <h1>Come Join our Events</h1>

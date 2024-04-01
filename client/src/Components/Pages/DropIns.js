@@ -3,7 +3,16 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
-
+function speak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Welcome to the Drop in menu. Book drop in appointments here"
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
 class DropIns extends Component {
     constructor(props) {
         super(props);
@@ -66,6 +75,7 @@ class DropIns extends Component {
     };      
 
     render() {
+        speak();
         const { dropOffTime, pickUpTime, submissionMessage } = this.state;
         const now = dayjs(); // Get the current date and time
 

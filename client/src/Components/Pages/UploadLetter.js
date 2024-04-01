@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
 
+function speak() {  
+  // Create a SpeechSynthesisUtterance object
+
+  let text = "Here you can upload newsletters."
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Speak the text
+  window.speechSynthesis.speak(utterance);
+}
+
 const UploadLetter = ({ changePage , user}) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [newsletters, setNewsletters] = useState(null);
@@ -15,6 +26,7 @@ const UploadLetter = ({ changePage , user}) => {
   };
 
   useEffect(()=>{
+    speak();
     getNewsletters()
   },[])
 
