@@ -1,4 +1,22 @@
+
 import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from 'react';
+function introSpeak() {  
+    // Create a SpeechSynthesisUtterance object
+  
+    let text = "Here you can view photos placed in the library by users."
+  
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }
+
+function speak(){
+    const text = window.getSelection().toString() || "No text highlighted."
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
 
 function speak() {
   const text = window.getSelection().toString() || "No text highlighted.";
@@ -53,6 +71,16 @@ function PhotoGallery() {
     speak();
   }, []);
 
+    useEffect(() => {
+        fetch('/api/displayImages')
+            .then(response => response.json())
+            .then(data => {
+                setImages(data.images);
+            })
+            .catch(error => console.error('Error fetching images:', error));
+            introSpeak();
+    }, []);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -102,5 +130,5 @@ function PhotoGallery() {
     </div>
   );
 }
-
+}
 export default PhotoGallery;
