@@ -145,8 +145,14 @@ const ChatHome = ({ changePage }) => {
     let memberjsx = newChatMembers.map((user, index) => (
       <div id="added-member" key={index}>
         <p>{user.username}</p>
-        <button id="delete-member-btn" onClick={() => deleteChatMember(user)}>
-          <p>X</p>
+        <button
+          id="delete-member-btn-t"
+          className="no"
+          onClick={() => deleteChatMember(user)}
+        >
+          <div id="d-label">
+            <p>X</p>
+          </div>
         </button>
       </div>
     ));

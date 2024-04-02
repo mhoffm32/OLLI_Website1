@@ -1419,27 +1419,49 @@ li {
   font-weight: bold;
   display: inline;
   color: white;
-  padding-right: 5px;
   margin: 0px;
 }
 
 #added-member {
   align-items: center;
   display: inline-flex;
-  justify-content: center;
   background-color: #333;
-  width: fit-content;
+  height: 30px;
   margin: 1px;
-  padding: 3px 8px;
+  width: fit-content;
+  padding: 0px 8px;
   border-radius: 10px;
 }
 
-#new-chat-members{
-  display: inline-flex;
+
+
+#delete-member-btn-t > p{
+  font-size: 15px;
+  font-weight: bold;
+  display: inline;
+  margin: 0px;
+  margin-top: 90px;
+  transform: translateY(-60px);
 }
 
+#d-label{
+  transform: translate(-4px,-9px);
+  padding:0px
+}
+
+#d-label > p{
+font-size: 15px;
+font-weight: bold;
+display: inline;
+margin: 0px;
+margin-top: 90px;
+}
+
+
+
+
+
 .msg-label{
- 
   display: inline-flex;
 }
 
@@ -1454,16 +1476,11 @@ li {
   background-color: #5f5d5d;
   border-radius: 50%;
   width: 30px;
-  
-  /*
-  border-radius: 50%;
-  
-  background-color: #5f5d5d;
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  margin: 0 10px;*/
+
 }
+
+
+
 
 #new-msg-bubble > p {
  color: #ccc;
@@ -1882,3 +1899,15 @@ li {
 .first-i{
   border-top: none;
 }
+
+
+
+#delete-member-btn-t{
+  height: 10px;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 50%;
+  width: 12px
+
+}
+
