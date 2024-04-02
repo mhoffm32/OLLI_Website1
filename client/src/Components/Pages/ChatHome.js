@@ -261,7 +261,6 @@ const ChatHome = ({ changePage }) => {
     }
   };
 
-  speak();
   return (
     <div id="admin-page">
       {page === "chatHome" ? (

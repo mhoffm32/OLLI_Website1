@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SignatureCanvas from "react-signature-canvas";
+import { jwtDecode } from 'jwt-decode';
 
 
 function speak() {  
@@ -19,11 +20,17 @@ class Events extends Component {
           events: [],
           expandedEventId: null,
           showWaiverFields: false,
+          isAdmin: false,
           isSidebarOpen: false
         };
         this.sigCanvas = React.createRef();
         this.toggleSidebar = this.toggleSidebar.bind(this);
         this.getEvents();
+        const token = localStorage.getItem('jwt');
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            this.state.isAdmin = decodedToken.type === 'admin';
+        }
       }
 
     getEvents = () => {
@@ -111,8 +118,7 @@ class Events extends Component {
             </div>
             <div className="events">
                 <h1>Come Join our Events</h1>
-                <button onClick={() => this.props.changePage('EventCreator')}>Create Event</button>
-                <button onClick={() => this.getEvents()}>Get Events</button>
+                {this.state.isAdmin && <button onClick={() => this.props.changePage('EventCreator')}>Create Event</button>}
                 {this.state.events.map((event, index) => (
                     <div className='eventBox'>
                         <h2>{event.title}</h2>

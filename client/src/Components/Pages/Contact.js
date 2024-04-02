@@ -52,23 +52,37 @@ class Contact extends Component {
             window.speechSynthesis.cancel();
         }
         
-        //Email sending function
         sendMessage = async (e) => {
             e.preventDefault();
             const { name, email, message, subject, phoneNumber } = this.state;
             try {
-                const response = await axios.post('http://localhost:3000/user/send-ivey-message', {name, email, message, subject, phoneNumber});
-                console.log(response)
-            if(response.data === 'Email sent successfully'){
-                alert("Email sent Successfully")
-            }else{
-                alert('Failed to send email')
+                const response = await axios.post('http://localhost:3000/user/send-ivey-message', { name, email, message, subject, phoneNumber });
+                console.log(response);
+                if (response.status === 200) {
+                    alert("Email sent Successfully");
+                } else {
+                    // Handle any other success responses that don't result in an email being sent
+                    alert('Unexpected response from server');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+        
+                // Check if the error response has the expected structure and content
+                if (error.response && error.response.data) {
+                    const errorMessage = error.response.data.message;
+                    if (errorMessage === 'Poor language detected! Please do not use profanity.') {
+                        alert(errorMessage);
+                    } else {
+                        // Handle other potential error messages the same way
+                        alert('Failed to send email');
+                    }
+                } else {
+                    // Fallback error message if the response structure is not as expected
+                    alert('Error sending message');
+                }
             }
-            }catch(error){
-                console.error('Error sending message:',error)
-                alert('Error sending message')
-            }
-        }
+        };
+        
 
 
     render() {

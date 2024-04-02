@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+
+
+import React, { useState, useEffect } from 'react';
+
 
 function speak() {
   const text = window.getSelection().toString() || "No text highlighted.";
@@ -50,8 +53,16 @@ function PhotoGallery() {
         setImages(data.images);
       })
       .catch((error) => console.error("Error fetching images:", error));
-    speak();
   }, []);
+
+    useEffect(() => {
+        fetch('/api/displayImages')
+            .then(response => response.json())
+            .then(data => {
+                setImages(data.images);
+            })
+            .catch(error => console.error('Error fetching images:', error));
+    }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

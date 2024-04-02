@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 function speak() {  
     // Create a SpeechSynthesisUtterance object
   
-    let text = "Here you can add images to the photo library"
-  
+    const text = window.getSelection().toString() || "No text highlighted."   
     const utterance = new SpeechSynthesisUtterance(text);
     
     // Speak the text
@@ -54,7 +53,6 @@ function AddImages() {
     }
     
     };
-    speak();
     return (
         <div>
             <h1>Upload Images</h1>

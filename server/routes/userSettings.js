@@ -8,6 +8,8 @@ const InputChecker = require('../helperClasses/inputChecker'); // adjust the pat
 const PasswordChangeRequest = require('../models/passwordChangeRequest');
 const UserInterface = require('../helperClasses/userInterface');
 const { ObjectId } = require('mongodb');
+const Filter = require('bad-words');
+const filter = new Filter();
 
 const nodemailer = require('nodemailer');
 const {v4: uuidv4} = require('uuid');
@@ -37,6 +39,18 @@ const verifyToken = (req, res, next) => {
 		req.userId = decoded.id;
 		next();
 	});
+};
+
+const checkForBadWords = (req, res, next) => {
+    console.log('checking for bad words...');
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    if (filter.isProfane(firstname) || filter.isProfane(lastname)) {
+        return res.status(400).json({ message: 'Poor language detected! Please do not use profanity.' });
+    } else {
+        console.log('no bad words detected!')
+        next();
+    }
 };
 
 router.route('/request')
@@ -155,7 +169,7 @@ router.route('/user/changePassword')
 	})
 
 router.route('/user/changeName')
-	.post(passport.authenticate('jwt', {session: false}), async (req, res) => {
+	.post(passport.authenticate('jwt', {session: false}), checkForBadWords, async (req, res) => {
 		console.log("Changing Name for: " + req.user.email)
 		let user = await UserInterface.getUserByEmail(req.user.email)
 		let {firstname, lastname} = req.body;

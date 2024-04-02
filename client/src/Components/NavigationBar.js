@@ -107,7 +107,7 @@ class NavigationBar extends React.Component {
                     Chats
                 </a>
                 <a className={activeOption === 'Photo Gallery' ? 'active' : ''} onClick={() => this.props.changePage('Photo Gallery')}>
-                    <img src={activeOption === 'Photo Gallery' ? "/images/icons/photos.png" : '/images/icons/photos-green.png'} className="nav-icon" alt='Photo Gallery'/>
+                    <img src={activeOption === 'Photo Gallery' ? "/images/icons/photos-green.png" : '/images/icons/photos.png'} className="nav-icon" alt='Photo Gallery'/>
                     Photo Gallery
                 </a>
 
@@ -116,9 +116,14 @@ class NavigationBar extends React.Component {
                         Admin Tools
                     </a></> : <></>}
 
-                    {jwtDecode(token).type === "employee" ? <> <a className={activeOption === 'Clock' ? 'active' : ''} onClick={() => this.props.changePage('Clock')}>
-                        <img src={activeOption === "Clock" ? "/images/icons/clock-green.png" : "/images/icons/clock.png"} className="nav-icon" alt="Clock"/>
-                        Clock In/Out 
+                    {jwtDecode(token).type === "employee" ? <> <a className={activeOption === 'TimeSystem' ? 'active' : ''} onClick={() => this.props.changePage('TimeSystem')}>
+                        <img src={activeOption === "TimeSystem" ? "/images/icons/clock-green.png" : "/images/icons/clock.png"} className="nav-icon" alt="Clock"/>
+                        Time System 
+                    </a></> : <></>}
+
+                    {jwtDecode(token).type === "admin" ? <> <a className={activeOption === 'TimeSystem' ? 'active' : ''} onClick={() => this.props.changePage('TimeSystem')}>
+                        <img src={activeOption === "TimeSystem" ? "/images/icons/clock-green.png" : "/images/icons/clock.png"} className="nav-icon" alt="Clock"/>
+                        Time System 
                     </a></> : <></>}
 
                         <b className="username">

@@ -25,6 +25,20 @@ const eventRegistration = require("./routes/eventRegistration.js");
 const eventRoutes = require("./routes/eventRoutes.js");
 const review = require("./routes/reviews.js");
 const manageUsers = require("./routes/manageUsers.js");
+const timeSystemRoutes = require('./routes/timeSystemRoutes.js');
+const Filter = require("bad-words");
+const filter = new Filter();
+
+const checkForBadWords = (req, res, next) => {
+  console.log('checking for bad words...');
+  const { name, message, subject } = req.body;
+  if (filter.isProfane(name) || filter.isProfane(message) || filter.isProfane(subject)){
+      return res.status(400).json({ message: 'Poor language detected! Please do not use profanity.' });
+  } else {
+      console.log('no bad words detected!')
+      next();
+  }
+};
 
 /************ PASSPORT *******************/
 const passport = require("passport");
@@ -312,6 +326,7 @@ app.use(userSettings);
 app.use(eventRegistration);
 app.use(eventRoutes);
 app.use(review);
+app.use(timeSystemRoutes);
 app.use(manageUsers);
 
 const multer = require("multer");
@@ -524,7 +539,7 @@ router.route("/user/updateSettings").post(async (req, res) => {
   }
 });
 
-app.post("/user/send-ivey-message", async (req, res) => {
+app.post("/user/send-ivey-message", checkForBadWords, async (req, res) => {
   try {
     console.log("Sending message to Ivey");
     const { name, email, message, subject, phoneNumber } = req.body;
@@ -808,9 +823,6 @@ router.route("/chat/enableUser").post(async (req, res) => {
     console.log(error);
   }
 });
-
-const Filter = require("bad-words");
-const filter = new Filter();
 
 router.route("/admin/chat/getFlagged").get(async (req, res) => {
   try {
