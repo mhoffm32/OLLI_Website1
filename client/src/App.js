@@ -19,7 +19,7 @@ import EventCreator from "./Components/EventCreator";
 import ChatHome from "./Components/Pages/ChatHome";
 import PhotoGallery from "./Components/Pages/PhotoGallery";
 import TimeSystem from './Components/Pages/TimeSystem';
-import UploadLetter from './Components/Pages/UploadLetter';
+import UploadLetter from './Components/Pages/admin/UploadLetter';
 
 
 class App extends React.Component {
