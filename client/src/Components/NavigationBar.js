@@ -107,7 +107,7 @@ class NavigationBar extends React.Component {
                     Chats
                 </a>
                 <a className={activeOption === 'Photo Gallery' ? 'active' : ''} onClick={() => this.props.changePage('Photo Gallery')}>
-                    <img src={activeOption === 'Photo Gallery' ? "/images/icons/photos.png" : '/images/icons/photos-green.png'} className="nav-icon" alt='Photo Gallery'/>
+                    <img src={activeOption === 'Photo Gallery' ? "/images/icons/photos-green.png" : '/images/icons/photos.png'} className="nav-icon" alt='Photo Gallery'/>
                     Photo Gallery
                 </a>
 
