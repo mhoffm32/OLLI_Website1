@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Reviews = require('../models/reviews');
+const { checkForBadWords } = require('../helperClasses/inputChecker');
 
 router.route('/getReviews') 
     .get(async (req, res) => {
@@ -14,7 +15,7 @@ router.route('/getReviews')
     });
 
 router.route('/createReview')
-    .post(async (req, res) => {
+    .post(checkForBadWords, async (req, res) => {
         console.log("Creating review");
         try {
             const {username, date, rating, content} = req.body;
