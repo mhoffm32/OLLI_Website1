@@ -20,7 +20,7 @@ class Events extends Component {
           events: [],
           expandedEventId: null,
           showWaiverFields: false,
-          isAdmin: false
+          isAdmin: false,
           isSidebarOpen: false
         };
         this.sigCanvas = React.createRef();
