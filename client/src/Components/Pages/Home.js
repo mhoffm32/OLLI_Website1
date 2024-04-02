@@ -101,11 +101,13 @@ class Home extends Component {
                 },
                 body: JSON.stringify({ username, date, rating, content })
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 alert("Review created successfully.");
                 console.log(data.message);
                 this.getReviews();
+            } else if (data.message === "Bad input detected") {
+                alert("Poor language detected! Please do not use profanity.");
             }
         } catch (error) {
             alert("Error creating review.")

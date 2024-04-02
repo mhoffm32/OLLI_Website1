@@ -60,7 +60,16 @@ class Signup extends Component {
                 },
                 body: JSON.stringify({email: this.state.email, username: this.state.username, password: this.state.password})
             })
-            .then(res => res.json())
+            .then(res => {
+                // Check the response status code to handle errors
+                if (!res.ok) {
+                    // If the response is not ok, parse the JSON to get the error message
+                    return res.json().then(data => {
+                        throw new Error(data.message);
+                    });
+                }
+                return res.json();
+            })            
             .then(data => {
                 if(data.message === "Email already exists"){
                     alert("Email already exists");
@@ -73,7 +82,10 @@ class Signup extends Component {
                     this.props.changePage('ValidateEmail');
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err =>  {
+                console.log(err);
+                alert(err.message); // Display the server's error message
+            });
         }
     }
 

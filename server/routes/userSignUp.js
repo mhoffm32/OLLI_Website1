@@ -9,6 +9,8 @@ const UserVerificationEmails = require('../models/UserVerificationEmails'); // a
 const InputChecker = require('../helperClasses/inputChecker'); // adjust the path as needed
 const UserInterface = require('../helperClasses/userInterface');
 const AccountSetting = require('../models/accountSettings');
+const Filter = require('bad-words');
+const filter = new Filter();
 
 /*************************** NODEMAILER ******************************/
 const nodemailer = require('nodemailer');
@@ -29,11 +31,24 @@ transporter.verify((error, success) => {
 		console.log("Server is ready to take messages");
 	}
 });
+ 
+/*************************** BAD WORDS FILTER ******************************/
+
+const checkForBadWords = (req, res, next) => {
+    console.log('checking for bad words...');
+    const { email, username, password } = req.body;
+    if (filter.isProfane(username)) {
+        return res.status(400).json({ message: 'Poor language detected! Please do not use profanity.' });
+    } else {
+        console.log('no bad words detected!')
+        next();
+    }
+};
 
 /*************************** SIGNUP ROUTES **************************/
 
 router.route('/signup')
-	.post(async (req, res) => {
+	.post(checkForBadWords, async (req, res) => {
 		console.log("Signing Up")
 		const { email, username, password } = req.body;
 		const usernameLower = username.toLowerCase().trim();
