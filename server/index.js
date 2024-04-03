@@ -25,18 +25,24 @@ const eventRegistration = require("./routes/eventRegistration.js");
 const eventRoutes = require("./routes/eventRoutes.js");
 const review = require("./routes/reviews.js");
 const manageUsers = require("./routes/manageUsers.js");
-const timeSystemRoutes = require('./routes/timeSystemRoutes.js');
+const timeSystemRoutes = require("./routes/timeSystemRoutes.js");
 const Filter = require("bad-words");
 const filter = new Filter();
 
 const checkForBadWords = (req, res, next) => {
-  console.log('checking for bad words...');
+  console.log("checking for bad words...");
   const { name, message, subject } = req.body;
-  if (filter.isProfane(name) || filter.isProfane(message) || filter.isProfane(subject)){
-      return res.status(400).json({ message: 'Poor language detected! Please do not use profanity.' });
+  if (
+    filter.isProfane(name) ||
+    filter.isProfane(message) ||
+    filter.isProfane(subject)
+  ) {
+    return res.status(400).json({
+      message: "Poor language detected! Please do not use profanity.",
+    });
   } else {
-      console.log('no bad words detected!')
-      next();
+    console.log("no bad words detected!");
+    next();
   }
 };
 
