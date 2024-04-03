@@ -224,7 +224,7 @@ const UserSettings = () => {
                     <h3>Current Profile Details</h3>
                     <hr></hr>
                     <img src={userDetails.pfp} className="pfp"></img>
-                    <p>Email: {userDetails.email}</p>
+                    <p id='email'>Email: {userDetails.email}</p>
                     <p>First Name: {userDetails.firstname}</p>
                     <p>Last Name: {userDetails.lastname}</p>
                 </div>
