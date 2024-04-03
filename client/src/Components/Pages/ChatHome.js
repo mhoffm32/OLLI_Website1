@@ -3,21 +3,13 @@ import ChatThread from "../Pages/ChatThread";
 import { jwtDecode } from "jwt-decode";
 function speak() {
   // Create a SpeechSynthesisUtterance object
-
-  function speak() {
-    const text = window.getSelection().toString() || "No text highlighted";
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    window.speechSynthesis.speak(utterance);
-  }
-
-  let text = "Here you can view and start chats";
-
+  const text = window.getSelection().toString() || "No text highlighted.";
   const utterance = new SpeechSynthesisUtterance(text);
 
   // Speak the text
   window.speechSynthesis.speak(utterance);
 }
+
 const ChatHome = ({ changePage }) => {
   const [page, setPage] = useState("chatHome");
   const [user, setUser] = useState();
@@ -256,9 +248,14 @@ const ChatHome = ({ changePage }) => {
     const text = window.getSelection().toString();
     if (text) {
       speak(text);
-    } else {
+    } 
+    else {
       speak("No text highlighted");
     }
+  };
+
+  const cancelSpeech = () => {
+    window.speechSynthesis.cancel();
   };
 
   return (
@@ -281,6 +278,12 @@ const ChatHome = ({ changePage }) => {
                         <img id="speaker" src="/images/icons/speech.png"></img>
                         Click to hear highlighted text out loud
                       </button>
+                    <div className="cancel-speech">
+                      <button id="cancel-btn" onClick={cancelSpeech}>
+                        <img id="pause" src="/images/icons/pause.png"></img>
+                        Click to stop text to speech
+                      </button>
+                    </div>
                     </div>
 
                     <datalist id="suggestions">
