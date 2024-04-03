@@ -1433,8 +1433,6 @@ li {
   border-radius: 10px;
 }
 
-
-
 #delete-member-btn-t > p{
   font-size: 15px;
   font-weight: bold;
@@ -1456,8 +1454,6 @@ display: inline;
 margin: 0px;
 margin-top: 90px;
 }
-
-
 
 
 
@@ -1652,10 +1648,8 @@ margin-top: 90px;
   font-weight:400;
   align-items: center; 
   padding: 5px;
-  width: 40px;
   border-width: 0;
   border-radius: 8px;
-
 }
 
 /* MANAGE USER ADMIN TOOLS PAGE */
