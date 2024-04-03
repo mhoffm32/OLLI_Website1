@@ -217,19 +217,21 @@ class Home extends Component {
               </div>
             </div>
             <div className="olliAspects">
-              <div className="CheerConnectionsTitle">Cheer Living</div>
-              <div className="cheerLivingDescBack">
-                <div className="CheerConnections">
-                  <div className="CheerConnectionsDescription">
-                    An opportunity to practice independent living skills and
-                    living with minimal supports.
+              <div id="living-thing">
+                <div className="CheerConnectionsTitle">Cheer Living</div>
+                <div className="cheerLivingDescBack">
+                  <div className="CheerConnections">
+                    <div className="CheerConnectionsDescription">
+                      An opportunity to practice independent living skills and
+                      living with minimal supports.
+                    </div>
+                    <button
+                      className="CheerConnectionsButton"
+                      onClick={(evt) => this.props.changePage("About")}
+                    >
+                      Learn More
+                    </button>
                   </div>
-                  <button
-                    className="CheerConnectionsButton"
-                    onClick={(evt) => this.props.changePage("About")}
-                  >
-                    Learn More
-                  </button>
                 </div>
               </div>
             </div>

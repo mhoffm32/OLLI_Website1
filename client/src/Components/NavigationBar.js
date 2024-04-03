@@ -55,6 +55,12 @@ class NavigationBar extends React.Component {
     this.getUserDetails();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.activeOption !== prevProps.activeOption) {
+      this.getUserDetails();
+    }
+  }
+
   render() {
     const { userDetails } = this.state;
     const { activeOption } = this.props;
