@@ -1051,8 +1051,9 @@ p.letterheader{
 }
 
 #account-settings #email-prefs{
-  text-align: center;
-  margin-left: 20px;
+  display: inline-flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center;
 }
 
 #account-settings #email-prefs label.switch {
@@ -1082,14 +1083,20 @@ p.letterheader{
   border: rgb(238, 231, 221) 1px solid;
   border-radius: 20px;
   padding: 20px;
-  width: 40%;
+  width: fit-content;
   margin: auto;
   background-color: rgb(238, 231, 221);
   font-weight: 300;
 }
 
+#settings-pfps{
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+}
+
 #account-settings .selected img {
-  border: 3px solid black;
+  border: 6px solid black;
   border-radius: 50%;
 }
 
