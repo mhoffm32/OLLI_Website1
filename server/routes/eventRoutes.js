@@ -62,11 +62,11 @@ router.route('/events/createEvent')
         let { title, description, date, location, waiver } = req.body;
         console.log("Date: " + date)
 
-        console.log("Title: " + title);
-        console.log("Description: " + description);
-        console.log("Date: " + date);
-        console.log("Location: " + location);
-        console.log("Waiver: " + waiver[0].header + " " + waiver[0].content)
+        //console.log("Title: " + title);
+        //console.log("Description: " + description);
+        //console.log("Date: " + date);
+        //console.log("Location: " + location);
+        //console.log("Waiver: " + waiver[0].header + " " + waiver[0].content)
 
         if(!title || !description || !date || !location || !waiver) {
             return res.status(400).json({ message: 'Please enter all fields' });

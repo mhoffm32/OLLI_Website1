@@ -227,7 +227,7 @@ async function createUser(username, password, email, res) {
     type: "generalUser",
     firstname: "",
     lastname: "",
-    pfp: "",
+    pfp: '/images/icons/default_pfp.png',
   });
 
   const result = await newUser.save();
