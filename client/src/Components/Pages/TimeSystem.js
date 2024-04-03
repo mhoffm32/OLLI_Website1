@@ -106,16 +106,18 @@ class TimeSystem extends Component {
         const token = localStorage.getItem('jwt');
 
         return (
-            <div>
+            <div className='timeSystem'>
                 <h1>Time System</h1>
+                <div className='titleBox'>
                 <input
                     type="text"
                     value={this.state.note}
                     onChange={this.handleInputChange}
                     placeholder='Note'
                 />
-                <button onClick={this.handleClockOut}>Clock Out</button>
-                <button onClick={this.handleClockIn}>Clock In</button>
+                </div>
+                <button id='outButton' onClick={this.handleClockOut}>Clock Out</button>
+                <button id ='inButton' onClick={this.handleClockIn}>Clock In</button>
 
                 {timeBlocks.map((timeBlock, index) => (
                     <div key={index} className='eventBox'>
