@@ -241,11 +241,11 @@ class Home extends Component {
                             return (
                                 <div key={index} className="review">
                                     <div className="review-header">
-                                        <div className="review-username">User: {review.username}</div>
-                                        <div className="review-date">Date: {review.date}</div>
+                                        <div className="review-username"><strong>User:</strong> {review.username}</div>
+                                        <div className="review-date"><strong>Date:</strong> {review.date}</div>
                                     </div>
-                                    <div className="review-rating">Rating: {review.rating} Star</div>
-                                    <div className="review-content">Review: {review.content}</div>
+                                    <div className="review-rating"><strong>Rating:</strong> {review.rating} <img src="/images/icons/star.png"/></div>
+                                    <div className="review-content"><strong>Review:</strong> {review.content}</div>
                                 </div>
                             );
                         })}
