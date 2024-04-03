@@ -16,6 +16,7 @@ class Login extends Component {
             email: '',
             password: '',
             loginText: '',
+            isSidebarOpen: false
   
         };
     }
@@ -33,6 +34,15 @@ class Login extends Component {
         speak("No text is highlighted");
       }
     };
+
+    cancelSpeech = () => {
+      window.speechSynthesis.cancel();
+    };
+
+    toggleSidebar = () => {
+      this.setState({ isSidebarOpen: !this.state.isSidebarOpen });
+    };
+
 
     handleSubmit = (event) => {
         this.state.loginText = ""
@@ -105,19 +115,33 @@ class Login extends Component {
 
     render() {
         const { email, password } = this.state;
+        const {isSidebarOpen} = this.state;
+        const dynamicStyle = {
+          left: isSidebarOpen ? '60px' : '0px',
+          transition: '0.5s', // Animated transition for the sidebar toggle button
+        }
         
 
         return (
             <div>
-               <div className='speech-button'>
-                        <button id="speech-btn" onClick={this.readHighlightedText}>
-                            <img id="speaker" src='/images/icons/speech.png'></img>Click to hear highlighted text out loud</button>
-
-
-             </div>
+              
+               
                 <button onClick={() => this.props.changePage('Home')} className='backBtn'><img src="/images/BackArrow.png" alt="Back" className='backArrowImg' /></button>
+                
                 <img src="/images/OLLILOGO.png" alt="OLLI Logo" className='logo' />
                 <h1>Login Page</h1>
+                <button className="sidebar-toggle" style={dynamicStyle} onClick={this.toggleSidebar}>{isSidebarOpen ? <img src="/images/icons/close.png"></img> : <img src="/images/icons/sidebaropen.png"></img>}</button>
+                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+                  <div className='speech-button'>
+                        <button id="speech-btn" onClick={this.readHighlightedText}>
+                            <img id="speaker" src='/images/icons/speech.png'></img></button>
+
+             </div>
+             <div className="cancel-speech">
+                <button id="cancel-btn" onClick={this.cancelSpeech}>
+                <img id="pause" src='/images/icons/pause.png'></img></button>
+                </div>
+             </div>
 
                 <div id="g-login-btn1"><GLogin changePage={this.props.changePage}/></div>
   
