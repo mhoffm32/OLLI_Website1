@@ -276,40 +276,43 @@ class Home extends Component {
                   );
                 })}
             </div>
-            <div className="review-form">
-              <h1>Write a Review</h1>
-              <form
-                className="review-form1"
-                onSubmit={(evt) => {
-                  evt.preventDefault();
-                  const username = this.state.userDetails.username;
-                  const date = format(new Date(), "MMMM dd, yyyy");
-                  const rating = evt.target.rating.value;
-                  const content = evt.target.content.value;
-                  this.createReview(username, date, rating, content);
-                }}
-              >
-                <label>Rating: </label>
-                <input
-                  type="number"
-                  name="rating"
-                  min="1"
-                  max="5"
-                  required
-                  className="review-stars"
-                />
-                <br></br>
-                <label>Review: </label>
-                <textarea
-                  name="content"
-                  required
-                  className="review-text"
-                ></textarea>
-                <br></br>
-                <button type="submit" className="review-submit">
-                  Submit
-                </button>
-              </form>
+                <div className="review-section">
+                    <div className="review-desc">
+                        <h1>Hear from our Community</h1>
+                        <a>Here are some reviews from our members and their loved ones!</a>
+                    </div>
+                    <div className="reviews">
+                        {this.state.reviews && this.state.reviews.map((review, index) => {
+                            return (
+                                <div key={index} className="review">
+                                    <div className="review-header">
+                                        <div className="review-username"><strong>User:</strong> {review.username}</div>
+                                        <div className="review-date"><strong>Date:</strong> {review.date}</div>
+                                    </div>
+                                    <div className="review-rating"><strong>Rating:</strong> {review.rating} <img src="/images/icons/star.png"/></div>
+                                    <div className="review-content"><strong>Review:</strong> {review.content}</div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="review-form">
+                        <h1>Write a Review</h1>
+                        <form className="review-form1" onSubmit={evt => {
+                            evt.preventDefault();
+                            const username = this.state.userDetails.username;
+                            const date = format(new Date(), 'MMMM dd, yyyy');
+                            const rating = evt.target.rating.value;
+                            const content = evt.target.content.value;
+                            this.createReview(username, date, rating, content);
+                        }}>
+                            <label>Rating: </label>
+                            <input type="number" name="rating" min="1" max="5" required className="review-stars"/>
+                            <br></br>
+                            <label>Review: </label>
+                            <textarea name="content" required className="review-text"></textarea>
+                            <br></br>
+                            <button type="submit" className="review-submit">Submit</button>
+                        </form>
             </div>
           </div>
         </div>

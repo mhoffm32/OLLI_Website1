@@ -110,7 +110,7 @@ router.route('/user/changePassword')
 		console.log("Changing Password: " + req.body.email)
 		let user = await UserInterface.getUserByEmail(req.body.email)
 		if(user){
-			const currentURL = "http://localhost:3002";
+			const currentURL = process.env.SERVER_ADDRESS;
 
 			const uniqueString = uuidv4() + user._id;
 

@@ -400,13 +400,21 @@ button:hover {
 }
 
 .reviews .review {
-  width: 30%;
+  width: 15%;
   margin: 20px;
   padding: 20px;
-  border: 1px solid #6c7751;
-  border-radius: 20px;
+  font-size: smaller;
+  border: 2px solid #6c7751;
+  border-radius: 10px;
   background-color: #ffd7c7;
-  text-align: left;
+  text-align: middle;
+  font-style: italic;
+}
+
+.reviews .review img {
+  height: 22px;
+  width: 22px;
+  vertical-align: text-top;
 }
 
 .review-text, .review-stars {
