@@ -188,26 +188,10 @@ const UserSettings = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-
   const dynamicStyle = {
     left: isSidebarOpen ? "60px" : "0px",
     transition: "0.5s",
   };
-
-            {userSettings !== null ? <>
-                <div id="user-details">
-                    <h3>Current Profile Details</h3>
-                    <hr></hr>
-                    <img src={userDetails.pfp} className="pfp"></img>
-                    <p id='email'>Email: {userDetails.email}</p>
-                    <p>First Name: {userDetails.firstname}</p>
-                    <p>Last Name: {userDetails.lastname}</p>
-                </div>
-                <div id="email-prefs">
-                    <h3>
-                        Monthly Email Newsletter
-                    </h3>
-
 
   return (
     <div>
