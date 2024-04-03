@@ -3,6 +3,8 @@
 .App {
   text-align: center;
   font-family: 'Nunito', sans-serif;
+  background-color: #dbd0b3;
+  padding-bottom: 50px;
 }
 
 .App-header {
@@ -263,11 +265,10 @@ button:hover {
 }
 
 .olliAspects {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: flex-start;
   height: 100%; /* Adjust as needed */
-  float: left;
   width: 18.9%;
   height: auto;
   padding-left: 10px;
@@ -279,6 +280,10 @@ button:hover {
   margin-top: 10px;
   margin-left: 2%;
   margin-right: 2%;
+}
+
+#living-thing {
+  margin-top:15px;
 }
 
 .CheerConnectionsTitle {
@@ -299,6 +304,8 @@ button:hover {
 }
 
 .cheerWorksDescBack {
+  padding: 10px;
+  margin-left: 3.5%;
   background: url("../public/images/2.png") no-repeat center center;
   background-size: cover;
   border-radius: 20px;
@@ -354,7 +361,7 @@ button:hover {
 }
 
 .CheerConnections:hover{
-  padding-top: 10px;
+  padding-top: 22px;
   background-color: #6c7751;
   opacity: 0.9;
   transition: all 0.5s;
@@ -1759,32 +1766,46 @@ margin-top: 90px;
   color: black;
 }
 
-
 #images{
   border: #6c7751 5px solid;
 }
 
+#t2s-label{
+  margin-top: -10px;
+}
+
+#speaker{
+  margin-bottom:-4px;
+  margin-right: 4px;
+  height:15px
+}
+
+#pause{
+  margin-bottom:-4px;
+  margin-right: 4px;
+  height:15px
+}
+
 #speech-btn{
   background-color: #df7958;
-  padding: 10px;
-  font-size: medium;
+  padding: 0px;
+  font-size: small;
   border-radius: 8px;
   color: white;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  height:20px;
 }
 
 #speech-btn:hover{
   background-color: white;
   color: black;
-  
 } 
 
 #cancel-btn{
   background-color: #df7958;
-  padding: 10px;
-  font-size: medium;
+  padding: 0px;
+  font-size: small;
   border-radius: 8px;
+  height:20px;
   font-weight: normal;
   color: white;
   margin-bottom: 10px;
@@ -1953,4 +1974,29 @@ margin-top: 90px;
   background-color: #df7958;
   color: black;
   text-align: center;
+}
+
+.cheerGroupSectionExpandable,
+.cheerWorksSectionExpandable,
+.cheerConnectionsSectionExpandable,
+.cheerLivingSectionExpandable {
+  display: none;
+}
+
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 820px;
+  margin-top: -120px;
+}
+
+.button-container button {
+  margin-right: 0; /* Remove default margin */
+}
+
+.button-container .speech-button,
+.button-container .cancel-speech {
+  margin-right: 0; /* Remove any additional margin */
 }

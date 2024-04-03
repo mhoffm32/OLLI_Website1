@@ -248,8 +248,7 @@ const ChatHome = ({ changePage }) => {
     const text = window.getSelection().toString();
     if (text) {
       speak(text);
-    } 
-    else {
+    } else {
       speak("No text highlighted");
     }
   };
@@ -271,21 +270,34 @@ const ChatHome = ({ changePage }) => {
                 </>
               ) : (
                 <>
-                  <h1 id="chat-header">New Chat</h1>
-                  <div>
+                  <div className="button-container">
                     <div className="speech-button">
                       <button id="speech-btn" onClick={readHighlightedText}>
-                        <img id="speaker" src="/images/icons/speech.png"></img>
-                        Click to hear highlighted text out loud
+                        <div id="t2s-label">
+                          <img
+                            id="speaker"
+                            src="/images/icons/speech.png"
+                            alt="Speech icon"
+                          ></img>
+                          Click to hear highlighted text out loud
+                        </div>
                       </button>
+                    </div>
                     <div className="cancel-speech">
                       <button id="cancel-btn" onClick={cancelSpeech}>
-                        <img id="pause" src="/images/icons/pause.png"></img>
-                        Click to stop text to speech
+                        <div id="t2s-label">
+                          <img
+                            id="pause"
+                            src="/images/icons/pause.png"
+                            alt="Pause icon"
+                          ></img>
+                          Click to stop text to speech
+                        </div>
                       </button>
                     </div>
-                    </div>
-
+                  </div>
+                  <h1 id="chat-header">New Chat</h1>
+                  <div>
                     <datalist id="suggestions">
                       {usernames ? (
                         <>
