@@ -723,6 +723,7 @@ router.route("/chat/create-thread").post(async (req, res) => {
     for (let id of participants) {
       unread1[id] = 1;
     }
+
     unread1[sender_id] = 0;
 
     let newThread = new ChatThread({
@@ -738,6 +739,8 @@ router.route("/chat/create-thread").post(async (req, res) => {
       sender_id: sender_id,
       text: message,
     });
+
+    await newText.save();
 
     let ps = {};
 
