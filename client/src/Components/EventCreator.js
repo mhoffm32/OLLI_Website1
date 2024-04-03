@@ -54,7 +54,7 @@ class EventCreator extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // Add your logic to create the event here
-    console.log("Waiver Sections: " + this.state.waiverSections[0].header + " " + this.state.waiverSections[0].content);
+    //console.log("Waiver Sections: " + this.state.waiverSections[0].header + " " + this.state.waiverSections[0].content);
     fetch('/events/createEvent', {
         method: 'POST',
             headers: {
