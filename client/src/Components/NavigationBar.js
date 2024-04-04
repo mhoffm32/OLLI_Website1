@@ -325,6 +325,7 @@ class NavigationBar extends React.Component {
             </button>
             <button
               className="signup"
+              id="signup-b"
               onClick={(evt) => this.props.changePage("Sign Up")}
             >
               Sign Up
