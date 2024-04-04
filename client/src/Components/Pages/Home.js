@@ -246,34 +246,6 @@ class Home extends Component {
               />
             </div>
           </div>
-          <div className="review-section">
-            <div className="review-desc">
-              <h1>Hear from our Community</h1>
-              <a>
-                Here are some reviews from our members and their loved ones!
-              </a>
-            </div>
-            <div className="reviews">
-              {this.state.reviews &&
-                this.state.reviews.map((review, index) => {
-                  return (
-                    <div key={index} className="review">
-                      <div className="review-header">
-                        <div className="review-username">
-                          User: {review.username}
-                        </div>
-                        <div className="review-date">Date: {review.date}</div>
-                      </div>
-                      <div className="review-rating">
-                        Rating: {review.rating} Star
-                      </div>
-                      <div className="review-content">
-                        Review: {review.content}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
                 <div className="review-section">
                     <div className="review-desc">
                         <h1>Hear from our Community</h1>
@@ -314,7 +286,6 @@ class Home extends Component {
             </div>
           </div>
         </div>
-      </div>
       </div>
     );
   }
