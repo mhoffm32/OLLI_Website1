@@ -118,7 +118,10 @@ button:hover {
   background-color: #ffd7c7;
   color: black;
   margin-right: 0px;
-  
+}
+
+#signup-b{
+  margin-right: 5px;
 }
 
 .topnav button.signup:hover, .topnav button.signout:hover {
