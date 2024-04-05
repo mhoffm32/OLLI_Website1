@@ -5,7 +5,7 @@ const eventRegistrations = require('../models/eventRegistrations');
 
 router.route('/getRegistrations')
   .get(async (req, res) => {
-	const bookings = await eventRegistrations.find({}, {event: 1, pickup: 1, dropoff: 1, _id: 0});
+	const bookings = await eventRegistrations.find({}, {event: 1, username: 1, pickup: 1, dropoff: 1, note: 1, _id: 0});
 	res.json(bookings);
     
   });
@@ -13,8 +13,8 @@ router.route('/getRegistrations')
 
 router.route('/dropins')
 	.post(async (req, res) => {
-		const { dropOff, pickUp } = req.body;
-		createRegistration("dropIn", "testemail", dropOff, pickUp);
+		const { username, dropOff, pickUp, note } = req.body;
+		createRegistration("dropIn", username, dropOff, pickUp, note);
 		console.log("Drop off: " + dropOff + " ; Pick up: " + pickUp);
 		res.json({ message: 'Drop in successful' });
 	});
@@ -25,12 +25,13 @@ router.route('/dropins')
 module.exports = router;
 
 /******************************** HELPER FUNCTIONS **************************************/
-async function createRegistration(type, email, pickup, dropoff) {
+async function createRegistration(type, username, pickup, dropoff, note) {
 	const newRegistration = new eventRegistrations({
 		event: type,
-		userEmail: email,
+		username: username,
 		pickup: pickup,
-		dropoff: dropoff
+		dropoff: dropoff,
+		note: note
 	});
 
 	await newRegistration.save();
