@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { jwtDecode } from 'jwt-decode';
 import dayjs from 'dayjs';
 function speak() {  
     // Create a SpeechSynthesisUtterance object
@@ -18,10 +19,15 @@ class DropIns extends Component {
         this.state = {
             dropOffTime: new Date(),
             pickUpTime: new Date(),
+            note: '',
             isSidebarOpen: false,
             submissionMessage: '' // Add a state property for the submission message
         };
         this.toggleSidebar = this.toggleSidebar.bind(this);
+    }
+
+    handleInputChange = (event) => {
+        this.setState({ note: event.target.value });
     }
 
     handleDropOffTimeChange = (date) => {
@@ -54,6 +60,8 @@ class DropIns extends Component {
     handleSubmit = (event) => { 
         event.preventDefault();
         const { dropOffTime, pickUpTime } = this.state;
+        const token = localStorage.getItem("jwt");
+        const username = token ? jwtDecode(token).username : '';
 
             // Convert times to dayjs objects for easy comparison
         const dropOffDayjs = dayjs(dropOffTime);
@@ -78,8 +86,10 @@ class DropIns extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
+                username: username,
                 dropOff: formattedDropOff, 
                 pickUp: formattedPickUp,
+                note: this.state.note,
             })            
         })
         .then(response => {
@@ -95,7 +105,6 @@ class DropIns extends Component {
     };      
 
     render() {
-
         const { isSidebarOpen } = this.state;
         const dynamicStyle = {
             left: isSidebarOpen ? '60px' : '0px',
@@ -154,6 +163,14 @@ class DropIns extends Component {
                             />
                         </LocalizationProvider>
                     </div>
+                    <br></br>
+                    <input
+                        type="text"
+                        value={this.state.note}
+                        onChange={this.handleInputChange}
+                        id="dropinNote"
+                        placeholder='Important details here... '
+                    />                    
                     <br></br>
                     <button type="submit" className="button">Submit</button>  
                 </form>

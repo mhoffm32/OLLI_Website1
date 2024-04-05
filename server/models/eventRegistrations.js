@@ -3,9 +3,10 @@ const mongoose = require('../db');
 
 const eventRegSchema = new mongoose.Schema({
     event: String,
-    userEmail: String,
+    username: String,
     pickup: Date,
     dropoff: Date,
+    note: String,
 });
 
 const eventRegistrations = mongoose.model('eventRegistrations', eventRegSchema);

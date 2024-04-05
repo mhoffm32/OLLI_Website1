@@ -3,6 +3,8 @@
 .App {
   text-align: center;
   font-family: 'Nunito', sans-serif;
+  background-color: #dbd0b3;
+  padding-bottom: 50px;
 }
 
 .App-header {
@@ -115,6 +117,11 @@ button:hover {
 .topnav button.signup, .topnav button.signout{
   background-color: #ffd7c7;
   color: black;
+  margin-right: 0px;
+}
+
+#signup-b{
+  margin-right: 5px;
 }
 
 .topnav button.signup:hover, .topnav button.signout:hover {
@@ -123,19 +130,21 @@ button:hover {
 }
 
 .topnav #settings-icon {
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
+  display: inline-flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin-right: 5px;
+  margin-left: -7px;
+  margin-top: -5px;
   border-radius: 50%;
-  height: 20px; 
+  height: 20px;
   width: 20px;
 }
 
 .topnav #settings-img {
-  height: 30px;
-  width: auto;
-  vertical-align: middle;
-  border-radius: 50%;
+  height: 30px; 
+  width: 30px;
+
 }
 
 .topnav #pfp {
@@ -143,7 +152,6 @@ button:hover {
   vertical-align:middle;
   height: 30px;
   width: 30px;
-  border-radius: 50%;
 }
 
 #signInButton {
@@ -260,11 +268,10 @@ button:hover {
 }
 
 .olliAspects {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: flex-start;
   height: 100%; /* Adjust as needed */
-  float: left;
   width: 18.9%;
   height: auto;
   padding-left: 10px;
@@ -276,6 +283,10 @@ button:hover {
   margin-top: 10px;
   margin-left: 2%;
   margin-right: 2%;
+}
+
+#living-thing {
+  margin-top:15px;
 }
 
 .CheerConnectionsTitle {
@@ -296,6 +307,8 @@ button:hover {
 }
 
 .cheerWorksDescBack {
+  padding: 10px;
+  margin-left: 3.5%;
   background: url("../public/images/2.png") no-repeat center center;
   background-size: cover;
   border-radius: 20px;
@@ -351,7 +364,7 @@ button:hover {
 }
 
 .CheerConnections:hover{
-  padding-top: 10px;
+  padding-top: 22px;
   background-color: #6c7751;
   opacity: 0.9;
   transition: all 0.5s;
@@ -390,13 +403,21 @@ button:hover {
 }
 
 .reviews .review {
-  width: 30%;
+  width: 15%;
   margin: 20px;
   padding: 20px;
-  border: 1px solid #6c7751;
-  border-radius: 20px;
+  font-size: smaller;
+  border: 2px solid #6c7751;
+  border-radius: 10px;
   background-color: #ffd7c7;
-  text-align: left;
+  text-align: middle;
+  font-style: italic;
+}
+
+.reviews .review img {
+  height: 22px;
+  width: 22px;
+  vertical-align: text-top;
 }
 
 .review-text, .review-stars {
@@ -492,7 +513,7 @@ button:hover {
 
 .loginBtn {
   margin-top: 20px;
-  width: 20%;
+  width: 30%;
   padding: 10px;
   font-size: medium;
   border: none;
@@ -869,6 +890,17 @@ button:hover {
   margin: 0 10px; /* Adds horizontal margin */
 }
 
+.drop-in #dropinNote {
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+  font-style: italic;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 /* NEWS PAGE */
 
 .news .info-container {
@@ -1048,8 +1080,9 @@ p.letterheader{
 }
 
 #account-settings #email-prefs{
-  text-align: center;
-  margin-left: 20px;
+  display: inline-flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center;
 }
 
 #account-settings #email-prefs label.switch {
@@ -1079,14 +1112,21 @@ p.letterheader{
   border: rgb(238, 231, 221) 1px solid;
   border-radius: 20px;
   padding: 20px;
-  width: 80%;
+
+  width: fit-content;
   margin: auto;
   background-color: rgb(238, 231, 221);
   font-weight: 300;
 }
 
+#settings-pfps{
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+}
+
 #account-settings .selected img {
-  border: 3px solid black;
+  border: 6px solid black;
   border-radius: 50%;
 }
 
@@ -1172,7 +1212,7 @@ p.letterheader{
   align-items: center; /* Aligns items vertically within the info container */
 }
 
-.button-container {
+.button-container1 {
   position:absolute;
   right: 0;
   margin-right: 200px;
@@ -1180,7 +1220,7 @@ p.letterheader{
   transform: translateY(-50%);
 }
 
-.button-container button {
+.button-container1 button {
   margin-right: 10px; /* Adjust as needed */
 
 }
@@ -1433,8 +1473,6 @@ li {
   border-radius: 10px;
 }
 
-
-
 #delete-member-btn-t > p{
   font-size: 15px;
   font-weight: bold;
@@ -1456,8 +1494,6 @@ display: inline;
 margin: 0px;
 margin-top: 90px;
 }
-
-
 
 
 
@@ -1652,10 +1688,8 @@ margin-top: 90px;
   font-weight:400;
   align-items: center; 
   padding: 5px;
-  width: 40px;
   border-width: 0;
   border-radius: 8px;
-
 }
 
 /* MANAGE USER ADMIN TOOLS PAGE */
@@ -1754,32 +1788,46 @@ margin-top: 90px;
   color: black;
 }
 
-
 #images{
   border: #6c7751 5px solid;
 }
 
+#t2s-label{
+  margin-top: -10px;
+}
+
+#speaker{
+  margin-bottom:-4px;
+  margin-right: 4px;
+  height:15px
+}
+
+#pause{
+  margin-bottom:-4px;
+  margin-right: 4px;
+  height:15px
+}
+
 #speech-btn{
   background-color: #df7958;
-  padding: 10px;
-  font-size: medium;
+  padding: 0px;
+  font-size: small;
   border-radius: 8px;
   color: white;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  height:20px;
 }
 
 #speech-btn:hover{
   background-color: white;
   color: black;
-  
 } 
 
 #cancel-btn{
   background-color: #df7958;
-  padding: 10px;
-  font-size: medium;
+  padding: 0px;
+  font-size: small;
   border-radius: 8px;
+  height:20px;
   font-weight: normal;
   color: white;
   margin-bottom: 10px;
@@ -1911,3 +1959,65 @@ margin-top: 90px;
 
 }
 
+.timeSystem .titleBox input{
+  display: inline-block;
+  margin-bottom: 10px;
+  width: 38.6%;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.timeSystem #outButton{
+  background-color: #6c7751;
+  color:#fafafa;
+  width: 100px;
+  height: 50px;
+  border: 0px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.timeSystem #outButton:hover{
+  background-color: #df7958;
+  color: black;
+  text-align: center;
+}
+.timeSystem #inButton{
+  background-color: #6c7751;
+  color:#fafafa;
+  width: 100px;
+  height: 50px;
+  border: 0px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.timeSystem #inButton:hover{
+  background-color: #df7958;
+  color: black;
+  text-align: center;
+}
+
+.cheerGroupSectionExpandable,
+.cheerWorksSectionExpandable,
+.cheerConnectionsSectionExpandable,
+.cheerLivingSectionExpandable {
+  display: none;
+}
+
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 820px;
+  margin-top: -120px;
+}
+
+.button-container button {
+  margin-right: 0; /* Remove default margin */
+}
+
+.fc-toolbar-title{
+  transform: translateX(450px); 
+}
