@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import FullCalendar  from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
 const ManageSchedule = ({ changePage, user }) => {
@@ -54,6 +54,7 @@ const ManageSchedule = ({ changePage, user }) => {
     <div id="fullcalendar">
       <FullCalendar
         plugins={[dayGridPlugin]}
+        id="calendar-id"
         initialView="dayGridMonth"
         events={bookedDates.map((date) => ({
           user: date.username,
