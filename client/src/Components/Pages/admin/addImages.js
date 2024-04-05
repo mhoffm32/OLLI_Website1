@@ -8,6 +8,9 @@ function speak() {
     // Speak the text
     window.speechSynthesis.speak(utterance);
   }
+
+
+
 function AddImages() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [text, setText] = useState("");
@@ -21,6 +24,25 @@ function AddImages() {
     const handleCaption = (event) => {
         setCaption(event.target.value);
     };
+
+    const deleteImages = async () => {
+        try{
+            const response = await fetch('/api/admin/deleteAllImages', {
+                method: 'DELETE'
+            });
+            const res = await response.json();
+            if (response.ok){
+                console.log("All images successfully deleted")
+                setText("All images successfully deleted")
+            }
+            else{
+                console.log("error occured: ", res) 
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
 
     const handleFormSubmit = async (event) => {
         setText('');    
@@ -54,15 +76,18 @@ function AddImages() {
     
     };
     return (
-        <div>
+        <><div>
             <h1>Upload Images</h1>
             <form onSubmit={handleFormSubmit}>
                 <input id='selectFile' type="file" onChange={handleImageUpload} />
-                <input id='caption' type="text" placeholder="Caption" value={caption} onChange={handleCaption}/>
+                <input id='caption' type="text" placeholder="Caption" value={caption} onChange={handleCaption} />
                 <button id='submitButton' type="submit">Upload</button>
                 <p>{text}</p>
             </form>
-        </div>
+        </div><div>
+            <button id='deleteImages' onClick={deleteImages}>Delete All Images</button>
+
+            </div></>
     );
 }
 

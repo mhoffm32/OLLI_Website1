@@ -34,7 +34,7 @@ const AdminTools = () => {
           </button>
           <br />
           <button id="add-images-btn" onClick={() => setPage("AddImages")}>
-            Upload Images
+            Manage Images
           </button>
           <br />
           <button id="delete-rvw-btn" onClick={() => setPage("DeleteReviews")}>
