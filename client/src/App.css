@@ -890,6 +890,17 @@ button:hover {
   margin: 0 10px; /* Adds horizontal margin */
 }
 
+.drop-in #dropinNote {
+  border: none;
+  border-radius: 10px; /* Rounded sides */
+  background-color: #fef9e8;
+  color: #6c7751; /* Text color */
+  text-align: center; /* Centered text */
+  font-style: italic;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 /* NEWS PAGE */
 
 .news .info-container {
