@@ -1201,7 +1201,7 @@ p.letterheader{
   align-items: center; /* Aligns items vertically within the info container */
 }
 
-.button-container {
+.button-container1 {
   position:absolute;
   right: 0;
   margin-right: 200px;
@@ -1209,7 +1209,7 @@ p.letterheader{
   transform: translateY(-50%);
 }
 
-.button-container button {
+.button-container1 button {
   margin-right: 10px; /* Adjust as needed */
 
 }
@@ -2007,7 +2007,6 @@ margin-top: 90px;
   margin-right: 0; /* Remove default margin */
 }
 
-.button-container .speech-button,
-.button-container .cancel-speech {
-  margin-right: 0; /* Remove any additional margin */
+.fc-toolbar-title{
+  transform: translateX(450px); 
 }
