@@ -4,6 +4,6 @@ node_modules
 .prettierignore
 OAuth.txt
 app.yaml
-images
+client/public/images
 
 
